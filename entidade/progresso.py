@@ -1,6 +1,5 @@
 from entidade.usuario import Usuario
 from entidade.curso import Curso
-from entidade.avaliacao import Avaliacao
     
 class Progresso:
   def __init__(
@@ -8,7 +7,7 @@ class Progresso:
       usuario: Usuario,
       curso: Curso,
       aulas_concluidas: list = [],
-      nota: Avaliacao = None):
+      nota: int = None):
 
     self.__usuario = usuario
     self.__curso = curso

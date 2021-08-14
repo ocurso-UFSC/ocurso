@@ -1,5 +1,4 @@
 from entidade.usuario import Usuario
-from entidade.avaliacao import Avaliacao
 from entidade.aula import Aula
 
 
