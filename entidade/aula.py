@@ -1,15 +1,14 @@
-from entidade.usuario import Usuario
-from entidade.conteudo import Conteudo
+# from conteudo import Conteudo
 
 class Aula:
     def __init__(
                 self,
                 numero_aula: int,
-                conteudo: Conteudo,
+                # conteudo: Conteudo,
                 lista_conteudos: dict,
                 concluidos: int):
         self.__numero_aula = numero_aula
-        self.__conteudo = conteudo
+        # self.__conteudo = conteudo
         self.__lista_conteudos = lista_conteudos
         self.__concluidos = concluidos
 
