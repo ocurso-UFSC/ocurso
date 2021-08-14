@@ -2,7 +2,7 @@ class TelaSistema:
     def tela_opcoes(self):
         print("-------- oCurso ---------")
         print("Escolha sua opcao")
-        print("1 - Questao")
+        print("1 - Avaliação")
         print("2 - Fazer cadastro")
         print("3 - Login")
         print("4 - Cursos")

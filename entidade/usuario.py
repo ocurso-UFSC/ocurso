@@ -1,5 +1,5 @@
-from progresso import Progresso
-from curso import Curso
+# from progresso import Progresso
+# from curso import Curso
 
 
 class Usuario:

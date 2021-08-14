@@ -8,10 +8,10 @@ from controle.ControladorUsuario import ControladorUsuarios
 class ControladorSistema:
     def __init__(self):
         # self.__controlador_avaliacao = ControladorQuestao(self)
-        self.__controlador_aula = ControladorAula(self)
+        # self.__controlador_aula = ControladorAula(self)
         self.__controlador_curso = ControladorCurso(self)
         self.__controlador_questao = ControladorQuestao(self)
-        self.__controlador_usuario = ControladorQuestao(self)
+        # self.__controlador_usuarios = ControladorUsuarios(self)
         self.__tela_sistema = TelaSistema()
 
     @property

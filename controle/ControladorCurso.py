@@ -1,4 +1,4 @@
-from limite.TelaCurso import TelaCurso
+from limite.telaCurso import TelaCurso
 from entidade.curso import Curso
 
 class ControladorCurso():

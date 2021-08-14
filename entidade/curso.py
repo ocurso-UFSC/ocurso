@@ -1,6 +1,6 @@
-from usuario import Usuario
-from avaliacao import Avaliacao
-from aula import Aula
+# from usuario import Usuario
+# from avaliacao import Avaliacao
+# from aula import Aula
 
 
 class Curso:

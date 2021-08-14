@@ -3,8 +3,8 @@ class TelaQuestao:
         #if usuario == adm
 
         print ('---------- ESCOLHA A OPÇÃO ----------\n')
-        print ('Opção 1 - Adicionar questão')
-        print ('Opção 2 - Adicionar alternativa à questão')
+        print ('Opção 1 - Adicionar pergunta')
+        print ('Opção 2 - Adicionar alternativa à pergunta')
         print ('Opção 0 - Retornar')
 
         opcao = int(input('\nEscolha uma das opções: '))
