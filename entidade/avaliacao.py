@@ -1,4 +1,4 @@
-from questao import Questao
+from entidade.questao import Questao
 
 class Avaliacao:
     def __init__(

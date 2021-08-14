@@ -33,6 +33,13 @@ class ControladorUsuarios():
     else:
       self.__tela_usuario.mostra_mensagem("ATENÇÃO!!! Usuário inexistente")
 
+  def logar(self):
+    dados_login = self.__tela_usuario.pega_login()
+    for usuario in self.__usuarios:
+      if ((dados_login["email"] == usuario.email) and (dados_login["senha"] == usuario.senha)):
+        return usuario
+    return None
+
   def lista_usuarios(self):
     if len(self.__usuarios) == 0:
       print("Lista de usuários está vazia")
@@ -55,8 +62,7 @@ class ControladorUsuarios():
     self.__controlador_sistema.abre_tela()
 
   def abre_tela(self):
-    lista_opcoes = {1: self.incluir_usuario, 2: self.alterar_usuario, 3: self.lista_usuarios, 4: self.excluir_usuario, 0: self.retornar}
-
+    lista_opcoes = {1: self.logar, 2: self.incluir_usuario, 3: self.alterar_usuario, 4: self.lista_usuarios, 5: self.excluir_usuario, 0: self.retornar}
     continua = True
     while continua:
       lista_opcoes[self.__tela_usuario.tela_opcoes()]()

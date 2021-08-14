@@ -1,5 +1,5 @@
-from usuario import Usuario
-from conteudo import Conteudo
+from entidade.usuario import Usuario
+from entidade.conteudo import Conteudo
 
 class Aula:
     def __init__(

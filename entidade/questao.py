@@ -1,4 +1,4 @@
-from alternativa import Alternativa
+from entidade.alternativa import Alternativa
 
 class Questao:
     def __init__(self,

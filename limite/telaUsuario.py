@@ -4,10 +4,11 @@ class TelaUsuario():
     print("Escolha uma das opções a seguir")
     entrada = input(
       '''
-      1 - Adicionar Usuário
-      2 - Alterar Usuário 
-      3 - Listar Usuários
-      4 - Excluir Usuário
+      1 - Logar
+      2 - Cadastrar Usuário
+      3 - Alterar Usuário 
+      4 - Listar Usuários
+      5 - Excluir Usuário
       '''
     )
 
@@ -21,6 +22,13 @@ class TelaUsuario():
   
     return {"nome": nome, "email": email, "senha": senha}
 
+
+  def pega_login(self):
+    print("Entre com login do usuário: ")
+    email = input("Email: ")
+    senha = input("Senha: ")
+  
+    return {"email": email, "senha": senha}
 
   def mostra_usuario(self, dados_usuario):
     print("Nome: ", dados_usuario["nome"])

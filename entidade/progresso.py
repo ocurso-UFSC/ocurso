@@ -1,6 +1,6 @@
-from usuario import Usuario
-from curso import Curso
-from avaliacao import Avaliacao
+from entidade.usuario import Usuario
+from entidade.curso import Curso
+from entidade.avaliacao import Avaliacao
     
 class Progresso:
   def __init__(
