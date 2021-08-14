@@ -1,12 +1,20 @@
+from usuario import Usuario
+
 class Aula:
     def __init__(
                 self,
+                classe_usuario: Usuario.is_admin,
                 numero_aula: int,
-                conteudos: list,
-                checkbox: bool):
+                conteudos: dict,
+                concluidos: int):
+        self.__classe_usuario = classe_usuario
         self.__numero_aula = numero_aula
         self.__conteudos = conteudos
-        self.__checkbox = checkbox
+        self.__concluidos = concluidos
+
+    @property
+    def classe_usuario(self):
+        return self.__classe_usuario
 
     @property
     def numero_aula(self):
@@ -17,8 +25,12 @@ class Aula:
         return self.__conteudos
 
     @property
-    def checkbox(self):
-        return self.__checkbox
+    def concluidos(self):
+        return self.__concluidos
+
+    @classe_usuario.setter
+    def classe_usuario(self, classe_usuario):
+        self.__classe_usuario = classe_usuario
 
     @numero_aula.setter
     def numero_aula(self, numero_aula):
@@ -28,9 +40,9 @@ class Aula:
     def conteudos(self, conteudos):
         self.__conteudos = conteudos
 
-    @checkbox.setter
-    def checkbox(self, checkbox):
-        self.__checkbox = checkbox
+    @concluidos.setter
+    def concluidos(self, concluidos):
+        self.__concluidos = concluidos
 
     def adicionar_conteudo(self):
         ...
