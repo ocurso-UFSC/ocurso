@@ -1,6 +1,5 @@
 from limite.TelaAula import TelaAula
 from entidade.aula import Aula
-from entidade.conteudo import Conteudo
 
 class ControladorAula:
 
