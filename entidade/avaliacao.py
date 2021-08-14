@@ -5,13 +5,12 @@ class Avaliacao:
                 self,
                 nome_avaliacao: str,
                 questao: Questao,
-                lista_questoes: list,
+                lista_questoes: dict,
                 nota: int,
                 total_acertos: int):
             self.__nome_avaliacao = nome_avaliacao
             self.__questao = questao
             self.__lista_questoes = lista_questoes
-            self.__lista_questoes.append(questao)
             self.__nota = nota
             self.__total_acertos = total_acertos
             

@@ -30,6 +30,3 @@ class Alternativa:
     @status_alternativa.setter
     def status_alternativa(self, status_alternativa):
         self.__status_alternativa = status_alternativa
-
-    def editar_descricao(self, descricao_alternativa):
-        ...

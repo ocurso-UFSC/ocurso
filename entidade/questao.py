@@ -5,13 +5,12 @@ class Questao:
                 numero_questao: int,
                 descricao_questao: str,
                 alternativa: Alternativa,
-                alternativas: list,
+                alternativas: dict,
                 acerto: int):
             self.__numero_questao = numero_questao
             self.__descricao_questao = descricao_questao
             self.__alternativa = alternativa
             self.__alternativas = alternativas
-            self.__alternativas.append(alternativa)
             self.__acerto = acerto      #talvez esse atributo seja do controlador, e não da classe "Questao"
 
     @property
@@ -53,16 +52,3 @@ class Questao:
     @acerto.setter
     def acerto(self, acerto):
         self.__acerto = acerto
-
-    def editar_descricao(self, descricao_questao):
-        ...
-
-    def adicionar_alternativa(self, alternativas):
-        ... #tanto aqui quanto nas def's abaixo terá um "if usuario == adm:" para realizar o procedimento
-            #talvez seja necessário colocar essas def's na classe "Alternativa" mesmo
-
-    def remover_alternativa(self, alternativas):
-        ...
-
-    def definir_alternativa_correta(self, alternativa):
-        ...
