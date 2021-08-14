@@ -8,6 +8,7 @@ class Usuario:
                 nome: str,
                 email: str,
                 senha: str,
+                status: str,        #adicionar gets e setters
                 notas: list = [],
                 progresso: list = []):
 
