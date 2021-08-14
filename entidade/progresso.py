@@ -6,10 +6,12 @@ class Progresso:
   def __init__(
       self,
       usuario: Usuario,
-      aulas_concluidas: Curso,
-      nota: Avaliacao):
+      curso: Curso,
+      aulas_concluidas: list = [],
+      nota: Avaliacao = None):
 
     self.__usuario = usuario
+    self.__curso = curso
     self.__aulas_concluidas = aulas_concluidas
     self.__nota = nota
 
@@ -18,21 +20,33 @@ class Progresso:
     return self.__usuario
 
   @property
+  def curso(self):
+    return self.__curso
+  
+  @property
   def aulas_concluidas(self):
     return self.__aulas_concluidas
 
   @property
   def nota(self):
     return self.__nota
-
+  
   @usuario.setter
   def usuario(self, usuario):
     self.__usuario = usuario
 
+  @curso.setter
+  def curso(self, curso):
+    self.__curso = curso
+
   @aulas_concluidas.setter
-  def nome(self, aulas_concluidas):
+  def aulas_concluidas(self, aulas_concluidas):
     self.__aulas_concluidas = aulas_concluidas
 
   @nota.setter
-  def nome(self, nota):
+  def nota(self, nota):
     self.__nota = nota
+
+
+  def gerar_certificado(self):
+    pass

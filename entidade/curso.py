@@ -9,16 +9,15 @@ class Curso:
       nome_do_curso: str,
       descricao: str,
       quantidade_horas: str,
-      aula: Aula,
-      inscritos: list,
-      aprovados: list,
-      lista_aulas: list,
+      inscritos: list = [],
+      aprovados: list = [],
+      lista_aulas: list = [],
       ):
 
     self.__nome_do_curso = nome_do_curso
     self.__descricao = descricao
     self.__quantidade_horas = quantidade_horas
-    self.__aula = aula
+    # self.__aula = aula
     self.__inscritos = inscritos
     self.__aprovados = aprovados
     self.__lista_aulas = lista_aulas
@@ -35,9 +34,9 @@ class Curso:
   def quantidade_horas(self):
     return self.__quantidade_horas
 
-  @property
-  def aula(self):
-    return self.__aula
+  # @property
+  # def aula(self):
+  #   return self.__aula
 
   @property
   def inscritos(self):
@@ -63,9 +62,9 @@ class Curso:
   def quantidade_horas(self, quantidade_horas):
     self.__quantidade_horas = quantidade_horas
 
-  @aula.setter
-  def aula(self, aula):
-    self.__aula = aula
+  # @aula.setter
+  # def aula(self, aula):
+  #   self.__aula = aula
 
   @inscritos.setter
   def nome(self, inscritos):
@@ -78,8 +77,3 @@ class Curso:
   @lista_aulas.setter
   def lista_aulas(self, lista_aulas):
     self.__lista_aulas = lista_aulas
-
-
-  def gerar_certificar(self):
-    # fazer ainda
-    pass
