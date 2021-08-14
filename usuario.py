@@ -8,7 +8,7 @@ class Usuario:
                 nome: str,
                 email: str,
                 senha: str,
-                is_admin: bool,        #adicionar gets e setters
+                is_admin: bool,
                 notas: list = [],
                 progresso: list = []):
 
@@ -32,6 +32,10 @@ class Usuario:
         return self.__senha
 
     @property
+    def is_admin(self):
+        return self.__is_admin
+
+    @property
     def notas(self):
         return self.__notas
 
@@ -50,6 +54,10 @@ class Usuario:
     @senha.setter
     def nome(self, senha):
         self.__senha = senha
+
+    @is_admin.setter
+    def nome(self, is_admin):
+        self.__is_admin = is_admin
 
     @notas.setter
     def nome(self, notas):
