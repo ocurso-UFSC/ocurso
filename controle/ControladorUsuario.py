@@ -2,7 +2,6 @@ from limite.telaUsuario import TelaUsuario
 from entidade.usuario import Usuario
 
 class ControladorUsuarios():
-
   def __init__(self, controlador_sistema):
     self.__usuarios = []
     self.__tela_usuario = TelaUsuario()
