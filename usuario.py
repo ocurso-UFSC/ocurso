@@ -8,7 +8,7 @@ class Usuario:
                 nome: str,
                 email: str,
                 senha: str,
-                status: str,        #adicionar gets e setters
+                is_admin: bool,        #adicionar gets e setters
                 notas: list = [],
                 progresso: list = []):
 
