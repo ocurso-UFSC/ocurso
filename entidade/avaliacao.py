@@ -1,15 +1,15 @@
-from questao import Questao
+# from questao import Questao
 
 class Avaliacao:
     def __init__(
                 self,
                 nome_avaliacao: str,
-                questao: Questao,
+                # questao: Questao,
                 lista_questoes: dict,
                 nota: int,
                 total_acertos: int):
             self.__nome_avaliacao = nome_avaliacao
-            self.__questao = questao
+            # self.__questao = questao
             self.__lista_questoes = lista_questoes
             self.__nota = nota
             self.__total_acertos = total_acertos
@@ -18,9 +18,9 @@ class Avaliacao:
     def nome_avaliacao(self):
         return self.__nome_avaliacao
 
-    @property
-    def questao(self):
-        return self.__questao
+    # @property
+    # def questao(self):
+    #     return self.__questao
 
     @property
     def lista_questoes(self):
@@ -38,9 +38,9 @@ class Avaliacao:
     def nome_avaliacao(self, nome_avaliacao):
         self.__nome_avaliacao = nome_avaliacao
 
-    @questao.setter
-    def questao(self, questao):
-        self.__questao = questao
+    # @questao.setter
+    # def questao(self, questao):
+    #     self.__questao = questao
 
     @lista_questoes.setter
     def lista_questoes(self, lista_questoes):

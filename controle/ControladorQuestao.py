@@ -1,4 +1,4 @@
-# from entidade.questao import Questao
+#from entidade.questao import Questao
 from limite.TelaQuestao import TelaQuestao
 
 class ControladorQuestao():
