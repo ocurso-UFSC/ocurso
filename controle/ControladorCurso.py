@@ -28,7 +28,9 @@ class ControladorCurso():
         "descricao": curso.descricao, "quantidade_horas": curso.quantidade_horas})
 
   def alterar_curso(self):
-    self.lista_cursos()
+    self.__tela_curso.mostra_mensagem("Alterar curso \n")
+
+    #self.lista_cursos()
     nome_do_curso = self.__tela_curso.seleciona_curso()
     curso = self.pega_curso_por_nome(nome_do_curso)
 

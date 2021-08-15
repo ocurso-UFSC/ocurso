@@ -45,7 +45,7 @@ class ControladorUsuarios():
       print("Lista de usuários está vazia")
 
     for usuario in self.__usuarios:
-      self.__tela_usuario.mostra_usuario({"nome": usuario.nome, "email": usuario.telefone, "senha": usuario.cpf})
+      self.__tela_usuario.mostra_usuario({"nome": usuario.nome, "email": usuario.email, "senha": usuario.senha, "adm": usuario.adm})
 
   def excluir_usuario(self):
     self.lista_usuarios()

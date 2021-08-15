@@ -49,7 +49,7 @@ class Curso:
     self.__nome_do_curso = nome_do_curso
 
   @descricao.setter
-  def nome(self, descricao):
+  def descricao(self, descricao):
     self.__descricao = descricao
 
   @quantidade_horas.setter

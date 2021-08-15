@@ -7,7 +7,7 @@ class Usuario:
       nome: str,
       email: str,
       senha: str,
-      adm: bool,
+      adm: bool = False,
       notas: list = [],
       progresso: list = []):
 

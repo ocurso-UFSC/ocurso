@@ -1,19 +1,19 @@
 class TelaCurso():
   def tela_opcoes(self):
-    print("Escolha uma das opções a seguir")
-    entrada = input(
-      '''
-      1 - Adicionar Curso
-      2 - Alterar Curso 
-      3 - Listar Curso
-      4 - Excluir Curso
-      '''
-    )
+    entrada = int(input(
+'''
+--------- Curso  ---------
+Escolha uma das opções a seguir
+1 - Adicionar Curso
+2 - Alterar Curso 
+3 - Listar Curso
+4 - Excluir Curso
+Escolha a opcao: '''))
 
     return entrada
 
   def pega_dados_curso(self):
-    print("Entre com os dados do usuário: ")
+    print("Entre com os dados do curso: ")
     nome_do_curso = input("Nome Curso: ")
     descricao = input("Descricao: ")
     quantidade_horas = input("Quantidade horas: ")

@@ -1,16 +1,18 @@
 
 class TelaUsuario():
   def tela_opcoes(self):
-    print("Escolha uma das opções a seguir")
-    entrada = input(
-      '''
-      1 - Logar
-      2 - Cadastrar Usuário
-      3 - Alterar Usuário 
-      4 - Listar Usuários
-      5 - Excluir Usuário
-      '''
-    )
+    entrada = int(input(
+'''
+---------- Usuario  ----------
+Escolha uma das opções a seguir
+1 - Logar
+2 - Cadastrar Usuário
+3 - Alterar Usuário 
+4 - Listar Usuários
+5 - Excluir Usuário
+0 - Voltar
+
+Escolha a opção: '''))
 
     return entrada
 
@@ -34,6 +36,7 @@ class TelaUsuario():
     print("Nome: ", dados_usuario["nome"])
     print("Email: ", dados_usuario["email"])
     print("Senha: ", dados_usuario["senha"])
+    print("ADM: ", dados_usuario["adm"])
     print()
 
   def seleciona_usuario(self):
