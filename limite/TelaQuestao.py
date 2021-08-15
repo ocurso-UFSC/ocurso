@@ -1,10 +1,11 @@
 class TelaQuestao:
     def tela_opcoes(self):
-        #if usuario == adm
+        adm = False
 
         print ('---------- ESCOLHA A OPÇÃO ----------\n')
-        print ('Opção 1 - Adicionar pergunta')
-        print ('Opção 2 - Adicionar alternativa à pergunta')
+        print ('Opção 1 - Mostrar perguntas')
+        if adm:
+            print ('Opção 2 - Adicionar pergunta')
         print ('Opção 0 - Retornar')
 
         opcao = int(input('\nEscolha uma das opções: '))
@@ -20,6 +21,7 @@ class TelaQuestao:
         for c in range (quantidade_alternativas):
             index = str(input(f'Digite o index da {c+1} alternativa: ')).lower()
             resposta = str(input(f'Digite a resposta da {c+1} alternativa: '))
+            print ('')
             alternativas[index] = resposta
         alternativa_correta = str(input('Informe quais das alternativas da questão é a correta: '))
 
@@ -29,6 +31,8 @@ class TelaQuestao:
             'alternativa_correta':alternativa_correta,
         }
 
-    def remove_questao():
-        numero_questao = int(input('Qual questão você deseja remover? '))
-        return numero_questao
+    def mostra_descricao(self, descricao):
+        print(descricao)
+
+    def mostra_pergunta(self, alternativa, index):
+        print (f'   {index}) {alternativa}')

@@ -1,5 +1,4 @@
 from limite.TelaSistema import TelaSistema
-# from controle.ControladorAvaliacao import ControladorAvaliacao
 # from controle.ControladorAula import ControladorAula
 from controle.ControladorCurso import ControladorCurso
 from controle.ControladorQuestao import ControladorQuestao
@@ -7,7 +6,6 @@ from controle.ControladorUsuario import ControladorUsuarios
 
 class ControladorSistema:
     def __init__(self):
-        # self.__controlador_avaliacao = ControladorQuestao(self)
         #self.__controlador_aula = ControladorAula(self)
         self.__tela_sistema = TelaSistema()
         self.__controlador_curso = ControladorCurso(self)
