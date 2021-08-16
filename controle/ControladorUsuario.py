@@ -1,17 +1,28 @@
 from limite.telaUsuario import TelaUsuario
 from entidade.usuario import Usuario
 
-class ControladorUsuarios():
+class ControladorUsuario():
   def __init__(self, controlador_sistema):
     self.__usuarios = []
     self.__tela_usuario = TelaUsuario()
     self.__controlador_sistema = controlador_sistema
+
+
+  def pega_usuario_por_email_e_senha(self, email: str, senha: str):
+    for usuario in self.__usuarios:
+      if (usuario.email == email) and (usuario.senha == senha):
+        return usuario
+      return None
+
 
   def pega_usuario_por_email(self, email: str):
     for usuario in self.__usuarios:
       if (usuario.email == email):
         return usuario
     return None
+
+  def cadastrar_usuario(self, usuario):
+    self.__usuarios.append(usuario)
 
   def incluir_usuario(self):
     dados_usuario = self.__tela_usuario.pega_dados_usuario()
@@ -37,7 +48,9 @@ class ControladorUsuarios():
     dados_login = self.__tela_usuario.pega_login()
     for usuario in self.__usuarios:
       if ((dados_login["email"] == usuario.email) and (dados_login["senha"] == usuario.senha)):
+        self.__tela_usuario.mostra_mensagem("Bem vindo {}" .format(usuario.nome))
         return usuario
+    self.__tela_usuario.mostra_mensagem("Usuário incorreto")
     return None
 
   def lista_usuarios(self):

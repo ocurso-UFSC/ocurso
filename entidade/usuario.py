@@ -1,6 +1,3 @@
-# from entidade.progresso import Progresso
-# from entidade.curso import Curso
-
 class Usuario:
   def __init__(
       self,
