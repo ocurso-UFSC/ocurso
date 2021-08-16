@@ -28,7 +28,6 @@ class ControladorSistema:
     def usuario_logado(self, usuario_logado):
         self.__usuario_logado = usuario_logado
 
-
     def inicializa_sistema(self):
         if self.__usuario_logado == None:
             self.__controlador_login.abre_tela()
@@ -51,6 +50,7 @@ class ControladorSistema:
         exit(0)
 
     def abre_tela(self):
+        self.__tela_sistema.mostra_mensagem("Logado como: {}" .format(self.__usuario_logado.email))
         lista_opcoes = {1: self.usuario,  2: self.inclui_questao, 3: self.ver_curso, 0: self.encerra_sistema}
 
         while True:

@@ -59,3 +59,7 @@ class Usuario:
   @progresso.setter
   def progresso(self, progresso):
     self.__progresso = progresso
+
+  @adm.setter
+  def adm(self, adm):
+    self.__adm = adm
