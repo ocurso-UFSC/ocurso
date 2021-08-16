@@ -8,6 +8,8 @@ class ControladorAula():
     
     def acessar_python(self):
         aula_python = ['Python', 'O Python é uma linguagem de programação pipipipopopo', 'https://link.conteudo.python']
+        for c in range (len(aula_python)):
+            self.__tela_aula.mostra_aulas(aula_python[c])
         
     def retornar_curso(self):
         self.__controlador_sistema.ver_curso()
