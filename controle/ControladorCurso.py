@@ -23,7 +23,7 @@ class ControladorCurso():
 
   def lista_cursos(self):
     if len(self.__cursos) == 0:
-      print("Lista de cursos está vazia")
+      self.__tela_curso.mostra_mensagem("Lista de cursos está vazia")
 
     for curso in self.__cursos:
       self.__tela_curso.mostra_curso({"nome_do_curso": curso.nome_do_curso, 
@@ -48,7 +48,7 @@ class ControladorCurso():
 
   def lista_cursos(self):
     if len(self.__cursos) == 0:
-      print("Lista de cursos está vazia")
+      self.__tela_curso.mostra_mensagem("Lista de cursos está vazia")
 
     for curso in self.__cursos:
       self.__tela_curso.mostra_curso({"nome_do_curso": curso.nome_do_curso, 

@@ -54,7 +54,7 @@ class ControladorUsuario():
     self.__controlador_sistema.usuario_logado.email = novos_dados_usuario["email"]
     self.__controlador_sistema.usuario_logado.senha = novos_dados_usuario["senha"]
 
-    print()
+    self.__tela_usuario.mostra_mensagem("\n")
 
   def alterar_usuario(self):
     # Em caso de ser ADM

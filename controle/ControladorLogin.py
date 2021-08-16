@@ -17,7 +17,6 @@ class ControladorLogin():
     if usuario != None:
       self.__tela_login.mostra_mensagem("Bem vindo {}" .format(usuario.nome))
       self.__usuario_logado = usuario
-      print()
       return True
     
     self.__tela_login.mostra_mensagem("Usuário incorreto")
@@ -50,7 +49,6 @@ class ControladorLogin():
     usuario = self.__controlador_usuario.criar_usuario(dados)
     self.__controlador_usuario.cadastrar_usuario(usuario)
     self.__usuario_logado = usuario
-    print()
 
   def abre_tela(self):
     lista_opcoes = {1: self.logar, 2: self.cadastrar, 3: self.logar_visitante, 0: self.finaliza_sistema}

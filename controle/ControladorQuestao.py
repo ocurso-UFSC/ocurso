@@ -47,7 +47,7 @@ class ControladorQuestao():
         self.__tela_questao.mostra_mensagem('\n---------- RESPOSTAS DA AVALIAÇÃO ----------\n')
         for q in range(len(self.__questoes)):
             self.__tela_questao.mostra_resposta(q, self.__questoes[q]['alternativa_correta'])
-        print ('')
+        self.__tela_questao.mostra_mensagem()
 
     def retornar(self):
         self.__controlador_sistema.abre_tela()
