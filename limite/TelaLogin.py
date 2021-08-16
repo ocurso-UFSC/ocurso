@@ -7,7 +7,7 @@ class TelaLogin():
 Escolha uma das opções a seguir
 1 - Logar
 2 - Cadastrar Usuário
-3 - AUTOMATICO
+3 - Visitante
 0 - Finalizar
 Digite a opção: '''))
 

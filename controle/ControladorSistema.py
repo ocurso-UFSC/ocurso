@@ -1,5 +1,5 @@
 from limite.TelaSistema import TelaSistema
-# from controle.ControladorAula import ControladorAula
+from controle.ControladorAula import ControladorAula
 from controle.ControladorCurso import ControladorCurso
 from controle.ControladorQuestao import ControladorQuestao
 from controle.ControladorUsuario import ControladorUsuario
@@ -7,7 +7,7 @@ from controle.ControladorLogin import ControladorLogin
 
 class ControladorSistema:
     def __init__(self, usuario_logado = None):
-        #self.__controlador_aula = ControladorAula(self)
+        self.__controlador_aula = ControladorAula(self)
         self.__usuario_logado = usuario_logado
         self.__tela_sistema = TelaSistema()
         self.__controlador_curso = ControladorCurso(self)
@@ -16,6 +16,10 @@ class ControladorSistema:
         self.__controlador_login = ControladorLogin(self, self.__controlador_usuario)
 
    
+    @property
+    def controlador_aula(self):
+        return self.__controlador_aula
+    
     @property
     def controlador_questao(self):
         return self.__controlador_questao
@@ -50,7 +54,7 @@ class ControladorSistema:
         exit(0)
 
     def abre_tela(self):
-        self.__tela_sistema.mostra_mensagem("Logado como: {}" .format(self.__usuario_logado.email))
+        self.__tela_sistema.mostra_mensagem("\n")
         lista_opcoes = {1: self.usuario,  2: self.inclui_questao, 3: self.ver_curso, 0: self.encerra_sistema}
 
         while True:

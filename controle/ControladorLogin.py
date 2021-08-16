@@ -45,15 +45,15 @@ class ControladorLogin():
     exit()
 
   # funcao teste - logar automatico 
-  def logar_automatico(self):
-    dados = {"nome": "teste", "email": "teste", "senha": "123", "adm": True}
+  def logar_visitante(self):
+    dados = {"nome": "visitante", "email": "visitante", "senha": "visitante", "adm": False}
     usuario = self.__controlador_usuario.criar_usuario(dados)
     self.__controlador_usuario.cadastrar_usuario(usuario)
     self.__usuario_logado = usuario
     print()
 
   def abre_tela(self):
-    lista_opcoes = {1: self.logar, 2: self.cadastrar, 3: self.logar_automatico, 0: self.finaliza_sistema}
+    lista_opcoes = {1: self.logar, 2: self.cadastrar, 3: self.logar_visitante, 0: self.finaliza_sistema}
     
     while self.__usuario_logado == None:
       opcao_escolhida = self.__tela_login.tela_opcoes()
