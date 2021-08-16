@@ -20,64 +20,101 @@ class ControladorUsuario():
     return None
 
   def criar_usuario(self, dados_usuario):
-    usuario = Usuario(dados_usuario["nome"], dados_usuario["email"], dados_usuario["senha"])
+    usuario = Usuario(dados_usuario["nome"], dados_usuario["email"], dados_usuario["senha"], dados_usuario["adm"])
     return usuario
 
   def cadastrar_usuario(self, usuario):
     self.__usuarios.append(usuario)
 
   def incluir_usuario(self):
-    dados_usuario = self.__tela_usuario.pega_dados_usuario()
-    usuario = Usuario(dados_usuario["nome"], dados_usuario["email"], dados_usuario["senha"])
-    self.__usuarios.append(usuario)
+    self.__tela_usuario.mostra_mensagem("\nEntre com os dados")
+    dados = self.__tela_usuario.pega_dados_usuario()
 
-  def alterar_usuario(self, usuario = None):
+    if dados["adm"].lower() == "s" or dados["adm"].lower() == "sim":
+      dados["adm"] = True
+    elif dados["adm"].lower() == "n" or dados["adm"].lower() == "nao":
+      dados["adm"] = False
+    
+    else:
+      self.__tela_login.mostra_mensagem("Opcao ADM inválida")
+      return False
+
+    usuario = Usuario(dados["nome"], dados["email"], dados["senha"], dados["adm"])
+    self.__usuarios.append(usuario)
+    return False
+
+
+  def alterar_meus_dados(self):
+    self.__tela_usuario.mostra_mensagem("Alterando seus dados")
+    self.__tela_usuario.mostra_mensagem("\n")
+    self.minha_informacao()
+    self.__tela_usuario.mostra_mensagem("Entre com os novos dados: ")
+    novos_dados_usuario = self.__tela_usuario.pega_dados_usuario()
+    self.__controlador_sistema.usuario_logado.nome = novos_dados_usuario["nome"]
+    self.__controlador_sistema.usuario_logado.email = novos_dados_usuario["email"]
+    self.__controlador_sistema.usuario_logado.senha = novos_dados_usuario["senha"]
+
+    print()
+
+  def alterar_usuario(self):
     # Em caso de ser ADM
-    if usuario == None:
+    if self.__controlador_sistema.usuario_logado.adm == True:
       self.lista_usuarios()
       email_usuario = self.__tela_usuario.seleciona_usuario()
       usuario = self.pega_usuario_por_email(email_usuario)
 
-    # Em caso de nao ser ADM
-    else: 
-      self.__tela_usuario.mostra_mensagem("Alterando seus dados")
+      # Solicitacao de novos dados
+      if (usuario != None):
+        novos_dados_usuario = self.__tela_usuario.pega_dados_usuario()
+      
+      if novos_dados_usuario["adm"].lower() == "s" or novos_dados_usuario["adm"].lower() == "sim":
+        novos_dados_usuario["adm"] = True
+      elif novos_dados_usuario["adm"].lower() == "n" or novos_dados_usuario["adm"].lower() == "nao":
+        novos_dados_usuario["adm"] = False
+      else:
+        self.__tela_login.mostra_mensagem("Opcao ADM inválida")
+        return False
 
-    # Solicitacao de novos dados
-    if (usuario != None):
-      novos_dados_usuario = self.__tela_usuario.pega_dados_usuario()
       usuario.nome = novos_dados_usuario["nome"]
       usuario.email = novos_dados_usuario["email"]
       usuario.senha = novos_dados_usuario["senha"]
-      self.lista_usuarios()
+      usuario.adm = novos_dados_usuario["adm"]
+      self.__tela_usuario.mostra_mensagem("\n")
 
-    # Caso o 'pega_usuario_por_email' retornar 'Null'
+      # Caso o 'pega_usuario_por_email' retornar 'Null'
     else:
       self.__tela_usuario.mostra_mensagem("ATENÇÃO!!! Usuário inexistente")
 
+  def minha_informacao(self):
+    usuario = self.__controlador_sistema.usuario_logado
+    self.__tela_usuario.mostra_mensagem("Minhas informações")
+    self.__tela_usuario.mostra_usuario({"nome": usuario.nome, "email": usuario.email, "senha": usuario.senha, "adm": usuario.adm})
+
   def lista_usuarios(self, usuario = None):
     if len(self.__usuarios) == 0:
-      self.__tela_usuario.mostra_mensagem("nenhum usuario cadastrado")
+      self.__tela_usuario.mostra_mensagem("Nenhum usuário cadastrado")
 
-    # Em caso de usuario comum
-    if usuario != None:
+    for usuario in self.__usuarios:
+      self.__tela_usuario.mostra_mensagem("Todos os usuários cadastrados")
       self.__tela_usuario.mostra_usuario({"nome": usuario.nome, "email": usuario.email, "senha": usuario.senha, "adm": usuario.adm})
-
-    # Em caso de ADM
-    else:
-      for usuario in self.__usuarios:
-        self.__tela_usuario.mostra_usuario({"nome": usuario.nome, "email": usuario.email, "senha": usuario.senha, "adm": usuario.adm})
 
   def mostra_usuario_logado(self):
     self.lista_usuarios(self.__controlador_sistema.usuario_logado)
 
-  def excluir_usuario(self):
-    self.lista_usuarios()
-    email_usuario = self.__tela_usuario.seleciona_usuario()
-    usuario = self.pega_usuario_por_email(email_usuario)
+  def excluir_minha_conta(self):
+    self.__tela_usuario.mostra_mensagem("Adeus")
+    self.excluir_usuario(self.__controlador_sistema.usuario_logado)
+    exit()
+
+  def excluir_usuario(self, usuario = None):
+    if usuario == None:
+      email_usuario = self.__tela_usuario.seleciona_usuario()
+      usuario = self.pega_usuario_por_email(email_usuario)
 
     if (usuario != None):
       self.__usuarios.remove(usuario)
-      self.lista_usuarios()
+      self.__tela_usuario.mostra_mensagem("Usuario removido")
+
     else:
       self.__tela_usuario.mostra_mensagem("ATENÇÃO!!! Usuário inexistente")
 
@@ -85,7 +122,12 @@ class ControladorUsuario():
     self.__controlador_sistema.abre_tela()
 
   def abre_tela(self):
-    lista_opcoes = {1: self.mostra_usuario_logado, 2: self.incluir_usuario, 3: self.alterar_usuario, 4: self.lista_usuarios, 5: self.excluir_usuario, 0: self.retornar}
+    lista_opcoes = {1: self.minha_informacao, 2: self.alterar_meus_dados, 4: self.excluir_minha_conta, 0: self.retornar}
+    lista_opcoes_adm = {1: self.minha_informacao, 2: self.lista_usuarios, 3: self.alterar_meus_dados, 4: self.incluir_usuario, 
+                          5: self.alterar_usuario, 6: self.excluir_usuario, 7: self.excluir_minha_conta, 0: self.retornar}
     continua = True
     while continua:
-      lista_opcoes[self.__tela_usuario.tela_opcoes()]()
+      if self.__controlador_sistema.usuario_logado.adm == True:
+        lista_opcoes_adm[self.__tela_usuario.tela_opcoes_adm()]()
+      else:
+        lista_opcoes[self.__tela_usuario.tela_opcoes()]()

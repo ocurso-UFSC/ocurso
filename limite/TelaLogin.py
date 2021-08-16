@@ -26,8 +26,9 @@ Digite a opção: '''))
     email = input("Email: ")
     senha = input("Senha: ")
     senha2 = input("Repita a senha: ")
+    adm = input("ADM? s/sim n/nao: ")
   
-    return {"nome": nome, "email": email, "senha": senha, "senha2": senha2}
+    return {"nome": nome, "email": email, "senha": senha, "senha2": senha2, "adm":adm}
 
   def mostra_mensagem(self, msg):
     print(msg)

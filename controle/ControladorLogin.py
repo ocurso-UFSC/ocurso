@@ -26,9 +26,17 @@ class ControladorLogin():
   def cadastrar(self):
     dados = self.__tela_login.pega_dados_cadastro()
     if dados["senha"] == dados["senha2"]:
+      if dados["adm"].lower() == "s" or dados["adm"].lower() == "sim":
+        dados["adm"] = True
+      elif dados["adm"].lower() == "n" or dados["adm"].lower() == "nao":
+        dados["adm"] = False
+      else:
+        self.__tela_login.mostra_mensagem("Opcao ADM inválida")
+        return False
       usuario = self.__controlador_usuario.criar_usuario(dados)
       self.__controlador_usuario.cadastrar_usuario(usuario)
       return True
+    
     self.__tela_login.mostra_mensagem("Senhas não correspondem")
     return False
 
@@ -38,7 +46,7 @@ class ControladorLogin():
 
   # funcao teste - logar automatico 
   def logar_automatico(self):
-    dados = {"nome": "teste", "email": "teste", "senha": "123"}
+    dados = {"nome": "teste", "email": "teste", "senha": "123", "adm": True}
     usuario = self.__controlador_usuario.criar_usuario(dados)
     self.__controlador_usuario.cadastrar_usuario(usuario)
     self.__usuario_logado = usuario
@@ -53,4 +61,5 @@ class ControladorLogin():
       funcao_escolhida()
 
     if self.__usuario_logado != None:
+      self.__controlador_sistema.usuario_logado = self.__usuario_logado
       self.__controlador_sistema.abre_tela()
