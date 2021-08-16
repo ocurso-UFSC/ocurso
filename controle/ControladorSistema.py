@@ -3,15 +3,18 @@ from limite.TelaSistema import TelaSistema
 from controle.ControladorCurso import ControladorCurso
 from controle.ControladorQuestao import ControladorQuestao
 from controle.ControladorUsuario import ControladorUsuario
+from controle.ControladorLogin import ControladorLogin
 
 class ControladorSistema:
-    def __init__(self, usuario_logado):
+    def __init__(self, usuario_logado = None):
         #self.__controlador_aula = ControladorAula(self)
         self.__usuario_logado = usuario_logado
         self.__tela_sistema = TelaSistema()
         self.__controlador_curso = ControladorCurso(self)
         self.__controlador_questao = ControladorQuestao(self)
         self.__controlador_usuario = ControladorUsuario(self)
+        self.__controlador_login = ControladorLogin(self, self.__controlador_usuario)
+
    
     @property
     def controlador_questao(self):
@@ -21,8 +24,16 @@ class ControladorSistema:
     def usuario_logado(self):
         return self.__usuario_logado
 
+    @usuario_logado.setter
+    def usuario_logado(self, usuario_logado):
+        self.__usuario_logado = usuario_logado
+
+
     def inicializa_sistema(self):
-        self.abre_tela()
+        if self.__usuario_logado == None:
+            self.__controlador_login.abre_tela()
+        else:
+            self.abre_tela()
 
     def usuario(self):
         self.__controlador_usuario.abre_tela()

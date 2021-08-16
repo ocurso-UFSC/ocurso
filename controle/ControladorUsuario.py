@@ -19,6 +19,10 @@ class ControladorUsuario():
         return usuario
     return None
 
+  def criar_usuario(self, dados_usuario):
+    usuario = Usuario(dados_usuario["nome"], dados_usuario["email"], dados_usuario["senha"])
+    return usuario
+
   def cadastrar_usuario(self, usuario):
     self.__usuarios.append(usuario)
 

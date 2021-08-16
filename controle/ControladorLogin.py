@@ -1,21 +1,18 @@
-from limite.telaUsuario import TelaUsuario
 from limite.TelaLogin import TelaLogin
-from entidade.usuario import Usuario
-from controle.ControladorUsuario import ControladorUsuario
-from controle.ControladorSistema import ControladorSistema
 
-class ControladorLogin(ControladorUsuario):
-  def __init__(self):
+class ControladorLogin():
+  def __init__(self, controladorSistema, controladorUsuario):
     self.__tela_login = TelaLogin()
     self.__usuario_logado = None
-    super().__init__(None)
+    self.__controlador_usuario = controladorUsuario
+    self.__controlador_sistema = controladorSistema
 
   def inicializa_sistema(self):
     self.abre_tela()
 
   def logar(self):
     dados_login = self.__tela_login.pega_login()
-    usuario = super().pega_usuario_por_email_e_senha(dados_login["email"], dados_login["senha"])
+    usuario = self.__controlador_usuario.pega_usuario_por_email_e_senha(dados_login["email"], dados_login["senha"])
     
     if usuario != None:
       self.__tela_login.mostra_mensagem("Bem vindo {}" .format(usuario.nome))
@@ -29,8 +26,8 @@ class ControladorLogin(ControladorUsuario):
   def cadastrar(self):
     dados = self.__tela_login.pega_dados_cadastro()
     if dados["senha"] == dados["senha2"]:
-      usuario = Usuario(dados["nome"], dados["email"], dados["senha"])
-      super().cadastrar_usuario(usuario)
+      usuario = self.__controlador_usuario.criar_usuario(dados)
+      self.__controlador_usuario.cadastrar_usuario(usuario)
       return True
     self.__tela_login.mostra_mensagem("Senhas não correspondem")
     return False
@@ -41,9 +38,10 @@ class ControladorLogin(ControladorUsuario):
 
   # funcao teste - logar automatico 
   def logar_automatico(self):
-    usuario = Usuario("123", "123", "123")
-    super().cadastrar_usuario(usuario)
-    self.__usuario_logado = usuario
+    dados = {"nome": "teste", "email": "teste", "senha": "123"}
+    usuario = self.__controlador_usuario.criar_usuario(dados)
+    self.__controlador_usuario.cadastrar_usuario(usuario)
+    self.__controlador_sistema.usuario_logado(usuario)
     print()
 
   def abre_tela(self):
@@ -55,4 +53,4 @@ class ControladorLogin(ControladorUsuario):
       funcao_escolhida()
 
     if self.__usuario_logado != None:
-      ControladorSistema(self.__usuario_logado).abre_tela()
+      self.__controlador_sistema.abre_tela()
