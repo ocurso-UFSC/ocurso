@@ -9,7 +9,6 @@ Escolha uma das opções a seguir
 2 - Cadastrar Usuário
 3 - AUTOMATICO
 0 - Finalizar
-
 Digite a opção: '''))
 
     return entrada

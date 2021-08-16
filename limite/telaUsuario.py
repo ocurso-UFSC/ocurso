@@ -5,7 +5,7 @@ class TelaUsuario():
 '''
 ---------- Usuario  ----------
 Escolha uma das opções a seguir
-1 - Logar
+1 - Minhas informações
 2 - Cadastrar Usuário
 3 - Alterar Usuário 
 4 - Listar Usuários

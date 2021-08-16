@@ -5,8 +5,9 @@ from controle.ControladorQuestao import ControladorQuestao
 from controle.ControladorUsuario import ControladorUsuario
 
 class ControladorSistema:
-    def __init__(self):
+    def __init__(self, usuario_logado):
         #self.__controlador_aula = ControladorAula(self)
+        self.__usuario_logado = usuario_logado
         self.__tela_sistema = TelaSistema()
         self.__controlador_curso = ControladorCurso(self)
         self.__controlador_questao = ControladorQuestao(self)
@@ -15,6 +16,10 @@ class ControladorSistema:
     @property
     def controlador_questao(self):
         return self.__controlador_questao
+
+    @property
+    def usuario_logado(self):
+        return self.__usuario_logado
 
     def inicializa_sistema(self):
         self.abre_tela()

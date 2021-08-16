@@ -10,8 +10,6 @@ class ControladorLogin(ControladorUsuario):
     self.__usuario_logado = None
     super().__init__(None)
 
-    # entrar usuario automatico
-
   def inicializa_sistema(self):
     self.abre_tela()
 
@@ -22,6 +20,7 @@ class ControladorLogin(ControladorUsuario):
     if usuario != None:
       self.__tela_login.mostra_mensagem("Bem vindo {}" .format(usuario.nome))
       self.__usuario_logado = usuario
+      print()
       return True
     
     self.__tela_login.mostra_mensagem("Usuário incorreto")
@@ -36,15 +35,19 @@ class ControladorLogin(ControladorUsuario):
     self.__tela_login.mostra_mensagem("Senhas não correspondem")
     return False
 
+  def finaliza_sistema(self):
+    self.__tela_login.mostra_mensagem("Até a próxima")
+    exit()
 
+  # funcao teste - logar automatico 
   def logar_automatico(self):
     usuario = Usuario("123", "123", "123")
     super().cadastrar_usuario(usuario)
     self.__usuario_logado = usuario
-
+    print()
 
   def abre_tela(self):
-    lista_opcoes = {1: self.logar, 2: self.cadastrar, 3: self.logar_automatico}
+    lista_opcoes = {1: self.logar, 2: self.cadastrar, 3: self.logar_automatico, 0: self.finaliza_sistema}
     
     while self.__usuario_logado == None:
       opcao_escolhida = self.__tela_login.tela_opcoes()
@@ -52,5 +55,4 @@ class ControladorLogin(ControladorUsuario):
       funcao_escolhida()
 
     if self.__usuario_logado != None:
-      #ControladorSistema.abre_tela(self.__usuario_logado)
-      ControladorSistema().abre_tela()
+      ControladorSistema(self.__usuario_logado).abre_tela()
