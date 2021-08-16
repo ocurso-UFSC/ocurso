@@ -8,6 +8,7 @@ Escolha uma das opções a seguir
 2 - Alterar Curso 
 3 - Listar Curso
 4 - Excluir Curso
+5 - Mostrar aulas
 Escolha a opcao: '''))
 
     return entrada
