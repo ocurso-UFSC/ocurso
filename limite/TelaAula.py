@@ -1,17 +1,22 @@
 class TelaAula:
     def tela_opcoes(self):
-        opcao = int(input(
-        '''
-Você deseja acessar a aula de qual curso?
+        print('O que você deseja fazer?')
+        print('Opção 1 - Mostrar conteúdos do curso')
 
-Opção 1 - Python
+        #if usuario é adm:
+        print('Opção 2 - Adicionar conteúdo')
+        print('Opção 3 - Editar conteúdo')
+        print('Opção 4 - Remover conteúdo')
+        #fim do if usuario é adm
 
-Escolha a opção: '''))
+        print('Opção 0 - Retornar')
 
+        opcao = int(input('Escolha a opção: '))
         return opcao
 
-    def mostra_aulas(self, chave_aula):
-        print (chave_aula)
+    def mostra_aulas(self, descricao, link):
+        print (f'\n   {descricao}\n   {link}')
+        print ('-'*50)
 
     def mostra_mensagem(self, msg):
         print(msg)

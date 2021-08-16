@@ -1,12 +1,13 @@
-# from limite.TelaCurso import TelaCurso
+from limite.TelaCurso import TelaCurso
 from entidade.curso import Curso
 from controle.ControladorAula import ControladorAula
 from limite.TelaAula import TelaAula
 
 class ControladorCurso():
   def __init__(self, controlador_sistema):
+    #self.__cursos = [nome, descricao, qtdhoras, lista_conteudos]
     self.__cursos = []
-    # self.__tela_curso = TelaCurso()
+    self.__tela_curso = TelaCurso()
     self.__controlador_sistema = controlador_sistema
     self.__controlador_aula = ControladorAula(self)
 
@@ -22,7 +23,7 @@ class ControladorCurso():
   def incluir_curso(self):
     dados_curso = self.__tela_curso.pega_dados_curso()
     curso = Curso(dados_curso["nome_do_curso"], dados_curso["descricao"], 
-                    dados_curso["quantidade_horas"])
+                    dados_curso["quantidade_horas"], dados_curso["lista_conteudos"])
     self.__cursos.append(curso)
 
   def lista_cursos(self):
@@ -82,3 +83,11 @@ class ControladorCurso():
     continua = True
     while continua:
       lista_opcoes[self.__tela_curso.tela_opcoes()]()
+  
+  def mostra_conteudo(self):
+    lista_opcoes = {1: 'self.lista_conteudos', 2:'self.adicionar_conteudo', 3: 'self.editar_conteudo', 
+      4: 'self.remover_conteudo', 0: self.abre_tela}
+
+    continua = True
+    while continua:
+      lista_opcoes[self.__tela_curso.mostra_curso()]()
