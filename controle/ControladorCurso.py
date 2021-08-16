@@ -1,5 +1,7 @@
 from limite.TelaCurso import TelaCurso
 from entidade.curso import Curso
+from controle.ControladorAula import ControladorAula
+from limite.TelaAula import TelaAula
 
 class ControladorCurso():
   def __init__(self, controlador_sistema):
@@ -63,12 +65,15 @@ class ControladorCurso():
     else:
       self.__tela_curso.mostra_mensagem("ATENÇÃO!!! Curso inexistente")
 
+  def abre_aula(self):
+    TelaAula.tela_opcoes()
+
   def retornar(self):
     self.__controlador_sistema.abre_tela()
 
   def abre_tela(self):
     lista_opcoes = {1: self.incluir_curso, 2: self.alterar_curso, 
-      3: self.lista_cursos, 4: self.excluir_curso, 0: self.retornar}
+      3: self.lista_cursos, 4: self.excluir_curso, 5:self.abre_aula, 0: self.retornar}
 
     continua = True
     while continua:
