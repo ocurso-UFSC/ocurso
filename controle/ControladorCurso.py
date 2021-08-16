@@ -1,4 +1,4 @@
-from limite.TelaCurso import TelaCurso
+# from limite.TelaCurso import TelaCurso
 from entidade.curso import Curso
 from controle.ControladorAula import ControladorAula
 from limite.TelaAula import TelaAula
@@ -6,7 +6,7 @@ from limite.TelaAula import TelaAula
 class ControladorCurso():
   def __init__(self, controlador_sistema):
     self.__cursos = []
-    self.__tela_curso = TelaCurso()
+    # self.__tela_curso = TelaCurso()
     self.__controlador_sistema = controlador_sistema
     self.__controlador_aula = ControladorAula(self)
 
