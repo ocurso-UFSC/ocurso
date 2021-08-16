@@ -4,6 +4,7 @@ from limite.TelaQuestao import TelaQuestao
 class ControladorQuestao():
     def __init__(self, controlador_sistema):
         self.__controlador_sistema = controlador_sistema
+        self.__tela_questao = TelaQuestao()
         self.__questoes = [
                     {
                         'descricao_questao':'Quanto é 2+2?',
@@ -16,8 +17,7 @@ class ControladorQuestao():
                         'alternativa_correta':'c',
                     },
         ]
-        self.__tela_questao = TelaQuestao()
-    
+
     def mostra_perguntas(self):
         self.__tela_questao.mostra_mensagem('\n---------- AVALIAÇÃO FINAL ----------\n')      #trocar para mostrar msg
         for q in range(len(self.__questoes)):
