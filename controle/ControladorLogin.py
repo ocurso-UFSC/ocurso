@@ -56,10 +56,17 @@ class ControladorLogin():
     lista_opcoes = {1: self.logar, 2: self.cadastrar, 3: self.logar_visitante, 0: self.finaliza_sistema}
     
     while self.__usuario_logado == None:
-      opcao_escolhida = self.__tela_login.tela_opcoes()
-      funcao_escolhida = lista_opcoes[opcao_escolhida]
-      funcao_escolhida()
+      try:
+        opcao_escolhida = self.__tela_login.tela_opcoes()
+        funcao_escolhida = lista_opcoes[opcao_escolhida]
+        funcao_escolhida()
+      except:
+        self.__tela_login.mostra_mensagem("Opção inválida")
 
     if self.__usuario_logado != None:
-      self.__controlador_sistema.usuario_logado = self.__usuario_logado
-      self.__controlador_sistema.abre_tela()
+      try:
+        self.__controlador_sistema.usuario_logado = self.__usuario_logado
+        self.__controlador_sistema.abre_tela()
+
+      except:
+        self.__tela_login.mostra_mensagem("Opção inválida \n")

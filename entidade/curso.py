@@ -1,7 +1,3 @@
-from entidade.usuario import Usuario
-from entidade.aula import Aula
-
-
 class Curso:
   def __init__(
       self,

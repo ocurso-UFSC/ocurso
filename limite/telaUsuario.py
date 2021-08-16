@@ -1,4 +1,3 @@
-
 class TelaUsuario():
   def tela_opcoes_adm(self):
     entrada = int(input(

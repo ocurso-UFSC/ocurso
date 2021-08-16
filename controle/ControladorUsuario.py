@@ -128,6 +128,12 @@ class ControladorUsuario():
     continua = True
     while continua:
       if self.__controlador_sistema.usuario_logado.adm == True:
-        lista_opcoes_adm[self.__tela_usuario.tela_opcoes_adm()]()
+        try:
+          lista_opcoes_adm[self.__tela_usuario.tela_opcoes_adm()]()
+        except:
+          self.__tela_usuario.mostra_mensagem("Opção inválida")
       else:
-        lista_opcoes[self.__tela_usuario.tela_opcoes()]()
+        try:
+          lista_opcoes[self.__tela_usuario.tela_opcoes()]()
+        except:
+          self.__tela_usuario.mostra_mensagem("Opção inválida")
