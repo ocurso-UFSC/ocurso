@@ -45,3 +45,6 @@ class TelaQuestao:
 
     def mostra_resposta(self, numero_questao, resposta_correta):
         print (f'Resposta da questão {numero_questao+1}: {resposta_correta.upper()}')
+
+    def mostra_mensagem(self, msg):
+        print(msg)
