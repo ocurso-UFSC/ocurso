@@ -19,7 +19,7 @@ class ControladorQuestao():
         self.__tela_questao = TelaQuestao()
     
     def mostra_perguntas(self):
-        print('\n---------- AVALIAÇÃO FINAL ----------\n')      #trocar para mostrar msg
+        self.__tela_questao.mostra_mensagem('\n---------- AVALIAÇÃO FINAL ----------\n')      #trocar para mostrar msg
         for q in range(len(self.__questoes)):
             self.__tela_questao.mostra_descricao(q+1, self.__questoes[q]['descricao_questao'])
             for resposta_alternativa, index_questao in self.__questoes[q]['alternativas'].items():
@@ -27,8 +27,8 @@ class ControladorQuestao():
                 resposta = resposta_alternativa
 
                 self.__tela_questao.mostra_pergunta(index, resposta)
-            print('')
-        print('\nResponda as questões e guarde suas respostas para comparar com as corretas mais tarde.\n')
+            self.__tela_questao.mostra_mensagem('')
+        self.__tela_questao.mostra_mensagem('Responda as questões e guarde suas respostas para comparar com as corretas mais tarde.\n')
     
     def incluir_questao(self):
         infos_questao = self.__tela_questao.infos_questao()
@@ -44,7 +44,7 @@ class ControladorQuestao():
         self.__questoes.pop(numero-1)
 
     def mostrar_respostas(self):
-        print ('\n---------- RESPOSTAS DA AVALIAÇÃO ----------\n')
+        self.__tela_questao.mostra_mensagem('\n---------- RESPOSTAS DA AVALIAÇÃO ----------\n')
         for q in range(len(self.__questoes)):
             self.__tela_questao.mostra_resposta(q, self.__questoes[q]['alternativa_correta'])
         print ('')
