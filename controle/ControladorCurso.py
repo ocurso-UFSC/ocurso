@@ -16,6 +16,9 @@ class ControladorCurso():
         return curso
     return None
 
+  def adiciona_conteudo_curso(self, curso, conteudo):
+    curso.adicionar_aula(conteudo)
+
   def incluir_curso(self):
     dados_curso = self.__tela_curso.pega_dados_curso()
     curso = Curso(dados_curso["nome_do_curso"], dados_curso["descricao"], 

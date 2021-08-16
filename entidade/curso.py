@@ -20,6 +20,10 @@ class Curso:
     self.__aprovados = aprovados
     self.__lista_aulas = lista_aulas
 
+
+  def adicionar_aula(self, aula):
+    self.__lista_aulas.append(aula)
+
   @property
   def nome_do_curso(self):
     return self.__nome_do_curso
