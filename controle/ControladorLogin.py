@@ -41,7 +41,7 @@ class ControladorLogin():
     dados = {"nome": "teste", "email": "teste", "senha": "123"}
     usuario = self.__controlador_usuario.criar_usuario(dados)
     self.__controlador_usuario.cadastrar_usuario(usuario)
-    self.__controlador_sistema.usuario_logado(usuario)
+    self.__usuario_logado = usuario
     print()
 
   def abre_tela(self):
