@@ -8,6 +8,7 @@ class ControladorCurso():
     self.__cursos = []
     self.__tela_curso = TelaCurso()
     self.__controlador_sistema = controlador_sistema
+    self.__controlador_aula = ControladorAula(self)
 
   def pega_curso_por_nome(self, nome: str):
     for curso in self.__cursos:
@@ -66,7 +67,7 @@ class ControladorCurso():
       self.__tela_curso.mostra_mensagem("ATENÇÃO!!! Curso inexistente")
 
   def abre_aula(self):
-    TelaAula.tela_opcoes()
+    self.__controlador_aula.abre_tela()
 
   def retornar(self):
     self.__controlador_sistema.abre_tela()
