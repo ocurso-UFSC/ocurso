@@ -11,12 +11,8 @@ class Curso:
     self.__descricao = descricao
     self.__quantidade_horas = quantidade_horas
     self.__aula = aula
+    self.__avaliacao = []
 
-
-  def adicionar_aula(self, aula):
-    self.__lista_aulas.append(aula)
-    lista_de_aulas = self.__lista_aulas
-    return lista_de_aulas
 
   @property
   def nome_do_curso(self):
@@ -33,6 +29,10 @@ class Curso:
   @property
   def aula(self):
     return self.__aula
+  
+  @property
+  def avaliacao(self):
+    return self.__avaliacao
 
   @nome_do_curso.setter
   def nome_do_curso(self, nome_do_curso):
@@ -45,6 +45,10 @@ class Curso:
   @quantidade_horas.setter
   def quantidade_horas(self, quantidade_horas):
     self.__quantidade_horas = quantidade_horas
+
+  @aula.setter
+  def aula(self, aula):
+    self.__aula = aula
 
   @aula.setter
   def lista_aulas(self, aula):
