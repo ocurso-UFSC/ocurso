@@ -127,13 +127,14 @@ class ControladorUsuario():
                           5: self.alterar_usuario, 6: self.excluir_usuario, 7: self.excluir_minha_conta, 0: self.retornar}
     continua = True
     while continua:
-      if self.__controlador_sistema.usuario_logado.adm == True:
-        try:
-          lista_opcoes_adm[self.__tela_usuario.tela_opcoes_adm()]()
-        except:
-          self.__tela_usuario.mostra_mensagem("Opção inválida")
-      else:
-        try:
-          lista_opcoes[self.__tela_usuario.tela_opcoes()]()
-        except:
-          self.__tela_usuario.mostra_mensagem("Opção inválida")
+        lista_opcoes_adm[self.__tela_usuario.tela_opcoes_adm()]()
+      # if self.__controlador_sistema.usuario_logado.adm == True:
+      #   try:
+      #     lista_opcoes_adm[self.__tela_usuario.tela_opcoes_adm()]()
+      #   except:
+      #     self.__tela_usuario.mostra_mensagem("Opção inválida")
+      # else:
+      #   try:
+      #     lista_opcoes[self.__tela_usuario.tela_opcoes()]()
+      #   except:
+      #     self.__tela_usuario.mostra_mensagem("Opção inválida")
