@@ -49,7 +49,6 @@ class ControladorLogin():
     self.__controlador_sistema.usuario_logado = usuario
 
   def abre_tela(self):
-    print("FRUMMMm")
     lista_opcoes = {1: self.logar, 2: self.cadastrar, 3: self.logar_visitante, 0: self.finaliza_sistema}
     
     while self.__controlador_sistema.usuario_logado == None:
