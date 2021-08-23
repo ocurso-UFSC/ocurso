@@ -4,7 +4,7 @@ class ControladorLogin():
   def __init__(self, controladorSistema, controladorUsuario):
     self.__tela_login = TelaLogin()
     self.__usuario_logado = None
-    self.__controlador_usuario = controladorUsuario
+    # self.__controlador_usuario = controladorUsuario
     self.__controlador_sistema = controladorSistema
 
   def inicializa_sistema(self):
@@ -12,7 +12,7 @@ class ControladorLogin():
 
   def logar(self):
     dados_login = self.__tela_login.pega_login()
-    usuario = self.__controlador_usuario.pega_usuario_por_email_e_senha(dados_login["email"], dados_login["senha"])
+    usuario = self.__controlador_sistema.controlador_usuario.pega_usuario_por_email_e_senha(dados_login["email"], dados_login["senha"])
     
     if usuario != None:
       self.__tela_login.mostra_mensagem("Bem vindo {}" .format(usuario.nome))

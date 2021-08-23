@@ -19,6 +19,10 @@ class ControladorSistema:
         return self.__controlador_questao
 
     @property
+    def controlador_usuario(self):
+        return self.__controlador_usuario
+
+    @property
     def usuario_logado(self):
         return self.__usuario_logado
 
