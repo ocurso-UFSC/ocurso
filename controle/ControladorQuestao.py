@@ -5,18 +5,7 @@ class ControladorQuestao():
     def __init__(self, controlador_sistema):
         self.__controlador_sistema = controlador_sistema
         self.__tela_questao = TelaQuestao()
-        self.__questoes = [
-                    {
-                        'descricao_questao':'Quanto é 2+2?',
-                        'alternativas':{'a':'2', 'b':'4', 'c':'8'},
-                        'alternativa_correta':'b',
-                    },
-                    {
-                        'descricao_questao':'Quem descobriu o Brasil?',
-                        'alternativas':{'a':'Neymar', 'b':'Jean Hauck', 'c':'Pedro Alvares Cabral'},
-                        'alternativa_correta':'c',
-                    },
-        ]
+        self.__questoes = []
 
     def mostra_perguntas(self):
         self.__tela_questao.mostra_mensagem('\n---------- AVALIAÇÃO FINAL ----------\n')      #trocar para mostrar msg
@@ -27,8 +16,6 @@ class ControladorQuestao():
                 resposta = resposta_alternativa
 
                 self.__tela_questao.mostra_pergunta(index, resposta)
-            self.__tela_questao.mostra_mensagem('')
-        self.__tela_questao.mostra_mensagem('Responda as questões e guarde suas respostas para comparar com as corretas mais tarde.\n')
     
     def incluir_questao(self):
         infos_questao = self.__tela_questao.infos_questao()

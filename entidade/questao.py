@@ -1,16 +1,12 @@
-from entidade.alternativa import Alternativa
-
 class Questao:
   def __init__(
       self,
       descricao_questao: str,
-      alternativa: Alternativa,
+      lista_alternativas: list,
       alternativa_correta: str):
 
     self.__descricao_questao = descricao_questao
-    self.__alternativa = alternativa
-    self.__lista_alternativas = []
-    self.__lista_alternativas.append(alternativa)
+    self.__lista_alternativas = lista_alternativas
     self.__alternativa_correta = alternativa_correta
 
   @property
@@ -18,8 +14,8 @@ class Questao:
     return self.__descricao_questao
 
   @property
-  def alternativa(self):
-    return self.__alternativa
+  def lista_alternativas(self):
+    return self.__lista_alternativas
 
   @property
   def alternativa_correta(self):
@@ -29,9 +25,9 @@ class Questao:
   def descricao_questao(self, descricao_questao):
     self.__descricao_questao = descricao_questao
 
-  @alternativa.setter
-  def alternativa(self, alternativa):
-    self.__alternativa = alternativa
+  @lista_alternativas.setter
+  def lista_alternativas(self, lista_alternativas):
+    self.__lista_alternativas = lista_alternativas
 
   @alternativa_correta.setter
   def alternativa_correta(self, alternativa_correta):
