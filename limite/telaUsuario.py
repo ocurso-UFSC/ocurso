@@ -23,8 +23,8 @@ Escolha a opção: '''))
 ---------- Usuario  ----------
 Escolha uma das opções a seguir
 1 - Minhas informações
-3 - Alterar minhas informações
-4 - Excluir a minha conta
+2 - Alterar minhas informações
+3 - Excluir a minha conta
 0 - Voltar
 
 Escolha a opção: '''))
@@ -46,12 +46,11 @@ Escolha a opção: '''))
   
     return {"email": email, "senha": senha}
 
-  def mostra_usuario(self, dados_usuario):
-    print("Nome: ", dados_usuario["nome"])
-    print("Email: ", dados_usuario["email"])
-    print("Senha: ", dados_usuario["senha"])
-    print("ADM: ", dados_usuario["adm"])
-    print()
+  def mostra_usuario(self, usuario):
+    print("Nome: ", usuario.nome)
+    print("Email: ", usuario.email)
+    print("Senha: ", usuario.senha)
+    print("ADM: ", usuario.adm, '\n')
 
   def seleciona_usuario(self):
     email = input("Qual o o email do usuario deseja buscar? ")

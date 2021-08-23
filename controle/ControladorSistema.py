@@ -11,9 +11,13 @@ class ControladorSistema:
         self.__controlador_curso = ControladorCurso(self)
         self.__controlador_questao = ControladorQuestao(self)
         self.__controlador_usuario = ControladorUsuario(self)
-        self.__controlador_login = ControladorLogin(self, self.__controlador_usuario)
+        self.__controlador_login = ControladorLogin(self)
 
    
+    @property
+    def controlador_curso(self):
+        return self.__controlador_curso
+
     @property
     def controlador_questao(self):
         return self.__controlador_questao
@@ -49,11 +53,17 @@ class ControladorSistema:
         self.__controlador_questao.abre_tela()
 
     def encerra_sistema(self):
+        self.__tela_sistema.mostra_mensagem("Adios")
         exit(0)
+
+    def deslogar(self):
+        self.__tela_sistema.mostra_mensagem("Usuario Deslogado")
+        self.usuario_logado = None
+        self.__controlador_login.abre_tela()
 
     def abre_tela(self):
         self.__tela_sistema.mostra_mensagem("\n")
-        lista_opcoes = {1: self.usuario,  2: self.inclui_questao, 3: self.ver_curso, 0: self.encerra_sistema}
+        lista_opcoes = {1: self.usuario,  2: self.inclui_questao, 3: self.ver_curso, 0: self.deslogar}
 
         while True:
             opcao_escolhida = self.__tela_sistema.tela_opcoes()

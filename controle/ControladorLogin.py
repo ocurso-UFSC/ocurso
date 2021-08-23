@@ -1,10 +1,8 @@
 from limite.TelaLogin import TelaLogin
 
 class ControladorLogin():
-  def __init__(self, controladorSistema, controladorUsuario):
+  def __init__(self, controladorSistema):
     self.__tela_login = TelaLogin()
-    self.__usuario_logado = None
-    # self.__controlador_usuario = controladorUsuario
     self.__controlador_sistema = controladorSistema
 
   def inicializa_sistema(self):
@@ -16,7 +14,7 @@ class ControladorLogin():
     
     if usuario != None:
       self.__tela_login.mostra_mensagem("Bem vindo {}" .format(usuario.nome))
-      self.__usuario_logado = usuario
+      self.__controlador_sistema.usuario_logado = usuario
       return True
     
     self.__tela_login.mostra_mensagem("Usuário incorreto")
@@ -48,16 +46,17 @@ class ControladorLogin():
     dados = {"nome": "visitante", "email": "visitante", "senha": "visitante", "adm": False}
     usuario = self.__controlador_sistema.controlador_usuario.criar_usuario(dados)
     self.__controlador_sistema.controlador_usuario.cadastrar_usuario(usuario)
-    self.__usuario_logado = usuario
+    self.__controlador_sistema.usuario_logado = usuario
 
   def abre_tela(self):
+    print("FRUMMMm")
     lista_opcoes = {1: self.logar, 2: self.cadastrar, 3: self.logar_visitante, 0: self.finaliza_sistema}
     
-    while self.__usuario_logado == None:
+    while self.__controlador_sistema.usuario_logado == None:
       opcao_escolhida = self.__tela_login.tela_opcoes()
       funcao_escolhida = lista_opcoes[opcao_escolhida]
       funcao_escolhida()
 
-    if self.__usuario_logado != None:
+    if self.__controlador_sistema != None:
       self.__controlador_sistema.usuario_logado = self.__usuario_logado
       self.__controlador_sistema.abre_tela()

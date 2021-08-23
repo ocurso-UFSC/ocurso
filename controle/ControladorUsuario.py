@@ -81,14 +81,14 @@ class ControladorUsuario():
       usuario.adm = novos_dados_usuario["adm"]
       self.__tela_usuario.mostra_mensagem("\n")
 
-      # Caso o 'pega_usuario_por_email' retornar 'Null'
+    # Caso o 'pega_usuario_por_email' retornar 'Null'
     else:
       self.__tela_usuario.mostra_mensagem("ATENÇÃO!!! Usuário inexistente")
 
   def minha_informacao(self):
     usuario = self.__controlador_sistema.usuario_logado
     self.__tela_usuario.mostra_mensagem("Minhas informações")
-    self.__tela_usuario.mostra_usuario({"nome": usuario.nome, "email": usuario.email, "senha": usuario.senha, "adm": usuario.adm})
+    self.__tela_usuario.mostra_usuario(usuario)
 
   def lista_usuarios(self, usuario = None):
     if len(self.__usuarios) == 0:
@@ -96,7 +96,8 @@ class ControladorUsuario():
 
     for usuario in self.__usuarios:
       self.__tela_usuario.mostra_mensagem("Todos os usuários cadastrados")
-      self.__tela_usuario.mostra_usuario({"nome": usuario.nome, "email": usuario.email, "senha": usuario.senha, "adm": usuario.adm})
+      self.__tela_usuario.mostra_usuario(usuario)
+
 
   def mostra_usuario_logado(self):
     self.lista_usuarios(self.__controlador_sistema.usuario_logado)
@@ -122,12 +123,11 @@ class ControladorUsuario():
     self.__controlador_sistema.abre_tela()
 
   def abre_tela(self):
-    lista_opcoes = {1: self.minha_informacao, 2: self.alterar_meus_dados, 4: self.excluir_minha_conta, 0: self.retornar}
+    lista_opcoes = {1: self.minha_informacao, 2: self.alterar_meus_dados, 3: self.excluir_minha_conta, 0: self.retornar}
     lista_opcoes_adm = {1: self.minha_informacao, 2: self.lista_usuarios, 3: self.alterar_meus_dados, 4: self.incluir_usuario, 
                           5: self.alterar_usuario, 6: self.excluir_usuario, 7: self.excluir_minha_conta, 0: self.retornar}
     continua = True
     while continua:
-      lista_opcoes_adm[self.__tela_usuario.tela_opcoes_adm()]()
 
       if self.__controlador_sistema.usuario_logado.adm == True:
         lista_opcoes_adm[self.__tela_usuario.tela_opcoes_adm()]()
