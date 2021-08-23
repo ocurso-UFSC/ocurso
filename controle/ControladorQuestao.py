@@ -7,14 +7,25 @@ class ControladorQuestao():
         self.__tela_questao = TelaQuestao()
         self.__questao = Questao
         self.__lista_questoes = []
+        self.__respostas_usuario = []
+        self.__nota_usuario = int
 
     def incluir_questao(self):
         infos_questao = self.__tela_questao.infos_questao()
-        questao = self.__questao(infos_questao['descricao_questao'], infos_questao['lista_alternativas'], infos_questao['alternativa_correta'])
-        self.__lista_questoes.append(questao)
+        self.__questao = Questao(
+                    infos_questao['descricao_questao'], 
+                    infos_questao['lista_alternativas'], 
+                    infos_questao['alternativa_correta'])
+        self.__lista_questoes.append(self.__questao)
 
     def mostra_perguntas(self):
-        print(self.__lista_questoes)
+        for questao in self.__lista_questoes:
+            self.__tela_questao.mostra_descricao(self.__lista_questoes.index(questao) + 1, questao._Questao__descricao_questao)       #self.__lista_questoes.index(q) + 1
+            for alternativa in questao._Questao__lista_alternativas:
+                self.__tela_questao.mostra_pergunta(alternativa["index"], alternativa["descricao_alternativa"])
+            
+            resposta_usuario = self.__tela_questao.pega_resposta()
+            self.__respostas_usuario.append(resposta_usuario)
 
     def alterar_questao(self):
         numero = self.__tela_questao.alterando_questao()
@@ -26,10 +37,14 @@ class ControladorQuestao():
         self.__lista_questoes.pop(numero-1)
 
     def mostrar_respostas(self):
-        self.__tela_questao.mostra_mensagem('\n---------- RESPOSTAS DA AVALIAÇÃO ----------\n')
-        for q in range(len(self.__lista_questoes)):
-            self.__tela_questao.mostra_resposta(q, self.__lista_questoes[q]['alternativa_correta'])
-        self.__tela_questao.mostra_mensagem()
+        self.__tela_questao.mostra_mensagem('\n---------- NOTA FINAL DA AVALIAÇÃO ----------\n')
+        acertos = 0
+        for resposta in range (len(self.__respostas_usuario)):
+            if self.__respostas_usuario[resposta] == self.__lista_questoes[resposta]._Questao__alternativa_correta:
+                acertos += 1
+
+        self.__nota_usuario = acertos/len(self.__respostas_usuario) * 10
+        self.__tela_questao.mostra_mensagem(f'Sua nota na avaliação é {self.__nota_usuario}\n')
 
     def retornar(self):
         self.__controlador_sistema.abre_tela()

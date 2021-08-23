@@ -8,7 +8,7 @@ class TelaQuestao:
             print ('Opção 2 - Adicionar questão')
             print ('Opção 3 - Alterar questão')
             print ('Opção 4 - Remover questão')
-        print ('Opção 9 - Mostrar respostas')
+        print ('Opção 9 - Mostrar minha nota')
         print ('Opção 0 - Retornar')
 
         opcao = int(input('\nEscolha uma das opções: '))
@@ -30,7 +30,7 @@ class TelaQuestao:
 
         return {
             'descricao_questao':descricao_questao,
-            'alternativas':lista_alternativas,
+            'lista_alternativas':lista_alternativas,
             'alternativa_correta':alternativa_correta,
         }
 
@@ -41,8 +41,12 @@ class TelaQuestao:
     def mostra_descricao(self, numero_questao, descricao):
         print(f'{numero_questao} - {descricao}')
 
-    def mostra_pergunta(self, alternativa, index):
+    def mostra_pergunta(self, index, alternativa):
         print (f'   {index}) {alternativa}')
+
+    def pega_resposta(self):
+        resposta_usuario = str(input('\nSua resposta: '))
+        return resposta_usuario
 
     def mostra_resposta(self, numero_questao, resposta_correta):
         print (f'Resposta da questão {numero_questao+1}: {resposta_correta.upper()}')
