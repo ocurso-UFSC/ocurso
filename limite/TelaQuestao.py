@@ -15,21 +15,22 @@ class TelaQuestao:
         return opcao
 
     def infos_questao(self):
-        descricao_questao = str(input('Descrição da questão: '))
-
-        alternativas = {}
-
+        descricao_questao = str(input('Escreva a sua descrição: '))
+        lista_alternativas = []
         quantidade_alternativas = int(input('Quantas alternativas você deseja adicionar na questão? '))
-        for c in range (quantidade_alternativas):
-            index = str(input(f'Digite o index da {c+1} alternativa: ')).lower()
-            resposta = str(input(f'Digite a resposta da {c+1} alternativa: '))
+
+        for q in range (quantidade_alternativas):
+            index = str(input(f'Digite o index da {q+1} alternativa: ')).lower()
+            descricao_alternativa = str(input(f'Digite a descrição da {q+1} alternativa: '))
             print ('')
-            alternativas[index] = resposta
+            alternativa = {'index':index, 'descricao_alternativa':descricao_alternativa}
+            lista_alternativas.append(alternativa)
+
         alternativa_correta = str(input('Informe quais das alternativas da questão é a correta: '))
 
         return {
             'descricao_questao':descricao_questao,
-            'alternativas':alternativas,
+            'alternativas':lista_alternativas,
             'alternativa_correta':alternativa_correta,
         }
 

@@ -1,39 +1,34 @@
-#from entidade.questao import Questao
+from entidade.questao import Questao
 from limite.TelaQuestao import TelaQuestao
 
 class ControladorQuestao():
     def __init__(self, controlador_sistema):
         self.__controlador_sistema = controlador_sistema
         self.__tela_questao = TelaQuestao()
-        self.__questoes = []
+        self.__questao = Questao
+        self.__lista_questoes = []
 
-    def mostra_perguntas(self):
-        self.__tela_questao.mostra_mensagem('\n---------- AVALIAÇÃO FINAL ----------\n')      #trocar para mostrar msg
-        for q in range(len(self.__questoes)):
-            self.__tela_questao.mostra_descricao(q+1, self.__questoes[q]['descricao_questao'])
-            for resposta_alternativa, index_questao in self.__questoes[q]['alternativas'].items():
-                index = index_questao
-                resposta = resposta_alternativa
-
-                self.__tela_questao.mostra_pergunta(index, resposta)
-    
     def incluir_questao(self):
         infos_questao = self.__tela_questao.infos_questao()
-        self.__questoes.append(infos_questao)
-    
+        questao = self.__questao(infos_questao['descricao_questao'], infos_questao['lista_alternativas'], infos_questao['alternativa_correta'])
+        self.__lista_questoes.append(questao)
+
+    def mostra_perguntas(self):
+        print(self.__lista_questoes)
+
     def alterar_questao(self):
         numero = self.__tela_questao.alterando_questao()
         infos_questao = self.__tela_questao.infos_questao()
-        self.__questoes[numero - 1] = infos_questao
+        self.__lista_questoes[numero - 1] = infos_questao
     
     def remover_questao(self):
         numero = self.__tela_questao.alterando_questao()
-        self.__questoes.pop(numero-1)
+        self.__lista_questoes.pop(numero-1)
 
     def mostrar_respostas(self):
         self.__tela_questao.mostra_mensagem('\n---------- RESPOSTAS DA AVALIAÇÃO ----------\n')
-        for q in range(len(self.__questoes)):
-            self.__tela_questao.mostra_resposta(q, self.__questoes[q]['alternativa_correta'])
+        for q in range(len(self.__lista_questoes)):
+            self.__tela_questao.mostra_resposta(q, self.__lista_questoes[q]['alternativa_correta'])
         self.__tela_questao.mostra_mensagem()
 
     def retornar(self):
