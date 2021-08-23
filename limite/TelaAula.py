@@ -1,3 +1,5 @@
+from entidade.aula import Aula
+
 class TelaAula:
     def tela_opcoes(self):
         print('O que você deseja fazer?')
