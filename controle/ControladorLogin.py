@@ -32,8 +32,8 @@ class ControladorLogin():
       else:
         self.__tela_login.mostra_mensagem("Opcao ADM inválida")
         return False
-      usuario = self.__controlador_usuario.criar_usuario(dados)
-      self.__controlador_usuario.cadastrar_usuario(usuario)
+      usuario = self.__controlador_sistema.controlador_usuario.criar_usuario(dados)
+      self.__controlador_sistema.controlador_usuario.cadastrar_usuario(usuario)
       return True
     
     self.__tela_login.mostra_mensagem("Senhas não correspondem")
@@ -46,25 +46,18 @@ class ControladorLogin():
   # funcao teste - logar automatico 
   def logar_visitante(self):
     dados = {"nome": "visitante", "email": "visitante", "senha": "visitante", "adm": False}
-    usuario = self.__controlador_usuario.criar_usuario(dados)
-    self.__controlador_usuario.cadastrar_usuario(usuario)
+    usuario = self.__controlador_sistema.controlador_usuario.criar_usuario(dados)
+    self.__controlador_sistema.controlador_usuario.cadastrar_usuario(usuario)
     self.__usuario_logado = usuario
 
   def abre_tela(self):
     lista_opcoes = {1: self.logar, 2: self.cadastrar, 3: self.logar_visitante, 0: self.finaliza_sistema}
     
     while self.__usuario_logado == None:
-      try:
-        opcao_escolhida = self.__tela_login.tela_opcoes()
-        funcao_escolhida = lista_opcoes[opcao_escolhida]
-        funcao_escolhida()
-      except:
-        self.__tela_login.mostra_mensagem("Opção inválida")
+      opcao_escolhida = self.__tela_login.tela_opcoes()
+      funcao_escolhida = lista_opcoes[opcao_escolhida]
+      funcao_escolhida()
 
     if self.__usuario_logado != None:
-      try:
-        self.__controlador_sistema.usuario_logado = self.__usuario_logado
-        self.__controlador_sistema.abre_tela()
-
-      except:
-        self.__tela_login.mostra_mensagem("Opção inválida \n")
+      self.__controlador_sistema.usuario_logado = self.__usuario_logado
+      self.__controlador_sistema.abre_tela()
