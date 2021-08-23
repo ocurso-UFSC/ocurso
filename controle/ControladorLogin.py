@@ -57,5 +57,4 @@ class ControladorLogin():
       funcao_escolhida()
 
     if self.__controlador_sistema != None:
-      self.__controlador_sistema.usuario_logado = self.__usuario_logado
       self.__controlador_sistema.abre_tela()

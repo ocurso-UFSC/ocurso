@@ -1,13 +1,11 @@
-from entidade.usuario import Usuario
-from entidade.curso import Curso
     
 class Progresso:
   def __init__(
       self,
-      usuario: Usuario,
-      curso: Curso,
+      usuario: object,
+      curso: object,
       aulas_concluidas: list = [],
-      nota: int = None):
+      nota: dict = {}):
 
     self.__usuario = usuario
     self.__curso = curso
