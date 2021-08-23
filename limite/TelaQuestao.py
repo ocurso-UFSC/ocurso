@@ -17,11 +17,12 @@ class TelaQuestao:
     def infos_questao(self):
         descricao_questao = str(input('Escreva a sua descrição: '))
         lista_alternativas = []
+        indexes = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
         quantidade_alternativas = int(input('Quantas alternativas você deseja adicionar na questão? '))
 
         for q in range (quantidade_alternativas):
-            index = str(input(f'Digite o index da {q+1} alternativa: ')).lower()
-            descricao_alternativa = str(input(f'Digite a descrição da {q+1} alternativa: '))
+            index = indexes[q]
+            descricao_alternativa = str(input(f'Digite a descrição da alternativa {index}: '))
             print ('')
             alternativa = {'index':index, 'descricao_alternativa':descricao_alternativa}
             lista_alternativas.append(alternativa)

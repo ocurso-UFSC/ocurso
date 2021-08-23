@@ -6,9 +6,10 @@ class ControladorQuestao():
         self.__controlador_sistema = controlador_sistema
         self.__tela_questao = TelaQuestao()
         self.__questao = Questao
-        self.__lista_questoes = []
         self.__respostas_usuario = []
-        self.__nota_usuario = int
+        
+        self.__lista_questoes = []      #levar para o ControladorCurso
+        self.__nota_usuario = int       #levar para a classe Usuario
 
     def incluir_questao(self):
         infos_questao = self.__tela_questao.infos_questao()
