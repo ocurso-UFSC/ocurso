@@ -1,3 +1,4 @@
+from entidade.alternativa import Alternativa
 from entidade.questao import Questao
 from limite.TelaQuestao import TelaQuestao
 
@@ -7,15 +8,24 @@ class ControladorQuestao():
         self.__tela_questao = TelaQuestao()
         self.__questao = Questao
         self.__respostas_usuario = []
+        self.__indexes = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
         
         self.__lista_questoes = []      #levar para o ControladorCurso
         self.__nota_usuario = int       #levar para a classe Usuario
 
     def incluir_questao(self):
         infos_questao = self.__tela_questao.infos_questao()
+        lista_alternativas = []
+        quantidade_alternativas = self.__tela_questao.quantidade('Quantas alternativas você deseja adicionar na questão? ')
+        for c in range (quantidade_alternativas):
+            index = self.__indexes[c]
+            descricao_alternativa = self.__tela_questao.alternativa(f'Digite a descrição da alternativa {index}: ')
+            self.__alternativa = Alternativa(index, descricao_alternativa)
+            lista_alternativas.append(self.__alternativa)
+
         self.__questao = Questao(
                     infos_questao['descricao_questao'], 
-                    infos_questao['lista_alternativas'], 
+                    lista_alternativas, 
                     infos_questao['alternativa_correta'])
         self.__lista_questoes.append(self.__questao)
 
@@ -23,7 +33,7 @@ class ControladorQuestao():
         for questao in self.__lista_questoes:
             self.__tela_questao.mostra_descricao(self.__lista_questoes.index(questao) + 1, questao._Questao__descricao_questao)       #self.__lista_questoes.index(q) + 1
             for alternativa in questao._Questao__lista_alternativas:
-                self.__tela_questao.mostra_pergunta(alternativa["index"], alternativa["descricao_alternativa"])
+                self.__tela_questao.mostra_pergunta(alternativa._Alternativa__index, alternativa._Alternativa__descricao_alternativa)
             
             resposta_usuario = self.__tela_questao.pega_resposta()
             self.__respostas_usuario.append(resposta_usuario)
