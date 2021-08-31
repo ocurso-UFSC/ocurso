@@ -3,6 +3,7 @@ from controle.ControladorCurso import ControladorCurso
 from controle.ControladorQuestao import ControladorQuestao
 from controle.ControladorUsuario import ControladorUsuario
 from controle.ControladorLogin import ControladorLogin
+from controle.ControladorAula import ControladorAula
 
 class ControladorSistema:
     def __init__(self, usuario_logado = None):
@@ -12,6 +13,7 @@ class ControladorSistema:
         self.__controlador_questao = ControladorQuestao(self)
         self.__controlador_usuario = ControladorUsuario(self)
         self.__controlador_login = ControladorLogin(self)
+        self.__controlador_aula = ControladorAula(self)
 
    
     @property
@@ -51,6 +53,9 @@ class ControladorSistema:
 
     def inclui_questao(self):
         self.__controlador_questao.abre_tela()
+    
+    def abre_aulas(self):
+        self.__controlador_aula.abre_tela()
 
     def encerra_sistema(self):
         self.__tela_sistema.mostra_mensagem("Adios")

@@ -8,6 +8,7 @@ Escolha uma das opções a seguir
 2 - Alterar Curso 
 3 - Listar Curso
 4 - Excluir Curso
+5 - Ver aulas
 0 - Voltar
 Escolha a opcao: '''))
 
@@ -18,19 +19,19 @@ Escolha a opcao: '''))
     nome_do_curso = input("Nome Curso: ")
     descricao = input("Descricao: ")
     quantidade_horas = input("Quantidade horas: ")
-    aula = input("Entre com o link da aula: ")
   
     return {"nome_do_curso": nome_do_curso, 
       "descricao": descricao, 
-      "quantidade_horas": quantidade_horas,
-      "aula": aula}
+      "quantidade_horas": quantidade_horas,}
 
   def mostra_curso(self, dados_curso):
     print("\n")
     print("Nome do Curso: ", dados_curso["nome_do_curso"])
     print("Descricao: ", dados_curso["descricao"])
     print("Quantidade horas: ", dados_curso["quantidade_horas"])
-    print("Aula: ", dados_curso["aula"])
+  
+  def ver_aulas(self):
+    ...
 
   def seleciona_curso(self):
     nome_curso = input("Qual o nome do curso deseja buscar? ")
