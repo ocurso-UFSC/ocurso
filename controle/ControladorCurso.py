@@ -8,6 +8,11 @@ class ControladorCurso():
     self.__tela_curso = TelaCurso()
     self.__controlador_sistema = controlador_sistema
 
+  
+  @property
+  def cursos(self):
+    return self.__cursos
+
   def lista_cursos(self):
     lista_cursos = self.__cursos
     return lista_cursos

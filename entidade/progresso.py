@@ -43,7 +43,3 @@ class Progresso:
   @nota.setter
   def nota(self, nota):
     self.__nota = nota
-
-  def gerar_certificado(self):
-    return ("Usuario", self.usuario.nome, "Completou o curso", self.curso.nome_do_curso,
-            "com uma carga horária de ", self.curso.quantidade_horas)
