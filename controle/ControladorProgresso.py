@@ -1,14 +1,14 @@
 from limite.TelaProgresso import TelaProgresso
 from entidade.progresso import Progresso
 
-class ControladorCurso():
+class ControladorProgresso():
   def __init__(self, controlador_sistema):
     self.__progressos = []
     self.__tela_progresso = TelaProgresso()
     self.__controlador_sistema = controlador_sistema
 
-  def cria_progresso(self, aluno, curso):
-    progresso = Progresso(aluno, curso)
+  def cria_progresso(self, usuario, curso):
+    progresso = Progresso(usuario, curso)
     self.__progressos.append(progresso)
     return True
 
@@ -23,6 +23,16 @@ class ControladorCurso():
   def dar_nota(self, progresso, nota):
     progresso.nota = nota
 
+  
+  def todos_progressos_por_nome(self, nome):
+    progressos = []
+    
+    for progresso in self.__progressos:
+      if progresso.usuario.nome == nome:
+        progressos.append(progresso)
+    
+    return progressos
+
   def mostra_relatorio_indv(self):
     pass
 
@@ -34,9 +44,8 @@ class ControladorCurso():
             "com uma carga horária de ", self.curso.quantidade_horas)
 
   def abre_tela(self):
-    lista_opcoes = {1: self.assisti_aula, 2: self.mostra_relatorio_indv, 
-      3: self.mostra_relatorio_todos}
+    lista_opcoes = {1: self.mostra_relatorio_indv, 2: self.mostra_relatorio_todos}
 
     continua = True
     while continua:
-      lista_opcoes[self.__tela_curso.tela_opcoes()]()
+      lista_opcoes[self.__tela_progresso.tela_opcoes()]()

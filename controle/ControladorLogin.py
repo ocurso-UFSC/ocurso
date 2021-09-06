@@ -43,7 +43,7 @@ class ControladorLogin():
 
   # funcao teste - logar automatico 
   def logar_visitante(self):
-    dados = {"nome": "visitante", "email": "visitante", "senha": "visitante", "adm": False}
+    dados = {"nome": "visitante", "email": "visitante", "senha": "visitante", "adm": True}
     usuario = self.__controlador_sistema.controlador_usuario.criar_usuario(dados)
     self.__controlador_sistema.controlador_usuario.cadastrar_usuario(usuario)
     self.__controlador_sistema.usuario_logado = usuario

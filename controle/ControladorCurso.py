@@ -33,6 +33,11 @@ class ControladorCurso():
                     dados_curso["quantidade_horas"])
     self.__cursos.append(curso)
 
+  def cadastrar_curso(self, dados_curso):
+    curso = Curso(dados_curso["nome_do_curso"], dados_curso["descricao"], 
+                    dados_curso["quantidade_horas"])
+    self.__cursos.append(curso)
+
   def lista_cursos(self):
     if len(self.__cursos) == 0:
       self.__tela_curso.mostra_mensagem("Lista de cursos está vazia")

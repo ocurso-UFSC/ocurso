@@ -4,9 +4,9 @@ class TelaProgresso():
 '''
 ---------- oCurso  ------------
 Escolha uma das opções a seguir
-1 - Assistir
-2 - Meu Relatório
-3 - Todos Relatórios
+1 - Meu Relatório
+2 - Todos Relatórios
+3 - Emitir meu certificado
 0 - Voltar
 Digite a opção: '''))
 
