@@ -1,17 +1,14 @@
 from limite.telaCurso import TelaCurso
 from entidade.curso import Curso
+from limite.TelaAula import TelaAula
 
 class ControladorCurso():
   def __init__(self, controlador_sistema):
     #self.__cursos = [nome, descricao, qtdhoras, lista_conteudos]
     self.__cursos = []
     self.__tela_curso = TelaCurso()
+    self.__tela_aula = TelaAula()
     self.__controlador_sistema = controlador_sistema
-
-  
-  @property
-  def cursos(self):
-    return self.__cursos
 
   @property
   def lista_cursos(self):
@@ -29,11 +26,6 @@ class ControladorCurso():
 
   def incluir_curso(self):
     dados_curso = self.__tela_curso.pega_dados_curso()
-    curso = Curso(dados_curso["nome_do_curso"], dados_curso["descricao"], 
-                    dados_curso["quantidade_horas"])
-    self.__cursos.append(curso)
-
-  def cadastrar_curso(self, dados_curso):
     curso = Curso(dados_curso["nome_do_curso"], dados_curso["descricao"], 
                     dados_curso["quantidade_horas"])
     self.__cursos.append(curso)
@@ -87,6 +79,29 @@ class ControladorCurso():
 
   def retornar(self):
     self.__controlador_sistema.abre_tela()
+  
+  # def pega_index_curso(self, nome_curso):
+  #   index_curso = 
+  
+  def adicionar_aula(self, nome_curso, aula):
+    curso = self.pega_curso_por_nome(nome_curso)
+    index_do_curso = self.__cursos.index(curso)
+    self.__cursos[index_do_curso]._Curso__lista_aulas.append(aula)
+  
+  def alterar_aula(self, nome_curso, numero_aula, aula):
+    curso = self.pega_curso_por_nome(nome_curso)
+    index_do_curso = self.__cursos.index(curso)
+    self.__cursos[index_do_curso]._Curso__lista_aulas[numero_aula] = aula
+
+  def remover_aula(self, nome_curso, numero_aula):
+    curso = self.pega_curso_por_nome(nome_curso)
+    index_do_curso = self.__cursos.index(curso)
+    self.__cursos[index_do_curso]._Curso__lista_aulas.pop(numero_aula)
+
+  def cadastrar_curso(self, dados_curso):
+    curso = Curso(dados_curso["nome_do_curso"], dados_curso["descricao"], 
+                    dados_curso["quantidade_horas"])
+    self.__cursos.append(curso)
 
   def abre_tela(self):
     lista_opcoes = {1: self.incluir_curso, 2: self.alterar_curso, 
