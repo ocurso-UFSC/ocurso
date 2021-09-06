@@ -91,6 +91,9 @@ class ControladorSistema:
                 "quantidade_horas": "3"}
         self.__controlador_curso.cadastrar_curso(dados_curso)
 
+        # cria progresso usuario
+        curso = self.__controlador_curso.pega_curso_por_nome("python")
+        self.__controlador_progresso.cria_progresso(self.__usuario_logado, curso)
 
     def progresso(self):
         self.__controlador_progresso.abre_tela()

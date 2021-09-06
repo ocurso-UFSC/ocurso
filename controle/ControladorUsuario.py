@@ -7,6 +7,10 @@ class ControladorUsuario():
     self.__tela_usuario = TelaUsuario()
     self.__controlador_sistema = controlador_sistema
 
+  @property
+  def usuarios(self):
+    return self.__usuarios
+
   def pega_usuario_por_email_e_senha(self, email: str, senha: str):
     for usuario in self.__usuarios:
       if (usuario.email == email) and (usuario.senha == senha):

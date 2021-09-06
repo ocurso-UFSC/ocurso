@@ -5,7 +5,7 @@ class Progresso:
       usuario: object,
       curso: object,
       aulas_concluidas: list = [],
-      nota: dict = {}):
+      nota: float = None):
 
     self.__usuario = usuario
     self.__curso = curso
