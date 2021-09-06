@@ -13,6 +13,10 @@ class ControladorCurso():
   def cursos(self):
     return self.__cursos
 
+  @property
+  def lista_cursos(self):
+    return self.__cursos
+
   def lista_cursos(self):
     lista_cursos = self.__cursos
     return lista_cursos

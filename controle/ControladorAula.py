@@ -13,7 +13,7 @@ class ControladorAula():
 
   def mostra_aulas(self):
     nome_curso = self.__tela_aula.nome_curso()
-    cursos = self.__controlador_curso.lista_cursos
+    cursos = self.__controlador_sistema.controlador_curso.lista_cursos
     curso = cursos[nome_curso]
     for aula in curso._Curso__lista_aulas:
       self.__tela_aula.mostra_aulas(aula._Aula__descricao, aula._Aula__link_aula)
