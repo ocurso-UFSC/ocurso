@@ -8,7 +8,7 @@ Escolha uma das opções a seguir
 2 - Alterar Curso 
 3 - Listar Curso
 4 - Excluir Curso
-5 - Ver aulas
+5 - Aulas
 0 - Voltar
 Escolha a opcao: '''))
 

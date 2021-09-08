@@ -29,7 +29,7 @@ class ControladorAula():
       if self.__ultima_aula == len(curso._Curso__lista_aulas):
         self.__tela_aula.mostra_mensagem('\nParabéns! Você concluiu as aulas deste curso.')
 
-  def adiciona_aula(self):
+  def adiciona_aula(self):                                          #adicionando aula
     nome_curso = self.__tela_aula.nome_curso()
     dados_aula = self.__tela_aula.pega_dados_aula()
     descricao_aula = dados_aula['descricao_aula']
