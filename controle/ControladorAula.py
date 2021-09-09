@@ -7,26 +7,28 @@ class ControladorAula():
   def __init__(self, controlador_sistema):
     self.__controlador_sistema = controlador_sistema
     self.__tela_aula = TelaAula()
-    self.__ultima_aula = 0  	        #mudar para dicionario contendo "nome do curso" e "numero da ultima aula"
+    self.__ultimas_aulas = {}         #este dict possui o nome do curso e a aula em que o usuário parou. Deve ser atribuido ao usuario
     self.__aula = Aula
     self.__curso = Curso
     self.__controlador_curso = ControladorCurso
 
   def mostra_aulas(self):
     nome_curso = self.__tela_aula.nome_curso()
+    if nome_curso not in self.__ultimas_aulas.keys():
+      self.__ultimas_aulas[nome_curso] = 0
     cursos = self.__controlador_sistema.controlador_curso._ControladorCurso__cursos
     index_do_curso = cursos.index(self.__controlador_sistema.controlador_curso.pega_curso_por_nome(nome_curso))
     curso = cursos[index_do_curso]
-    aulas_restantes = len(curso._Curso__lista_aulas) - self.__ultima_aula
+    aulas_restantes = len(curso._Curso__lista_aulas) - self.__ultimas_aulas[nome_curso]
     for c in range(aulas_restantes):
-      aula = curso._Curso__lista_aulas[self.__ultima_aula]
+      aula = curso._Curso__lista_aulas[self.__ultimas_aulas[nome_curso]]
       self.__tela_aula.mostra_aulas(curso._Curso__lista_aulas.index(aula) + 1, aula._Aula__descricao_aula, aula._Aula__link_aula)
-      self.__ultima_aula += 1
+      self.__ultimas_aulas[nome_curso] += 1
       continuar = self.__tela_aula.continuar_aula()
       if continuar == 'N':
         break
 
-      if self.__ultima_aula == len(curso._Curso__lista_aulas):
+      if self.__ultimas_aulas[nome_curso] == len(curso._Curso__lista_aulas):
         self.__tela_aula.mostra_mensagem('\nParabéns! Você concluiu as aulas deste curso.')
 
   def adiciona_aula(self):                                          #adicionando aula
