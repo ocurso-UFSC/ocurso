@@ -1,7 +1,5 @@
 from limite.TelaAula import TelaAula
 from entidade.aula import Aula
-from controle.ControladorCurso import ControladorCurso
-from entidade.curso import Curso
 
 class ControladorAula():
   def __init__(self, controlador_sistema):
@@ -9,8 +7,6 @@ class ControladorAula():
     self.__tela_aula = TelaAula()
     self.__ultimas_aulas = {}         #este dict possui o nome do curso e a aula em que o usuário parou. Deve ser atribuido ao usuario
     self.__aula = Aula
-    self.__curso = Curso
-    self.__controlador_curso = ControladorCurso
 
   def mostra_aulas(self):
     nome_curso = self.__tela_aula.nome_curso()
