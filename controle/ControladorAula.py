@@ -7,7 +7,7 @@ class ControladorAula():
   def __init__(self, controlador_sistema):
     self.__controlador_sistema = controlador_sistema
     self.__tela_aula = TelaAula()
-    self.__ultima_aula = 0
+    self.__ultima_aula = 0  	        #mudar para dicionario contendo "nome do curso" e "numero da ultima aula"
     self.__aula = Aula
     self.__curso = Curso
     self.__controlador_curso = ControladorCurso
