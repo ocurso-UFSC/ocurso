@@ -75,6 +75,16 @@ class ControladorCurso():
     curso = self.pega_curso_por_nome(nome_curso)
     index_do_curso = self.__cursos.index(curso)
     self.__cursos[index_do_curso]._Curso__avaliacao.append(questao)
+  
+  def alterar_questao(self, nome_curso, numero_questao, questao):
+    curso = self.pega_curso_por_nome(nome_curso)
+    index_do_curso = self.__cursos.index(curso)
+    self.__cursos[index_do_curso]._Curso__avaliacao[numero_questao - 1] = questao
+
+  def remover_questao(self, nome_curso, numero_questao):
+    curso = self.pega_curso_por_nome(nome_curso)
+    index_do_curso = self.__cursos.index(curso)
+    self.__cursos[index_do_curso]._Curso__avaliacao.pop(numero_questao - 1)
     
   def abre_aulas(self):
     self.__controlador_sistema.abre_aulas()

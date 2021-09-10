@@ -32,7 +32,6 @@ class TelaQuestao:
 
         return {
             'descricao_questao':descricao_questao,
-            # 'lista_alternativas':lista_alternativas,
             'alternativa_correta':alternativa_correta,
         }
 

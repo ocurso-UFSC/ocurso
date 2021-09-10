@@ -9,26 +9,24 @@ class ControladorQuestao():
         self.__questao = Questao
         self.__respostas_usuario = {}
         self.__indexes = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-        
-        self.__lista_questoes = []      #levar para o ControladorCurso
-        self.__nota_usuario = int       #levar para a classe Usuario
+        self.__nota_usuario = {}       #levar para a classe Usuario
 
     def incluir_questao(self):
         nome_curso = self.__tela_questao.nome_curso()
         infos_questao = self.__tela_questao.infos_questao()
         lista_alternativas = []
-        quantidade_alternativas = self.__tela_questao.quantidade('Quantas alternativas você deseja adicionar na questão? ')
+        quantidade_alternativas = self.__tela_questao.quantidade('Quantas alternativas você deseja ter na questão? ')
         for c in range (quantidade_alternativas):
             index = self.__indexes[c]
             descricao_alternativa = self.__tela_questao.alternativa(f'Digite a descrição da alternativa {index}: ')
             self.__alternativa = Alternativa(index, descricao_alternativa)
             lista_alternativas.append(self.__alternativa)
 
-        self.__questao = Questao(
+        questao = self.__questao(
                     infos_questao['descricao_questao'], 
                     lista_alternativas, 
                     infos_questao['alternativa_correta'])
-        self.__controlador_sistema.controlador_curso.incluir_questao(nome_curso, self.__questao)
+        self.__controlador_sistema.controlador_curso.incluir_questao(nome_curso, questao)
 
     def mostra_perguntas(self):
         nome_curso = self.__tela_questao.nome_curso()
@@ -45,13 +43,27 @@ class ControladorQuestao():
             self.__respostas_usuario[nome_curso].append(resposta_usuario)
 
     def alterar_questao(self):
+        nome_curso = self.__tela_questao.nome_curso()
         numero = self.__tela_questao.alterando_questao()
         infos_questao = self.__tela_questao.infos_questao()
-        self.__lista_questoes[numero - 1] = infos_questao
+        lista_alternativas = []
+        quantidade_alternativas = self.__tela_questao.quantidade('Quantas alternativas você deseja ter na questão? ')
+        for c in range (quantidade_alternativas):
+            index = self.__indexes[c]
+            descricao_alternativa = self.__tela_questao.alternativa(f'Digite a descrição da alternativa {index}: ')
+            self.__alternativa = Alternativa(index, descricao_alternativa)
+            lista_alternativas.append(self.__alternativa)
+
+        questao = self.__questao(
+                    infos_questao['descricao_questao'], 
+                    lista_alternativas, 
+                    infos_questao['alternativa_correta'])
+        self.__controlador_sistema.controlador_curso.alterar_questao(nome_curso, numero, questao)
     
     def remover_questao(self):
-        numero = self.__tela_questao.alterando_questao()
-        self.__lista_questoes.pop(numero-1)
+        nome_curso = self.__tela_questao.nome_curso()
+        numero_questao = self.__tela_questao.alterando_questao()
+        self.__controlador_sistema.controlador_curso.remover_questao(nome_curso, numero_questao)
 
     def mostrar_respostas(self):
         nome_curso = self.__tela_questao.nome_curso()
@@ -64,8 +76,8 @@ class ControladorQuestao():
             if self.__respostas_usuario[nome_curso][resposta] == curso._Curso__avaliacao[resposta]._Questao__alternativa_correta:
                 acertos += 1
 
-        self.__nota_usuario = acertos/len(self.__respostas_usuario[nome_curso]) * 10
-        self.__tela_questao.mostra_mensagem(f'Sua nota na avaliação é {self.__nota_usuario}\n')
+        self.__nota_usuario[nome_curso] = acertos/len(self.__respostas_usuario[nome_curso]) * 10
+        self.__tela_questao.mostra_mensagem(f'Sua nota na avaliação de {nome_curso.upper()} é {self.__nota_usuario[nome_curso]}\n')
 
     def retornar(self):
         self.__controlador_sistema.abre_tela()
