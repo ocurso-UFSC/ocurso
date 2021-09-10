@@ -1,13 +1,10 @@
 from limite.telaCurso import TelaCurso
 from entidade.curso import Curso
-from limite.TelaAula import TelaAula
 
 class ControladorCurso():
   def __init__(self, controlador_sistema):
-    #self.__cursos = [nome, descricao, qtdhoras, lista_conteudos]
     self.__cursos = []
     self.__tela_curso = TelaCurso()
-    self.__tela_aula = TelaAula()
     self.__controlador_sistema = controlador_sistema
 
   @property
@@ -74,8 +71,16 @@ class ControladorCurso():
     else:
       self.__tela_curso.mostra_mensagem("ATENÇÃO!!! Curso inexistente")
     
+  def incluir_questao(self, nome_curso, questao):
+    curso = self.pega_curso_por_nome(nome_curso)
+    index_do_curso = self.__cursos.index(curso)
+    self.__cursos[index_do_curso]._Curso__avaliacao.append(questao)
+    
   def abre_aulas(self):
     self.__controlador_sistema.abre_aulas()
+
+  def abre_avaliacoes(self):
+    self.__controlador_sistema.inclui_questao()
 
   def retornar(self):
     self.__controlador_sistema.abre_tela()
@@ -105,7 +110,7 @@ class ControladorCurso():
 
   def abre_tela(self):
     lista_opcoes = {1: self.incluir_curso, 2: self.alterar_curso, 
-      3: self.lista_cursos, 4: self.excluir_curso, 5:self.abre_aulas, 0: self.retornar}
+      3: self.lista_cursos, 4: self.excluir_curso, 5:self.abre_aulas, 6:self.abre_avaliacoes, 0: self.retornar}
 
     continua = True
     while continua:

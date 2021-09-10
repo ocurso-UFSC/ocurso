@@ -1,4 +1,8 @@
 class TelaQuestao:
+    def nome_curso(self):
+        curso_selecionado = str(input('Qual curso? '))
+        return curso_selecionado
+
     def tela_opcoes(self):
         adm = True
 

@@ -100,7 +100,7 @@ class ControladorSistema:
 
     def abre_tela(self):
         self.__tela_sistema.mostra_mensagem("\n")
-        lista_opcoes = {1: self.usuario,  2: self.inclui_questao, 3: self.ver_curso, 4: self.progresso, 9: self.automatico, 0: self.deslogar}
+        lista_opcoes = {1: self.usuario, 2: self.ver_curso, 3: self.progresso, 9: self.automatico, 0: self.deslogar}
 
         while True:
             opcao_escolhida = self.__tela_sistema.tela_opcoes()

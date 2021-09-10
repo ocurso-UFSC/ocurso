@@ -9,6 +9,7 @@ Escolha uma das opções a seguir
 3 - Listar Curso
 4 - Excluir Curso
 5 - Aulas
+6 - Avaliações
 0 - Voltar
 Escolha a opcao: '''))
 
