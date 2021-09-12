@@ -5,7 +5,7 @@ class ControladorAula():
   def __init__(self, controlador_sistema):
     self.__controlador_sistema = controlador_sistema
     self.__tela_aula = TelaAula()
-    self.__ultimas_aulas = {}         #este dict possui o nome do curso e a aula em que o usuário parou. Deve ser atribuido ao usuario
+    self.__ultimas_aulas = {}         # este dict possui o nome do curso e a aula em que o usuário parou. Deve ser atribuido ao usuario "curso | ultima aula parada"
     self.__aula = Aula
 
   def mostra_aulas(self):

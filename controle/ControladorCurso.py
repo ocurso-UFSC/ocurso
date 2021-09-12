@@ -95,9 +95,7 @@ class ControladorCurso():
   def retornar(self):
     self.__controlador_sistema.abre_tela()
   
-  # def pega_index_curso(self, nome_curso):
-  #   index_curso = 
-  
+   
   def adicionar_aula(self, nome_curso, aula):
     curso = self.pega_curso_por_nome(nome_curso)
     index_do_curso = self.__cursos.index(curso)

@@ -9,7 +9,7 @@ class ControladorQuestao():
         self.__questao = Questao
         self.__respostas_usuario = {}
         self.__indexes = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-        self.__nota_usuario = {}       #levar para a classe Usuario
+        self.__nota_usuario = {} # levar para a classe Usuario | "nome curso, nota usuario"
 
     def incluir_questao(self):
         nome_curso = self.__tela_questao.nome_curso()

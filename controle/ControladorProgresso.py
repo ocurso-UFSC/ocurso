@@ -7,10 +7,42 @@ class ControladorProgresso():
     self.__tela_progresso = TelaProgresso()
     self.__controlador_sistema = controlador_sistema
 
-  def cria_progresso(self, usuario, curso):
+  def cria_progresso(self, curso, usuario = None):
+    if usuario == None:
+      usuario = self.__controlador_sistema.usuario_logado
+
     progresso = Progresso(usuario, curso)
     self.adiciona_progresso(progresso)
     return True
+
+  def verifica_ja_cadastrado_curso(self, curso, usuario = None):
+    if usuario == None:
+      usuario = self.__controlador_sistema.usuario_logado
+    
+    for progresso in self.__progressos:
+      if progresso.usuario == usuario and progresso.curso == curso:
+        return True
+    return False
+        
+  def cadastrar_no_curso(self, usuario = None):
+    print('Opções de Cursos:')
+    self.__controlador_sistema.controlador_curso.lista_cursos()
+    self.__tela_progresso.mostra_mensagem("\nEntre com o nome do curso desejado...")
+    entrada = self.__tela_progresso.pega_entrada("Nome: ")
+    curso = self.__controlador_sistema.controlador_curso.pega_curso_por_nome(entrada)
+
+    if curso != None:
+      if self.verifica_ja_cadastrado_curso(curso, usuario):
+        self.__tela_progresso.mostra_mensagem("Usuário já é cadastrado nesse curso")
+      else:
+        self.cria_progresso(curso, usuario)
+        self.__tela_progresso.mostra_mensagem("Cadastrado no curso com sucesso")
+        return True
+
+    else:
+      self.__tela_progresso.mostra_mensagem("Curso inexistente")
+    
+    return False
 
   def adiciona_progresso(self, progresso):
     self.__progressos.append(progresso)
@@ -63,7 +95,7 @@ class ControladorProgresso():
     self.__controlador_sistema.abre_tela()
 
   def abre_tela(self):
-    lista_opcoes = {1: self.mostra_relatorio_indv, 2: self.mostra_relatorio_todos, 3: self.gerar_certificado, 0: self.retornar}
+    lista_opcoes = {1: self.cadastrar_no_curso, 2: self.mostra_relatorio_indv, 3: self.mostra_relatorio_todos, 4: self.gerar_certificado, 0: self.retornar}
 
     continua = True
     while continua:
