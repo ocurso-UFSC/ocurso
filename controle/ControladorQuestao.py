@@ -48,13 +48,17 @@ class ControladorQuestao():
         cursos = self.__controlador_sistema.controlador_curso._ControladorCurso__cursos
         index_do_curso = cursos.index(self.__controlador_sistema.controlador_curso.pega_curso_por_nome(nome_curso))
         curso = cursos[index_do_curso]
-        for questao in curso._Curso__avaliacao:
-            self.__tela_questao.mostra_descricao(curso._Curso__avaliacao.index(questao) + 1, questao._Questao__descricao_questao)       #self.__lista_questoes.index(q) + 1
-            for alternativa in questao._Questao__lista_alternativas:
-                self.__tela_questao.mostra_pergunta(alternativa._Alternativa__index, alternativa._Alternativa__descricao_alternativa)
-            
-            resposta_usuario = self.__tela_questao.pega_resposta()
-            self.__respostas_usuario[nome_curso].append(resposta_usuario)
+        progresso = self.__controlador_sistema.controlador_progresso.progresso_por_curso_e_usuario(curso)
+        if progresso._Progresso__ultima_aula == len(curso._Curso__lista_aulas):
+            for questao in curso._Curso__avaliacao:
+                self.__tela_questao.mostra_descricao(curso._Curso__avaliacao.index(questao) + 1, questao._Questao__descricao_questao)       #self.__lista_questoes.index(q) + 1
+                for alternativa in questao._Questao__lista_alternativas:
+                    self.__tela_questao.mostra_pergunta(alternativa._Alternativa__index, alternativa._Alternativa__descricao_alternativa)
+                
+                resposta_usuario = self.__tela_questao.pega_resposta()
+                self.__respostas_usuario[nome_curso].append(resposta_usuario)
+        else:
+            self.__tela_questao.mostra_mensagem('Você precisa concluir todas as aulas do curso para fazer a avaliação.')
 
     def alterar_questao(self):
         nome_curso = self.__tela_questao.nome_curso()
