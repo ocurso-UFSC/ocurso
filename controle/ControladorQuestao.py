@@ -14,7 +14,7 @@ class ControladorQuestao():
     
     def cadastra_questao_aut(self, nome_curso, infos_questao, desc_alternativas):
         #infos_questao = {'descricao_questao':'descricao_questao', 'alternativa_correta': 'alternativa_correta'}
-        #lista_alternativas = ["descricao_alternativa"]
+        #desc_alternativas = ["descricao_alternativa"]
         a1 = Alternativa("a", desc_alternativas[0])
         a2 = Alternativa("b", desc_alternativas[1])
         lista_alternativas = [a1, a2]
