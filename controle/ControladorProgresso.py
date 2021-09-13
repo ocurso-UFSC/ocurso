@@ -25,7 +25,7 @@ class ControladorProgresso():
     return None
         
   def cadastrar_no_curso(self, usuario = None):
-    print('Opções de Cursos:')
+    self.__tela_progresso.mostra_mensagem('Opções de Cursos:')
     self.__controlador_sistema.controlador_curso.lista_cursos()
     self.__tela_progresso.mostra_mensagem("\nEntre com o nome do curso desejado...")
     entrada = self.__tela_progresso.pega_entrada("Nome: ")
@@ -89,7 +89,9 @@ class ControladorProgresso():
     
     if len(prog) != 0:
       for progresso in prog:
-        self.__tela_progresso.mostra_mensagem("Curso: {}".format(progresso.curso.nome_do_curso))
+        self.__tela_progresso.mostra_mensagem("\nCurso: {}".format(progresso.curso.nome_do_curso))
+        ptg_conc = (progresso.ultima_aula / len(progresso.curso.lista_aulas)) * 100
+        self.__tela_progresso.mostra_mensagem("Concluiu: {} ptg  das aulas".format(ptg_conc))
         
         if progresso.nota != None:
           self.__tela_progresso.mostra_mensagem("Nota: {}".format(progresso.nota))
@@ -105,6 +107,7 @@ class ControladorProgresso():
       self.mostra_relatorio_indv(usuario)
 
   def gerar_certificado(self):
+    # nome_curso = 
     return ("Usuario", self.usuario.nome, "Completou o curso", self.curso.nome_do_curso,
             "com uma carga horária de ", self.curso.quantidade_horas)
 
