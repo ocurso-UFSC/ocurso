@@ -106,10 +106,23 @@ class ControladorProgresso():
     for usuario in usuarios:
       self.mostra_relatorio_indv(usuario)
 
-  def gerar_certificado(self):
-    # nome_curso = 
-    return ("Usuario", self.usuario.nome, "Completou o curso", self.curso.nome_do_curso,
-            "com uma carga horária de ", self.curso.quantidade_horas)
+  def gerar_certificado(self, usuario = None):
+    if usuario == None:
+      usuario = self.__controlador_sistema.usuario_logado
+    
+    nome_curso = self.__tela_progresso.pega_entrada("Qual curso? ")
+    curso = self.__controlador_sistema.controlador_curso.pega_curso_por_nome(nome_curso)
+
+    progresso = self.progresso_por_curso_e_usuario(curso, usuario)
+
+    if progresso.nota != None:
+      certificado = f"Declaramos que o Aluno {usuario.nome} completou o curso {curso.nome_do_curso} de carga horária de {curso.quantidade_horas} horas,\
+ com um aproveitamento de {progresso.nota * 10}% do curso"
+      
+      self.__tela_progresso.mostra_mensagem(certificado)
+      
+    else:
+      self.__tela_progresso.mostra_mensagem("Sem nota no curso")
 
   def retornar(self):
     self.__controlador_sistema.abre_tela()

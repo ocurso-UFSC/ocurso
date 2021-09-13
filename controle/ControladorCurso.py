@@ -17,7 +17,7 @@ class ControladorCurso():
 
   def pega_curso_por_nome(self, nome: str = None):
     for curso in self.__cursos:
-      if (curso.nome_do_curso == nome):
+      if (curso.nome_do_curso.lower() == nome.lower()):
         return curso
     return None
 
