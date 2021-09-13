@@ -15,14 +15,14 @@ class ControladorProgresso():
     self.adiciona_progresso(progresso)
     return True
 
-  def verifica_ja_cadastrado_curso(self, curso, usuario = None):
+  def progresso_por_curso_e_usuario(self, curso, usuario = None):
     if usuario == None:
       usuario = self.__controlador_sistema.usuario_logado
     
     for progresso in self.__progressos:
       if progresso.usuario == usuario and progresso.curso == curso:
-        return True
-    return False
+        return progresso
+    return None
         
   def cadastrar_no_curso(self, usuario = None):
     print('Opções de Cursos:')
@@ -32,7 +32,7 @@ class ControladorProgresso():
     curso = self.__controlador_sistema.controlador_curso.pega_curso_por_nome(entrada)
 
     if curso != None:
-      if self.verifica_ja_cadastrado_curso(curso, usuario):
+      if self.progresso_por_curso_e_usuario(curso, usuario) != None:
         self.__tela_progresso.mostra_mensagem("Usuário já é cadastrado nesse curso")
       else:
         self.cria_progresso(curso, usuario)
@@ -48,9 +48,27 @@ class ControladorProgresso():
     self.__progressos.append(progresso)
     return True
 
-  def assisti_aula(self, progresso, aula):
-    progresso.aulas_conconluidas[aula-1] = True
-    return True
+  def definir_ultima_aula(self, aula, curso, usuario = None):
+    try:
+      if usuario == None:
+        usuario = self.__controlador_sistema.usuario_logado
+      
+      progresso = self.progresso_por_curso_e_usuario(curso, usuario)
+      progresso.ultima_aula = aula
+      return True
+    except:
+      return False
+
+  def pegar_ultima_aula(self, curso, usuario = None):
+    try:
+      if usuario == None:
+        usuario = self.__controlador_sistema.usuario_logado
+      
+      progresso = self.progresso_por_curso_e_usuario(curso, usuario)
+      return progresso.ultima_aula
+    
+    except:
+      return None
 
   def dar_nota(self, progresso, nota):
     progresso.nota = nota
@@ -67,7 +85,6 @@ class ControladorProgresso():
       usuario = self.__controlador_sistema.usuario_logado
 
     self.__tela_progresso.mostra_mensagem("\nUsuário: {}" .format(usuario.nome))
-
     prog = self.todos_progressos_por_usuario(usuario)
     
     if len(prog) != 0:

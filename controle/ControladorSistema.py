@@ -51,9 +51,6 @@ class ControladorSistema:
     def usuario(self):
         self.__controlador_usuario.abre_tela()
 
-    def inclui_questao(self):
-        self.__controlador_questao.abre_tela()
-
     def ver_curso(self):
         self.__controlador_curso.abre_tela()
 
@@ -93,7 +90,46 @@ class ControladorSistema:
 
         # cria progresso usuario
         curso = self.__controlador_curso.pega_curso_por_nome("python")
-        self.__controlador_progresso.cria_progresso(self.__usuario_logado, curso)
+        self.__controlador_progresso.cria_progresso(curso,self.__usuario_logado)
+
+        curso = self.__controlador_curso.pega_curso_por_nome("django")
+        self.__controlador_progresso.cria_progresso(curso,self.__usuario_logado)
+
+        # adiciona algumas aulas
+        
+        # aula 1 = python
+        dados_aula = {"descricao_aula": "Lorem ipsum lorem", "link_aula": "www.aula_01_python.com"}
+        self.__controlador_aula.cadastra_aula("python", dados_aula)
+
+        # aula 2 = python
+        dados_aula = {"descricao_aula": "Lorem ipsum lorem", "link_aula": "www.aula_02_python.com"}
+        self.__controlador_aula.cadastra_aula("python", dados_aula)
+
+        # aula 3 = python
+        dados_aula = {"descricao_aula": "Lorem ipsum lorem", "link_aula": "www.aula_03_python.com"}
+        self.__controlador_aula.cadastra_aula("python", dados_aula)
+
+        # aula 4 = python
+        dados_aula = {"descricao_aula": "Lorem ipsum lorem", "link_aula": "www.aula_04_python.com"}
+        self.__controlador_aula.cadastra_aula("python", dados_aula)
+
+        # aula 5 = python
+        dados_aula = {"descricao_aula": "Lorem ipsum lorem", "link_aula": "www.aula_05_python.com"}
+        self.__controlador_aula.cadastra_aula("python", dados_aula)
+
+        # aula 1 = django
+        dados_aula = {"descricao_aula": "Lorem ipsum lorem", "link_aula": "www.aula_01_django.com"}
+        self.__controlador_aula.cadastra_aula("django", dados_aula)
+
+        # aula 2 = django
+        dados_aula = {"descricao_aula": "Lorem ipsum lorem", "link_aula": "www.aula_02_django.com"}
+        self.__controlador_aula.cadastra_aula("django", dados_aula)
+
+
+        # Questao curso
+        infos_questao = {'descricao_questao':'Qual é a certa?', 'alternativa_correta': 'a'}
+        desc_alternativas = ["Lorem ipsum, lorem ipsum", "Ipsum lorem, ipsum lorem"]
+        self.__controlador_questao.cadastra_questao_aut("python", infos_questao, desc_alternativas)
 
     def progresso(self):
         self.__controlador_progresso.abre_tela()

@@ -9,7 +9,21 @@ class ControladorQuestao():
         self.__questao = Questao
         self.__respostas_usuario = {}
         self.__indexes = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-        self.__nota_usuario = {} # levar para a classe Usuario | "nome curso, nota usuario"
+        # self.__nota_usuario = {} # levar para a classe Usuario | "nome curso, nota usuario"
+
+    
+    def cadastra_questao_aut(self, nome_curso, infos_questao, desc_alternativas):
+        #infos_questao = {'descricao_questao':'descricao_questao', 'alternativa_correta': 'alternativa_correta'}
+        #lista_alternativas = ["descricao_alternativa"]
+        a1 = Alternativa("a", desc_alternativas[0])
+        a2 = Alternativa("b", desc_alternativas[1])
+        lista_alternativas = [a1, a2]
+
+        questao = self.__questao(
+                    infos_questao['descricao_questao'], 
+                    lista_alternativas, 
+                    infos_questao['alternativa_correta'])
+        self.__controlador_sistema.controlador_curso.incluir_questao(nome_curso, questao)
 
     def incluir_questao(self):
         nome_curso = self.__tela_questao.nome_curso()
@@ -76,8 +90,10 @@ class ControladorQuestao():
             if self.__respostas_usuario[nome_curso][resposta] == curso._Curso__avaliacao[resposta]._Questao__alternativa_correta:
                 acertos += 1
 
-        self.__nota_usuario[nome_curso] = acertos/len(self.__respostas_usuario[nome_curso]) * 10
-        self.__tela_questao.mostra_mensagem(f'Sua nota na avaliação de {nome_curso.upper()} é {self.__nota_usuario[nome_curso]}\n')
+        progresso = self.__controlador_sistema.controlador_progresso.progresso_por_curso_e_usuario(curso)
+        progresso.nota = acertos/len(self.__respostas_usuario[nome_curso]) * 10
+        # self.__nota_usuario[nome_curso] = acertos/len(self.__respostas_usuario[nome_curso]) * 10
+        self.__tela_questao.mostra_mensagem(f'Sua nota na avaliação de {nome_curso.upper()} é {progresso.nota}\n')
 
     def retornar(self):
         self.__controlador_sistema.abre_tela()

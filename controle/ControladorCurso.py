@@ -15,7 +15,7 @@ class ControladorCurso():
     lista_cursos = self.__cursos
     return lista_cursos
 
-  def pega_curso_por_nome(self, nome: str):
+  def pega_curso_por_nome(self, nome: str = None):
     for curso in self.__cursos:
       if (curso.nome_do_curso == nome):
         return curso
@@ -94,7 +94,6 @@ class ControladorCurso():
 
   def retornar(self):
     self.__controlador_sistema.abre_tela()
-  
    
   def adicionar_aula(self, nome_curso, aula):
     curso = self.pega_curso_por_nome(nome_curso)

@@ -4,12 +4,12 @@ class Progresso:
       self,
       usuario: object,
       curso: object,
-      aulas_concluidas: list = [],
+      ultima_aula: int = 0,
       nota: float = None):
 
     self.__usuario = usuario
     self.__curso = curso
-    self.__aulas_concluidas = aulas_concluidas
+    self.__ultima_aula = ultima_aula
     self.__nota = nota
 
   @property
@@ -21,8 +21,8 @@ class Progresso:
     return self.__curso
   
   @property
-  def aulas_concluidas(self):
-    return self.__aulas_concluidas
+  def ultima_aula(self):
+    return self.__ultima_aula
 
   @property
   def nota(self):
@@ -36,9 +36,9 @@ class Progresso:
   def curso(self, curso):
     self.__curso = curso
 
-  @aulas_concluidas.setter
-  def aulas_concluidas(self, aulas_concluidas):
-    self.__aulas_concluidas = aulas_concluidas
+  @ultima_aula.setter
+  def ultima_aula(self, ultima_aula):
+    self.__ultima_aula = ultima_aula
 
   @nota.setter
   def nota(self, nota):
