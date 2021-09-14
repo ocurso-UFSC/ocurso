@@ -60,4 +60,4 @@ class ControladorAula():
     lista_opcoes = {1:self.mostra_aulas, 2:self.adiciona_aula, 3:self.altera_aula, 4:self.exclui_aula, 5:self.listar_aulas, 0:self.retornar}
     continua = True
     while continua:
-      lista_opcoes[self.__tela_aula.tela_opcoes()]()
+      lista_opcoes[self.__tela_aula.open()]()

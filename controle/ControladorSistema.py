@@ -24,7 +24,6 @@ class ControladorSistema:
             ControladorSistema.__instance = object.__new__(cls)
         return ControladorSistema.__instance
 
-   
     @property
     def controlador_curso(self):
         return self.__controlador_curso
@@ -59,6 +58,7 @@ class ControladorSistema:
         self.__controlador_usuario.abre_tela()
 
     def ver_curso(self):
+        self.__tela_sistema.close()
         self.__controlador_curso.abre_tela()
 
     def inclui_questao(self):
