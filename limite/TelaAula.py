@@ -16,10 +16,14 @@ class TelaAula:
             print ('Opção 2 - Adicionar aula')
             print ('Opção 3 - Alterar aula')
             print ('Opção 4 - Remover aula')
+        print ('Opção 5 - Listar aulas')
         print ('Opção 0 - Retornar')
 
         opcao = int(input('\nEscolha uma das opções: '))
         return opcao
+    
+    def lista_aulas(self, numero_aula, descricao):
+        print (f'Aula {numero_aula} - {descricao}')
 
     def mostra_aulas(self, numero_aula, descricao, link):
         print ('\n' + '-'*50)

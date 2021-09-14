@@ -1,3 +1,4 @@
+import PySimpleGUI as sg
 class TelaQuestao:
     def nome_curso(self):
         curso_selecionado = str(input('Qual curso? '))
@@ -5,18 +6,32 @@ class TelaQuestao:
 
     def tela_opcoes(self):
         adm = True
+        sg.ChangeLookAndFeel('DarkBlue')
+        botoes = [[sg.Button('Avaliações', size=(20,2), key=1, button_color='#7B68EE')],
+                  [sg.Button('Adicionar questão', size=(20,2), key=2)],
+                  [sg.Button('Alterar questão', size=(20,2), key=3)],
+                  [sg.Button('Remover questão', size=(20,2), key=3)],
+                  [sg.Button('Minhas notas', size=(20,2), key=9)],
+                  [sg.Button('<-', size=(20,2), key=0)]]
 
-        print ('---------- ESCOLHA A OPÇÃO ----------\n')
-        print ('Opção 1 - Mostrar avaliação final')
-        if adm:
-            print ('Opção 2 - Adicionar questão')
-            print ('Opção 3 - Alterar questão')
-            print ('Opção 4 - Remover questão')
-        print ('Opção 9 - Mostrar minha nota')
-        print ('Opção 0 - Retornar')
+        layout = [[sg.Text('oCurso', size=(15, 2), font=('Helvetica', 20), justification=('center'))],
+                  [sg.Column(botoes, vertical_alignment='center', justification='center', k='-C-')]]
+        
+        janela = sg.Window('oCurso').Layout(layout)
+        button, values = janela.read()
+        return button
 
-        opcao = int(input('\nEscolha uma das opções: '))
-        return opcao
+        # print ('---------- ESCOLHA A OPÇÃO ----------\n')
+        # print ('Opção 1 - Mostrar avaliação final')
+        # if adm:
+        #     print ('Opção 2 - Adicionar questão')
+        #     print ('Opção 3 - Alterar questão')
+        #     print ('Opção 4 - Remover questão')
+        # print ('Opção 9 - Mostrar minha nota')
+        # print ('Opção 0 - Retornar')
+
+        # opcao = int(input('\nEscolha uma das opções: '))
+        # return opcao
     
     def quantidade(self, msg):
         quantidade = int(input(msg))

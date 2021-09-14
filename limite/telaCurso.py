@@ -30,9 +30,6 @@ Escolha a opcao: '''))
     print("Nome do Curso: ", dados_curso["nome_do_curso"])
     print("Descricao: ", dados_curso["descricao"])
     print("Quantidade horas: ", dados_curso["quantidade_horas"])
-  
-  def ver_aulas(self):
-    ...
 
   def seleciona_curso(self):
     nome_curso = input("Qual o nome do curso deseja buscar? ")
