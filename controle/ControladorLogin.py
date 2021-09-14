@@ -1,12 +1,16 @@
 from limite.TelaLogin import TelaLogin
 
-class ControladorLogin():
+class ControladorLogin:
+  __instance = None
+
   def __init__(self, controladorSistema):
+    # self.__tela_login = TelaLogin()
     self.__tela_login = TelaLogin()
     self.__controlador_sistema = controladorSistema
 
   def inicializa_sistema(self):
-    self.abre_tela()
+    # self.abre_tela()
+    (botao, dados) = self.__main_view.open()
 
   def logar(self):
     dados_login = self.__tela_login.pega_login()
@@ -52,7 +56,9 @@ class ControladorLogin():
     lista_opcoes = {1: self.logar, 2: self.cadastrar, 3: self.logar_visitante, 0: self.finaliza_sistema}
     
     while self.__controlador_sistema.usuario_logado == None:
-      opcao_escolhida = self.__tela_login.tela_opcoes()
+      opcao_escolhida = self.__tela_login.open()
+      
+      print(opcao_escolhida)
       funcao_escolhida = lista_opcoes[opcao_escolhida]
       funcao_escolhida()
 
