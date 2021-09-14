@@ -4,13 +4,12 @@ class ControladorLogin:
   __instance = None
 
   def __init__(self, controladorSistema):
-    # self.__tela_login = TelaLogin()
     self.__tela_login = TelaLogin()
     self.__controlador_sistema = controladorSistema
 
   def inicializa_sistema(self):
     # self.abre_tela()
-    (botao, dados) = self.__main_view.open()
+    (botao, dados) = self.__tela_login.open()
 
   def logar(self):
     dados_login = self.__tela_login.pega_login()

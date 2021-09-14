@@ -7,28 +7,20 @@ class TelaLogin():
 
   def init_components(self):
     sg.ChangeLookAndFeel("Reddit")
-    coluna1 = [
-      [sg.Text('Coluna1', background_color='#d3dfda', justification='center', size=(10,1))],
-      [sg.Spin(values=('1', '2', '3'), initial_value='selecione', key='so_spin1')],
-      [sg.Spin(values=('1', '2', '3'), initial_value='selecione', key='so_spin2')],
-      [sg.Spin(values=('1', '2', '3'), initial_value='selecione', key='so_spin3')]
-    ]
+
+    botoes = [
+              [sg.Button('Login', size=(20,2), key=1, button_color='#7B68EE')],
+              [sg.Button('Cadastro', size=(20,2), key=2)],
+              [sg.Button('Visitante', size=(20,2), key=3)],
+              [sg.Button('Sair do sistema', size=(20,2), key=0)]
+            ]
 
     layout = [
-      [sg.Text('Teste de TEXTo', size=(30,1), font=("Helvetica", 25))],
-      [sg.Text("RESPONDA seu VAGABUNDO")],
-      # [sg.InputText("qual seu nome", key="it_nome")],
-      # [sg.InputText("qual sua senha", key="it_senha")],
-      # [sg.Column(coluna1, background_color='#d3dfda')],
-      # [sg.Button('Gravar'), sg.Cancel('Cancelar')]
-      [sg.Button('Login', key=1)],
-      [sg.Button('Cadastro', key=2)],
-      [sg.Button('Visitante', key=3)],
-      [sg.Button('Sair', key=0)],
-
+      [sg.Text('oCurso', size=(30,1), font=("Helvetica", 25), justification='center')],
+      [sg.Column(botoes, vertical_alignment='center', justification='center', k='-C-')]
     ]
 
-    self.__window = sg.Window("Titulo", default_element_size=(40, 1)).Layout(layout)
+    self.__window = sg.Window("Login", default_element_size=(40, 1)).Layout(layout)
 
   def open(self):
     button, values = self.__window.Read()
