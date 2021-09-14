@@ -7,15 +7,22 @@ from controle.ControladorAula import ControladorAula
 from controle.ControladorProgresso import ControladorProgresso
 
 class ControladorSistema:
+    __instance = None
+
     def __init__(self, usuario_logado = None):
-        self.__usuario_logado = usuario_logado
         self.__tela_sistema = TelaSistema()
+        self.__usuario_logado = usuario_logado
         self.__controlador_curso = ControladorCurso(self)
         self.__controlador_questao = ControladorQuestao(self)
         self.__controlador_usuario = ControladorUsuario(self)
         self.__controlador_login = ControladorLogin(self)
         self.__controlador_aula = ControladorAula(self)
         self.__controlador_progresso = ControladorProgresso(self)
+    
+    def __new__(cls):
+        if ControladorSistema.__instance is None:
+            ControladorSistema.__instance = object.__new__(cls)
+        return ControladorSistema.__instance
 
    
     @property
@@ -135,11 +142,11 @@ class ControladorSistema:
         self.__controlador_progresso.abre_tela()
 
     def abre_tela(self):
-        self.__tela_sistema.mostra_mensagem("\n")
         lista_opcoes = {1: self.usuario, 2: self.ver_curso, 3: self.progresso, 9: self.automatico, 0: self.encerra_sistema}
 
         while True:
-            opcao_escolhida = self.__tela_sistema.tela_opcoes()
+            opcao_escolhida = self.__tela_sistema.open()
             
             funcao_escolhida = lista_opcoes[opcao_escolhida]
             funcao_escolhida()
+        self.__tela_sistema.close()
