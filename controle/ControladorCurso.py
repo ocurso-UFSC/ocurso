@@ -4,6 +4,7 @@ from entidade.curso import Curso
 class ControladorCurso():
   def __init__(self, controlador_sistema):
     self.__cursos = []
+    self.__curso_escolhido = Curso
     self.__tela_curso = TelaCurso()
     self.__controlador_sistema = controlador_sistema
 
@@ -37,8 +38,6 @@ class ControladorCurso():
 
   def alterar_curso(self):
     self.__tela_curso.mostra_mensagem("Alterar curso \n")
-
-    #self.lista_cursos()
     nome_do_curso = self.__tela_curso.seleciona_curso()
     curso = self.pega_curso_por_nome(nome_do_curso)
 
@@ -95,18 +94,17 @@ class ControladorCurso():
   def retornar(self):
     self.__controlador_sistema.abre_tela()
    
-  def adicionar_aula(self, nome_curso, aula):
-    curso = self.pega_curso_por_nome(nome_curso)
-    index_do_curso = self.__cursos.index(curso)
+  def adicionar_aula(self, aula):
+    index_do_curso = self.__cursos.index(self.__curso_escolhido)
     self.__cursos[index_do_curso]._Curso__lista_aulas.append(aula)
   
-  def alterar_aula(self, nome_curso, numero_aula, aula):
-    curso = self.pega_curso_por_nome(nome_curso)
+  def alterar_aula(self, numero_aula, aula):
+    curso = self.pega_curso_por_nome(self.__curso_escolhido)
     index_do_curso = self.__cursos.index(curso)
     self.__cursos[index_do_curso]._Curso__lista_aulas[numero_aula] = aula
 
-  def remover_aula(self, nome_curso, numero_aula):
-    curso = self.pega_curso_por_nome(nome_curso)
+  def remover_aula(self, numero_aula):
+    curso = self.pega_curso_por_nome(self.__curso_escolhido)
     index_do_curso = self.__cursos.index(curso)
     self.__cursos[index_do_curso]._Curso__lista_aulas.pop(numero_aula)
 
@@ -116,6 +114,8 @@ class ControladorCurso():
     self.__cursos.append(curso)
 
   def abre_tela(self):
+    nome_curso = self.__tela_curso.seleciona_curso()
+    self.__curso_escolhido = self.pega_curso_por_nome(nome_curso)
     lista_opcoes = {1: self.incluir_curso, 2: self.alterar_curso, 
       3: self.lista_cursos, 4: self.excluir_curso, 5:self.abre_aulas, 6:self.abre_avaliacoes, 0: self.retornar}
 
