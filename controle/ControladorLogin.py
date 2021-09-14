@@ -12,33 +12,38 @@ class ControladorLogin:
     (botao, dados) = self.__tela_login.open()
 
   def logar(self):
-    dados_login = self.__tela_login.pega_login()
-    usuario = self.__controlador_sistema.controlador_usuario.pega_usuario_por_email_e_senha(dados_login["email"], dados_login["senha"])
-    
-    if usuario != None:
-      self.__tela_login.mostra_mensagem("Bem vindo {}" .format(usuario.nome))
-      self.__controlador_sistema.usuario_logado = usuario
-      return True
-    
-    self.__tela_login.mostra_mensagem("Usuário incorreto")
-    return False
+    while True:
+      dados_login = self.__tela_login.open_login()
+      usuario = self.__controlador_sistema.controlador_usuario.pega_usuario_por_email_e_senha(dados_login["email"], dados_login["senha"])
+      
+      if usuario != None:
+        self.__tela_login.show_message("Sucesso", "Bem vindo {}" .format(usuario.nome))
+        self.__controlador_sistema.usuario_logado = usuario
+        self.__tela_login.close_login()
+        return True
+      
+      self.__tela_login.show_message("Erro", "Usuário ou Senhas inválidas")
 
   def cadastrar(self):
-    dados = self.__tela_login.pega_dados_cadastro()
-    if dados["senha"] == dados["senha2"]:
-      if dados["adm"].lower() == "s" or dados["adm"].lower() == "sim":
-        dados["adm"] = True
-      elif dados["adm"].lower() == "n" or dados["adm"].lower() == "nao":
-        dados["adm"] = False
-      else:
-        self.__tela_login.mostra_mensagem("Opcao ADM inválida")
-        return False
-      usuario = self.__controlador_sistema.controlador_usuario.criar_usuario(dados)
-      self.__controlador_sistema.controlador_usuario.cadastrar_usuario(usuario)
-      return True
-    
-    self.__tela_login.mostra_mensagem("Senhas não correspondem")
-    return False
+    while True:
+      dados = self.__tela_login.open_cadastro()
+      dados["adm"] = "s"
+      if dados["senha"] == dados["senha2"]:
+        if dados["adm"].lower() == "s" or dados["adm"].lower() == "sim":
+          dados["adm"] = True
+        elif dados["adm"].lower() == "n" or dados["adm"].lower() == "nao":
+          dados["adm"] = False
+        else:
+          self.__tela_login.mostra_mensagem("Opcao ADM inválida")
+          self.__tela_login.close_cadastro()
+          return False
+        usuario = self.__controlador_sistema.controlador_usuario.criar_usuario(dados)
+        self.__controlador_sistema.controlador_usuario.cadastrar_usuario(usuario)
+        self.__tela_login.show_message("Bem Vindo", "Cadastrado com sucesso")
+        self.__tela_login.close_cadastro()
+        return True
+      
+      self.__tela_login.show_message("Erro", "Senhas não correspondem")
 
   def finaliza_sistema(self):
     self.__tela_login.mostra_mensagem("Até a próxima")
@@ -57,7 +62,6 @@ class ControladorLogin:
     while self.__controlador_sistema.usuario_logado == None:
       opcao_escolhida = self.__tela_login.open()
       
-      print(opcao_escolhida)
       funcao_escolhida = lista_opcoes[opcao_escolhida]
       funcao_escolhida()
 

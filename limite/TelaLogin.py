@@ -1,22 +1,25 @@
 import PySimpleGUI as sg
+from PySimpleGUI.PySimpleGUI import Button
 
 class TelaLogin():
   def __init__(self):
     self.__window = None
+    self.__window2 = None
+    self.__window3 = None
     self.init_components()
 
   def init_components(self):
-    sg.ChangeLookAndFeel("Reddit")
+    sg.ChangeLookAndFeel('DarkBlue')
 
     botoes = [
-              [sg.Button('Login', size=(20,2), key=1, button_color='#7B68EE')],
+              [sg.Button('Login', size=(20,2), key=1)],
               [sg.Button('Cadastro', size=(20,2), key=2)],
               [sg.Button('Visitante', size=(20,2), key=3)],
               [sg.Button('Sair do sistema', size=(20,2), key=0)]
             ]
 
     layout = [
-      [sg.Text('oCurso', size=(30,1), font=("Helvetica", 25), justification='center')],
+      [sg.Text('oCurso', size=(10,1), font=("Helvetica", 25), justification='center')],
       [sg.Column(botoes, vertical_alignment='center', justification='center', k='-C-')]
     ]
 
@@ -46,21 +49,61 @@ Digite a opção: '''))
     return entrada
 
   def pega_login(self):
-    print("Entre com login do usuário: ")
-    email = input("Email: ")
-    senha = input("Senha: ")
+    sg.ChangeLookAndFeel('DarkBlue')
+
+    entrada = [
+              [sg.Text("Email")],
+              [sg.InputText(size=(20,2), key="email")],
+              [sg.Text("Senha")],
+              [sg.InputText(size=(20,2), key="senha")],
+              [sg.Button("Entrar")]
+            ]
+
+    layout = [
+      [sg.Text('Cadastro', size=(10,1), font=("Helvetica", 25), justification='center')],
+      [sg.Column(entrada, vertical_alignment='center', justification='center', k='-C-')]
+    ]
+
+    self.__window3 = sg.Window("Login", default_element_size=(30, 1)).Layout(layout)
+
   
-    return {"email": email, "senha": senha}
+  def open_login(self):
+    self.pega_login()
+    button, values = self.__window3.Read()
+    return values
+
+  def close_login(self):
+    self.__window2.Close()
 
   def pega_dados_cadastro(self):
-    print("Cadastrando usuário...")
-    nome = input("Nome: ")
-    email = input("Email: ")
-    senha = input("Senha: ")
-    senha2 = input("Repita a senha: ")
-    adm = input("ADM? s/sim n/nao: ")
-  
-    return {"nome": nome, "email": email, "senha": senha, "senha2": senha2, "adm":adm}
+    sg.ChangeLookAndFeel('DarkBlue')
+
+    entrada = [
+              [sg.Text("Usuário")],
+              [sg.InputText(size=(20,2), key="nome")],
+              [sg.Text("Email")],
+              [sg.InputText(size=(20,2), key="email")],
+              [sg.Text("Senha")],
+              [sg.InputText(size=(20,2), key="senha")],
+              [sg.Text("Repita a senha")],
+              [sg.InputText(size=(20,2), key="senha2")],
+              [sg.Button("Salvar")]
+            ]
+
+    layout = [
+      [sg.Text('Cadastro', size=(10,1), font=("Helvetica", 25), justification='center')],
+      [sg.Column(entrada, vertical_alignment='center', justification='center', k='-C-')]
+    ]
+
+    self.__window2 = sg.Window("Cadastro", default_element_size=(30, 1)).Layout(layout)
+
+  def open_cadastro(self):
+    self.pega_dados_cadastro()
+    button, values = self.__window2.Read()
+    return values
+
+  def close_cadastro(self):
+    self.__window2.Close()
 
   def mostra_mensagem(self, msg):
     print(msg)
