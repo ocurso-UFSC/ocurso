@@ -60,7 +60,7 @@ Digite a opção: '''))
             ]
 
     layout = [
-      [sg.Text('Cadastro', size=(10,1), font=("Helvetica", 25), justification='center')],
+      [sg.Text('Login', size=(10,1), font=("Helvetica", 25), justification='center')],
       [sg.Column(entrada, vertical_alignment='center', justification='center', k='-C-')]
     ]
 
@@ -73,7 +73,7 @@ Digite a opção: '''))
     return values
 
   def close_login(self):
-    self.__window2.Close()
+    self.__window3.Close()
 
   def pega_dados_cadastro(self):
     sg.ChangeLookAndFeel('DarkBlue')
