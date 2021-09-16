@@ -142,10 +142,13 @@ class ControladorUsuario():
     if len(self.__usuarios) == 0:
       self.__tela_usuario.mostra_mensagem("Nenhum usuário cadastrado")
 
+    lista_nomes = []
     for usuario in self.__usuarios:
-      self.__tela_usuario.mostra_mensagem("Todos os usuários cadastrados")
-      self.__tela_usuario.mostra_usuario(usuario)
+      lista_nomes.append(usuario.nome)
 
+    button, values = self.__tela_usuario.open_opcao(2, lista_nomes)
+
+    print(values)
 
   def mostra_usuario_logado(self):
     self.lista_usuarios(self.__controlador_sistema.usuario_logado)

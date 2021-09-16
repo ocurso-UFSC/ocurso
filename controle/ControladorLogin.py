@@ -41,8 +41,7 @@ class ControladorLogin:
             self.__tela_login.mostra_mensagem("Opcao ADM inválida")
             self.__tela_login.close_cadastro()
             return False
-          usuario = self.__controlador_sistema.controlador_usuario.criar_usuario(dados)
-          self.__controlador_sistema.controlador_usuario.cadastrar_usuario(usuario)
+          self.__controlador_sistema.controlador_usuario.criar_usuario(dados)
           self.__tela_login.show_message("Bem Vindo", "Cadastrado com sucesso")
           self.__tela_login.close_cadastro()
           return True
@@ -61,7 +60,6 @@ class ControladorLogin:
   def logar_visitante(self):
     dados = {"nome": "visitante", "email": "visitante", "senha": "visitante", "adm": True}
     usuario = self.__controlador_sistema.controlador_usuario.criar_usuario(dados)
-    self.__controlador_sistema.controlador_usuario.cadastrar_usuario(usuario)
     self.__controlador_sistema.usuario_logado = usuario
     self.__tela_login.close()
 

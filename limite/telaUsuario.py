@@ -60,6 +60,18 @@ class TelaUsuario():
     self.__window2 = sg.Window("Informações", default_element_size=(40, 1)).Layout(layout)
 
 
+  # [sg.Listbox(values=('Listbox 1', 'Listbox 2', 'Listbox 3'), size=(30, 3))]
+
+  def listar_todos_usuarios_info(self, lista_usuarios):
+    botoes = [[sg.Button("Editar", key=1), sg.Button("Sair", key=0)]]
+
+    layout = [
+      [sg.Text('Todos Usuários', size=(15, 1), font=("Helvetica", 15))],
+      [sg.Listbox(values=lista_usuarios, key="username", size=(20, 10))],
+      [sg.Column(botoes, justification='center', k='-C-')],
+    ]
+
+    self.__window2 = sg.Window("Informações", default_element_size=(100, 1)).Layout(layout)
   
   def edita_usuario(self, dados_usuario):
     sg.ChangeLookAndFeel('DarkBlue')
@@ -99,6 +111,9 @@ class TelaUsuario():
   def open_opcao(self, opcao, dados = None): #dados eh opcional
     if opcao == 1:
       self.mostra_info_usuario(dados)
+
+    elif opcao == 2: 
+      self.listar_todos_usuarios_info(dados)
 
     button, values = self.__window2.Read()
     return button, values
