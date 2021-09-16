@@ -35,20 +35,79 @@ class TelaUsuario():
   def close(self):
     self.__window.Close()
 
+  def mostra_info_usuario(self, dados_usuario):
+    sg.ChangeLookAndFeel('DarkBlue')
 
-#   def tela_opcoes(self):
-#     entrada = int(input(
-# '''
-# ---------- Usuario  ----------
-# Escolha uma das opções a seguir
-# 1 - Minhas informações
-# 2 - Alterar minhas informações
-# 3 - Excluir a minha conta
-# 0 - Voltar
+    botoes = [[sg.Button("Editar", key=1), sg.Button("Sair", key=0)]]
 
-# Escolha a opção: '''))
+    infos = [
+      [sg.Text('Usuario', size=(8, 1), font=("Helvetica", 15)), 
+        sg.Text(dados_usuario["nome"], font=("Helvetica", 15))],
+      [sg.Text('Email', size=(8, 1), font=("Helvetica", 15)), 
+        sg.Text(dados_usuario["email"], font=("Helvetica", 15))],
+      [sg.Text('Senha', size=(8, 1), font=("Helvetica", 15)), 
+        sg.Text(dados_usuario["senha"], font=("Helvetica", 15))], 
+      [sg.Text('ADM', size=(8, 1), font=("Helvetica", 15)), 
+        sg.Text(dados_usuario["adm"], font=("Helvetica", 15))],
+      ]
+      # [sg.Column(text, vertical_alignment='center', justification='center', k='-C-')]
 
-#     return entrada
+    layout = [[sg.Text('Informações', size=(15,1), font=("Helvetica", 25), justification='center')],
+              [sg.Column(infos, justification='center')],
+              [sg.Column(botoes, justification='center', k='-C-')],
+    ]
+
+    self.__window2 = sg.Window("Informações", default_element_size=(40, 1)).Layout(layout)
+
+
+  
+  def edita_usuario(self, dados_usuario):
+    sg.ChangeLookAndFeel('DarkBlue')
+
+    botoes = [[sg.Button("Salvar", key=1), sg.Button("Sair", key=0)]]
+
+    infos = [
+      [sg.Text('Usuario', size=(8, 1), font=("Helvetica", 15)),
+        sg.InputText(dados_usuario["nome"], key="nome")],
+
+      [sg.Text('Email', size=(8, 1), font=("Helvetica", 15)),
+        sg.InputText(dados_usuario["email"], key="email")],        
+
+      [sg.Text('Senha', size=(8, 1), font=("Helvetica", 15)),
+        sg.InputText(dados_usuario["senha"], key="senha")],        
+
+      [sg.Text('ADM', size=(8, 1), font=("Helvetica", 15)),
+      
+        sg.Radio('Sim', "radio", key="adm",default = dados_usuario["adm"]), sg.Radio('Não', "radio", key="n_adm")
+      
+      ]
+      ]
+
+    layout = [[sg.Text('Informações', size=(15,1), font=("Helvetica", 25), justification='center')],
+              [sg.Column(infos, justification='center')],
+              [sg.Column(botoes, justification='center', k='-C-')],
+    ]
+
+    self.__window2 = sg.Window("Informações", default_element_size=(40, 1)).Layout(layout)
+
+  def open_edit_user(self, dados):
+    self.edita_usuario(dados)
+    button, values = self.__window2.Read()
+    
+    return button, values
+
+  def open_opcao(self, opcao, dados = None): #dados eh opcional
+    if opcao == 1:
+      self.mostra_info_usuario(dados)
+
+    button, values = self.__window2.Read()
+    return button, values
+
+  def close_opcao(self):
+    self.__window2.Close()
+
+  def show_message(self, titulo: str, mensagem: str):
+    sg.Popup(titulo, mensagem)
 
   def pega_dados_usuario(self):
     nome = input("Nome: ")

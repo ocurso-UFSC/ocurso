@@ -90,10 +90,53 @@ class ControladorUsuario():
     else:
       self.__tela_usuario.mostra_mensagem("ATENÇÃO!!! Usuário inexistente")
 
+  def user_to_json(self, usuario):
+    dados_usuario = {}
+    dados_usuario["nome"] = usuario.nome
+    dados_usuario["email"] = usuario.email
+    dados_usuario["senha"] = usuario.senha
+    dados_usuario["adm"] = usuario.adm
+
+    return dados_usuario
+
+
+  def alterar_usuario(self, usuario, novos_dados):
+    try:
+      usuario.nome = novos_dados["nome"]
+      usuario.email = novos_dados["email"]
+      usuario.senha = novos_dados["senha"]
+      usuario.adm = novos_dados["adm"]
+      
+      return True
+    
+    except:
+      return False
+
+
+  def alterar_usuario_info(self, usuario):
+    dados_antigos = self.user_to_json(usuario)
+    button, values = self.__tela_usuario.open_edit_user(dados_antigos)
+    
+    if button == 1:
+      if self.alterar_usuario(usuario, values):
+        self.__tela_usuario.show_message("Sucesso", "Dados alterados")
+        self.__tela_usuario.close_opcao()
+
+    elif button == 0:
+      self.__tela_usuario.close_opcao()
+
   def minha_informacao(self):
     usuario = self.__controlador_sistema.usuario_logado
-    self.__tela_usuario.mostra_mensagem("Minhas informações")
-    self.__tela_usuario.mostra_usuario(usuario)
+    dados_usuario = self.user_to_json(usuario)
+    button, values = self.__tela_usuario.open_opcao(1, dados_usuario)
+    
+    if button == 0:
+      self.__tela_usuario.close_opcao()
+
+    elif button == 1:
+      self.__tela_usuario.close_opcao()
+      self.alterar_usuario_info(usuario)
+
 
   def lista_usuarios(self, usuario = None):
     if len(self.__usuarios) == 0:
