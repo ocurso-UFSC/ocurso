@@ -59,6 +59,7 @@ class ControladorSistema:
             self.abre_tela()
 
     def usuario(self):
+        self.__tela_sistema.close()
         self.__controlador_usuario.abre_tela()
 
     def ver_curso(self):
