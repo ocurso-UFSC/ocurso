@@ -18,7 +18,7 @@ class ControladorCurso():
 
   def pega_curso_por_nome(self, nome: str = None):
     for curso in self.__cursos:
-      if (curso.nome_do_curso.lower() == nome.lower()):
+      if (curso.nome_do_curso == nome.lower()):
         return curso
     return None
 
@@ -95,8 +95,7 @@ class ControladorCurso():
     self.__controlador_sistema.abre_tela()
    
   def adicionar_aula(self, aula):
-    curso = self.pega_curso_por_nome(self.__curso_escolhido)
-    index_do_curso = self.__cursos.index(curso)
+    index_do_curso = self.__cursos.index(self.__curso_escolhido)
     self.__cursos[index_do_curso]._Curso__lista_aulas.append(aula)
   
   def alterar_aula(self, numero_aula, aula):

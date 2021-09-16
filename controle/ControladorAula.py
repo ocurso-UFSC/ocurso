@@ -1,3 +1,4 @@
+import PySimpleGUI as sg
 from limite.TelaAula import TelaAula
 from entidade.aula import Aula
 
@@ -9,10 +10,13 @@ class ControladorAula():
     self.__aula = Aula
   
   def listar_aulas(self):
+    aulas = []
     curso = self.__controlador_sistema.controlador_curso._ControladorCurso__curso_escolhido
     for aula in curso._Curso__lista_aulas:
       numero_aula = curso._Curso__lista_aulas.index(aula) + 1
-      self.__tela_aula.lista_aulas(numero_aula, aula._Aula__descricao_aula)
+      descricao_aula = aula._Aula__descricao_aula
+      aulas.append([sg.Text(f'{numero_aula} - {descricao_aula}')])
+    self.__tela_aula.lista_aulas(aulas)
 
   def mostra_aulas(self):
     curso = self.__controlador_sistema.controlador_curso._ControladorCurso__curso_escolhido
