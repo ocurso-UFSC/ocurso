@@ -29,6 +29,10 @@ class ControladorSistema:
         return self.__controlador_curso
 
     @property
+    def controlador_aula(self):
+        return self.__controlador_aula
+
+    @property
     def controlador_questao(self):
         return self.__controlador_questao
 

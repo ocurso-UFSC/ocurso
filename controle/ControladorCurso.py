@@ -18,7 +18,7 @@ class ControladorCurso():
 
   def pega_curso_por_nome(self, nome: str = None):
     for curso in self.__cursos:
-      if (curso.nome_do_curso == nome.lower()):
+      if (curso.nome_do_curso == nome):
         return curso
     return None
 
@@ -86,6 +86,7 @@ class ControladorCurso():
     self.__cursos[index_do_curso]._Curso__avaliacao.pop(numero_questao - 1)
     
   def abre_aulas(self):
+    self.__controlador_sistema.controlador_aula.listar_aulas
     self.__controlador_sistema.abre_aulas()
 
   def abre_avaliacoes(self):
@@ -99,13 +100,11 @@ class ControladorCurso():
     self.__cursos[index_do_curso]._Curso__lista_aulas.append(aula)
   
   def alterar_aula(self, numero_aula, aula):
-    curso = self.pega_curso_por_nome(self.__curso_escolhido)
-    index_do_curso = self.__cursos.index(curso)
+    index_do_curso = self.__cursos.index(self.__curso_escolhido)
     self.__cursos[index_do_curso]._Curso__lista_aulas[numero_aula] = aula
 
   def remover_aula(self, numero_aula):
-    curso = self.pega_curso_por_nome(self.__curso_escolhido)
-    index_do_curso = self.__cursos.index(curso)
+    index_do_curso = self.__cursos.index(self.__curso_escolhido)
     self.__cursos[index_do_curso]._Curso__lista_aulas.pop(numero_aula)
 
   def cadastrar_curso(self, dados_curso):

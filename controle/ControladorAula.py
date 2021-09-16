@@ -10,13 +10,11 @@ class ControladorAula():
     self.__aula = Aula
   
   def listar_aulas(self):
-    aulas = []
     curso = self.__controlador_sistema.controlador_curso._ControladorCurso__curso_escolhido
     for aula in curso._Curso__lista_aulas:
       numero_aula = curso._Curso__lista_aulas.index(aula) + 1
       descricao_aula = aula._Aula__descricao_aula
-      aulas.append([sg.Text(f'{numero_aula} - {descricao_aula}')])
-    self.__tela_aula.lista_aulas(aulas)
+      self.__tela_aula.lista_aulas(numero_aula, descricao_aula)
 
   def mostra_aulas(self):
     curso = self.__controlador_sistema.controlador_curso._ControladorCurso__curso_escolhido
@@ -39,11 +37,13 @@ class ControladorAula():
     self.__controlador_sistema.controlador_curso.adicionar_aula(aula)
 
   def adiciona_aula(self):                                     #adicionando aula
+    self.__tela_aula.close()
     dados_aula = self.__tela_aula.pega_dados_aula()
     descricao_aula = dados_aula['descricao_aula']
     link_aula = dados_aula['link_aula']
     aula = self.__aula(descricao_aula, link_aula)
     self.__controlador_sistema.controlador_curso.adicionar_aula(aula)
+    self.listar_aulas()
 
   def altera_aula(self):
     numero_aula = self.__tela_aula.mexe_na_aula('Qual aula você deseja alterar? ')
@@ -58,10 +58,12 @@ class ControladorAula():
     self.__controlador_sistema.controlador_curso.remover_aula(numero_aula)
 
   def retornar(self):
-    self.__controlador_sistema.abre_tela()
-  
+    self.__tela_aula.close()
+    self.__controlador_sistema.ver_curso()
+
   def abre_tela(self):
-    lista_opcoes = {1:self.mostra_aulas, 2:self.adiciona_aula, 3:self.altera_aula, 4:self.exclui_aula, 5:self.listar_aulas, 0:self.retornar}
-    continua = True
-    while continua:
+    self.listar_aulas()
+    lista_opcoes = {1:self.mostra_aulas, 2:self.adiciona_aula, 3:self.altera_aula, 4:self.exclui_aula, 0:self.retornar}
+
+    while True:
       lista_opcoes[self.__tela_aula.open()]()
