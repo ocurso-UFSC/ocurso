@@ -136,8 +136,9 @@ class ControladorUsuario():
 
       # em caso de ADM
       if self.__controlador_sistema.usuario_logado.adm == True:
-        lista_opcoes_adm[self.__tela_usuario.tela_opcoes_adm()]()
+        lista_opcoes_adm[self.__tela_usuario.open()]()
 
       # em caso de NÃO ADM
       else:
-        lista_opcoes[self.__tela_usuario.tela_opcoes()]()
+        # lista_opcoes[self.__tela_usuario.tela_opcoes()]()
+        pass
