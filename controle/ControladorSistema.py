@@ -41,6 +41,10 @@ class ControladorSistema:
         return self.__controlador_usuario
 
     @property
+    def controlador_login(self):
+        return self.__controlador_login
+
+    @property
     def controlador_progresso(self):
         return self.__controlador_progresso
 

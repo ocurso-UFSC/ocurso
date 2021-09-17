@@ -5,6 +5,11 @@ class ControladorLogin:
     self.__tela_login = TelaLogin()
     self.__controlador_sistema = controladorSistema
 
+
+  @property
+  def tela_login(self):
+    return self.__tela_login
+
   def inicializa_sistema(self):
     self.abre_tela()
 
@@ -14,6 +19,7 @@ class ControladorLogin:
       
       if (dados_login["email"] == "" or dados_login["email"] == None) and (dados_login["senha"] == "" or dados_login["senha"] == None):
         self.__tela_login.close_login()
+        self.__tela_login.close()
         return False
       usuario = self.__controlador_sistema.controlador_usuario.pega_usuario_por_email_e_senha(dados_login["email"], dados_login["senha"])
       
@@ -28,35 +34,7 @@ class ControladorLogin:
       self.__tela_login.close_login()
 
   def cadastrar(self):
-    while True:
-      button, dados = self.__tela_login.open_cadastro()
-
-      if button == 0:
-        self.__tela_login.close_cadastro()
-        return False
-
-      dados["adm"] = "s"
-      if (dados["nome"] != '' and dados["nome"] != None) and (dados["email"] != '' and dados["email"] != None)\
-          and (dados["senha"] != '' and dados["senha"] != None) and (dados["senha2"] != '' and dados["senha2"] != None):
-        if dados["senha"] == dados["senha2"]:
-          if dados["adm"].lower() == "s" or dados["adm"].lower() == "sim":
-            dados["adm"] = True
-          elif dados["adm"].lower() == "n" or dados["adm"].lower() == "nao":
-            dados["adm"] = False
-          else:
-            self.__tela_login.mostra_mensagem("Opcao ADM inválida")
-            self.__tela_login.close_cadastro()
-            return False
-          self.__controlador_sistema.controlador_usuario.criar_usuario(dados)
-          self.__tela_login.show_message("Bem Vindo", "Cadastrado com sucesso")
-          self.__tela_login.close_cadastro()
-          return True
-
-        self.__tela_login.show_message("Erro", "Senhas não correspondem")
-      else:
-        self.__tela_login.show_message("Erro", "Preencha todas as caixas")
-
-      self.__tela_login.close_cadastro()
+    self.__controlador_sistema.controlador_usuario.cadastrar()
 
   def finaliza_sistema(self):
     self.__tela_login.mostra_mensagem("Até a próxima")

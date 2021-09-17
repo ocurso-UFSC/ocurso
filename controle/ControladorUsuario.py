@@ -31,23 +31,52 @@ class ControladorUsuario():
   def cadastrar_usuario(self, usuario):
     self.__usuarios.append(usuario)
 
-  def incluir_usuario(self):
-    self.__tela_usuario.mostra_mensagem("\nEntre com os dados")
-    dados = self.__tela_usuario.pega_dados_usuario()
+  
+  def cadastrar(self):
+    while True:
+      button, dados = self.__tela_usuario.open_opcao(3)
 
-    if dados["adm"].lower() == "s" or dados["adm"].lower() == "sim":
-      dados["adm"] = True
-    elif dados["adm"].lower() == "n" or dados["adm"].lower() == "nao":
-      dados["adm"] = False
-    
-    else:
-      self.__tela_login.mostra_mensagem("Opcao ADM inválida")
-      return False
+      if button == 0:
+        self.__tela_usuario.close_opcao()
 
-    usuario = Usuario(dados["nome"], dados["email"], dados["senha"], dados["adm"])
-    self.__usuarios.append(usuario)
-    return False
+        # Essa verificacao serve pq pode ser para USUARIO ADM ou LOGIN
+        if self.__tela_usuario.window != None:
+          self.__tela_usuario.close()
+        else:
+          self.__controlador_sistema.controlador_login.tela_login.close()
+        return False
 
+      dados["adm"] = "s"
+
+      if (dados["nome"] != '' and dados["nome"] != None) and (dados["email"] != '' and dados["email"] != None)\
+          and (dados["senha"] != '' and dados["senha"] != None) and (dados["senha2"] != '' and dados["senha2"] != None):
+        if dados["senha"] == dados["senha2"]:
+          if dados["adm"].lower() == "s" or dados["adm"].lower() == "sim":
+            dados["adm"] = True
+          elif dados["adm"].lower() == "n" or dados["adm"].lower() == "nao":
+            dados["adm"] = False
+          else:
+            self.__tela_usuario.mostra_mensagem("Opcao ADM inválida")
+            self.__tela_usuario.close_opcao()
+            return False
+          self.criar_usuario(dados)
+
+          if self.__tela_usuario.window != None:
+            self.__tela_usuario.show_message("Sucesso", "Usuário Cadastrado")
+            self.__tela_usuario.close()
+            
+          else:
+            self.__tela_usuario.show_message("Bem Vindo", "Cadastrado com sucesso")
+            self.__controlador_sistema.controlador_login.tela_login.close()
+            
+          self.__tela_usuario.close_opcao()
+          return True
+
+        self.__tela_usuario.show_message("Erro", "Senhas não correspondem")
+      else:
+        self.__tela_usuario.show_message("Erro", "Preencha todos os campos")
+      
+      self.__tela_usuario.close_opcao()
 
   def user_to_json(self, usuario):
     dados_usuario = {}
@@ -78,10 +107,15 @@ class ControladorUsuario():
       if self.alterar_usuario(usuario, values):
         self.__tela_usuario.show_message("Sucesso", "Dados alterados")
         self.__tela_usuario.close_opcao()
+        self.__tela_usuario.close()
+
 
     elif button == 0:
       self.__tela_usuario.close_opcao()
+      self.__tela_usuario.close()
 
+
+  # card das informações do usuario, opcao de editar e excluir
   def informacao_user(self, usuario = None):
     if usuario == None:
       usuario = self.__controlador_sistema.usuario_logado
@@ -91,9 +125,11 @@ class ControladorUsuario():
     
     if button == 0:
       self.__tela_usuario.close_opcao()
+      self.__tela_usuario.close()
 
     elif button == 1:
       self.__tela_usuario.close_opcao()
+      self.__tela_usuario.close()
       self.alterar_usuario_info(usuario)
 
     elif button == 2:
@@ -114,16 +150,19 @@ class ControladorUsuario():
 
       if button == 0:
         self.__tela_usuario.close_opcao()
+        self.__tela_usuario.close()
         return False
 
       elif len(values["email"]) == 0:
         self.__tela_usuario.show_message("Erro", "Nenhum selecionado")
         self.__tela_usuario.close_opcao()
+        self.__tela_usuario.close()
         return False
 
       else:
         usuario = self.pega_usuario_por_email(values["email"][0])
         self.__tela_usuario.close_opcao()
+        self.__tela_usuario.close()
         self.informacao_user(usuario)
         return True
 
@@ -133,7 +172,10 @@ class ControladorUsuario():
   def excluir_usuario(self, usuario = None):
     if (usuario != None):
       if self.__controlador_sistema.usuario_logado == usuario:
+        self.__tela_usuario.close()
+        self.__tela_usuario.close_opcao()
         self.__controlador_sistema.deslogar_usuario()
+
       self.__usuarios.remove(usuario)
       self.__tela_usuario.show_message("Feito", "Usuario removido")
 
@@ -143,7 +185,7 @@ class ControladorUsuario():
 
   def abre_tela(self):
     
-    lista_opcoes_adm = {1: self.informacao_user, 2: self.lista_usuarios, 4: self.incluir_usuario, 0: self.retornar}
+    lista_opcoes_adm = {1: self.informacao_user, 2: self.lista_usuarios, 3: self.cadastrar, 0: self.retornar}
     continua = True
     while continua:
       if self.__controlador_sistema.usuario_logado.adm == True:

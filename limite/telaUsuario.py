@@ -5,8 +5,10 @@ class TelaUsuario():
   def __init__(self):
     self.__window = None
     self.__window2 = None
-    self.__window3 = None
-    self.init_components()
+
+  @property
+  def window(self):
+    return self.__window
 
   def init_components(self):
     sg.ChangeLookAndFeel('DarkBlue')
@@ -26,12 +28,36 @@ class TelaUsuario():
     self.__window = sg.Window("Usuário", default_element_size=(40, 1)).Layout(layout)
 
   def open(self):
+    self.init_components()
     button, values = self.__window.Read()
     return button
 
   def close(self):
-    self.__window.Close()
+    if self.__window != None:
+      self.__window.Close()
     self.__window = None
+
+  def pega_dados_cadastro(self):
+    sg.ChangeLookAndFeel('DarkBlue')
+
+    entrada = [
+              [sg.Text("Usuário")],
+              [sg.Input(size=(20,2), key="nome")],
+              [sg.Text("Email")],
+              [sg.InputText(size=(20,2), key="email")],
+              [sg.Text("Senha")],
+              [sg.InputText(size=(20,2), key="senha")],
+              [sg.Text("Repita a senha")],
+              [sg.InputText(size=(20,2), key="senha2")],
+              [sg.Button("Salvar", key = 1), sg.Button("Voltar", key = 0)]
+            ]
+
+    layout = [
+      [sg.Text('Cadastro', size=(10,1), font=("Helvetica", 25), justification='center')],
+      [sg.Column(entrada, vertical_alignment='center', justification='center', k='-C-')]
+    ]
+
+    self.__window2 = sg.Window("Cadastro", default_element_size=(30, 1)).Layout(layout)
 
   def mostra_info_usuario(self, dados_usuario):
     sg.ChangeLookAndFeel('DarkBlue')
@@ -106,6 +132,9 @@ class TelaUsuario():
 
     elif opcao == 2: 
       self.listar_todos_usuarios_info(dados)
+
+    elif opcao == 3:
+      self.pega_dados_cadastro()
 
     button, values = self.__window2.Read()
     return button, values
