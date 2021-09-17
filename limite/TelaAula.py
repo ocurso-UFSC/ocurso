@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+from PySimpleGUI.PySimpleGUI import Open
 class TelaAula:
     def __init__(self):
         self.__window = None
@@ -42,10 +43,6 @@ class TelaAula:
     def close_pega_dados_aula(self):
         self.__window3.Close()
 
-    def continuar_aula(self):
-        continuar = str(input('Deseja continuar? [ S | N ] ')).upper()
-        return continuar
-
     def lista_aulas(self, index_aula, descricao_aula):
         self.__aulas.append([index_aula, descricao_aula])
     
@@ -53,9 +50,19 @@ class TelaAula:
         self.__aulas = []
 
     def mostra_aulas(self, numero_aula, descricao, link):
-        print ('\n' + '-'*50)
-        print (f'Aula {numero_aula} - {descricao}\
-                \n   {link}')
+        sg.ChangeLookAndFeel('DarkBlue')
+        layout = [[sg.Text(f'{numero_aula} - {descricao}', font=('Helvetica', 20), justification=('center'))],
+                  [sg.Text(f'Link da aula:\n   {link}', size=(15,2), justification=('center'))],
+                  [sg.Button('Sair', size=(5,2), key='N', button_color='#7B68EE'),
+                   sg.Button('->', size=(5,2), key='S', button_color='#7B68EE')]]
+                
+        self.__window3 = sg.Window(f'Aula {numero_aula}', layout)
+    
+    def open_mostra_aulas(self, numero_aula, descricao, link):
+        self.mostra_aulas(numero_aula, descricao, link)
+        button, values = self.__window3.Read()
+        print (button)
+        return button
 
     def pega_dados_aula(self):
         sg.ChangeLookAndFeel('DarkBlue')
@@ -65,9 +72,6 @@ class TelaAula:
                 
         self.__window3 = sg.Window("Aula", layout)
 
-        # descricao_aula = str(input('Escreva aqui a descrição da aula: '))
-        # link_aula = str(input('Link da aula: '))
-    
     def open_pega_dados_aula(self):
         self.pega_dados_aula()
         button, values = self.__window3.Read()
@@ -95,5 +99,29 @@ class TelaAula:
 
         return valor_aula[0] - 1
 
-    def mostra_mensagem(self, msg):
-        print(msg)
+    def mostra_mensagem(self, titulo, mensagem):
+        sg.ChangeLookAndFeel('DarkBlue')
+        layout = [[sg.Text(f'{titulo}', font=('Helvetica', 20), justification=('center'))],
+                  [sg.Text(f'{mensagem}', size=(30,3), justification=('center'))],
+                  [sg.Button('OK', size=(5,2), button_color='#7B68EE')]]
+                
+        self.__window2 = sg.Window("Curso concluído", default_element_size=(30, 2)).Layout(layout)
+
+    def open_mensagem(self, titulo, mensagem):
+        self.mostra_mensagem(titulo, mensagem)
+        button, values = self.__window2.Read()
+        return button
+    
+    def pergunta (self):
+        sg.ChangeLookAndFeel('DarkBlue')
+        layout = [[sg.Text(f'Aulas', font=('Helvetica', 20), justification=('center'))],
+                  [sg.Text(f'Você já assistiu as aulas deste curso. \nDeseja assistir novamente?', size=(30,3), justification=('center'))],
+                  [sg.Button('Sim', size=(5,2), key='yes', button_color='#7B68EE'),
+                   sg.Button('Não', size=(5,2), key='no', button_color='#7B68EE')]]
+        
+        self.__window2 = sg.Window("Ver aulas", default_element_size=(30, 2)).Layout(layout)
+                
+    def open_pergunta(self):
+        self.pergunta()
+        button, values = self.__window2.Read()
+        return button

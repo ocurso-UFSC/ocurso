@@ -22,17 +22,24 @@ class ControladorAula():
     curso = self.__controlador_sistema.controlador_curso._ControladorCurso__curso_escolhido
     progresso = self.__controlador_sistema.controlador_progresso.progresso_por_curso_e_usuario(curso)
     aulas_restantes = len(curso._Curso__lista_aulas) - progresso.ultima_aula
+    if aulas_restantes <= 0:
+      see_again = self.__tela_aula.open_pergunta()
+      if see_again == 'yes':
+        progresso.ultima_aula = 0
+      self.__tela_aula.close_mexe_na_aula()
 
-    for c in range(aulas_restantes):
+
+    for _ in range(aulas_restantes):
       aula = curso.lista_aulas[progresso.ultima_aula]
-      self.__tela_aula.mostra_aulas(progresso.ultima_aula + 1, aula._Aula__descricao_aula, aula._Aula__link_aula)
-      progresso.ultima_aula += 1 # talvez precisa repetir
-      continuar = self.__tela_aula.continuar_aula()
+      continuar = self.__tela_aula.open_mostra_aulas(progresso.ultima_aula + 1, aula._Aula__descricao_aula, aula._Aula__link_aula)
+      if continuar == 'S':
+        progresso.ultima_aula += 1 # talvez precisa repetir
       if continuar == 'N':
         break
-
       if progresso.ultima_aula == len(curso._Curso__lista_aulas):
-        self.__tela_aula.mostra_mensagem('\nParabéns! Você concluiu as aulas deste curso.')
+        self.__tela_aula.open_mensagem('Parabéns!', 'Você concluiu as aulas deste curso!')
+        self.__tela_aula.close_mexe_na_aula()
+      self.__tela_aula.close_pega_dados_aula()
     self.listar_aulas()
 
   def cadastra_aula(self, dados):

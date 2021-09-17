@@ -80,6 +80,7 @@ class ControladorSistema:
           
 
     def automatico(self):
+        self.__tela_sistema.close()
         # cria usuarios
         
         dados_usuario = {"nome": "Joao", "email": "joao@gmail.com", "senha": "123", "adm": False}
