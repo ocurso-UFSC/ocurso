@@ -3,7 +3,6 @@ import PySimpleGUI as sg
 class TelaSistema():
     def __init__(self):
         self.__window = None
-        self.init_components()
 
     def init_components(self):
         sg.ChangeLookAndFeel('DarkBlue')
@@ -19,12 +18,13 @@ class TelaSistema():
         self.__window = sg.Window("oCurso", default_element_size=(40, 1)).Layout(layout)
     
     def open(self):
+        self.init_components()
         button, values = self.__window.Read()
-        print (button, values)
         return button
 
     def close(self):
         self.__window.Close()
+        self.__window = None
 
     def mostra_mensagem(self, mensagem):
         sg.Popup(mensagem)

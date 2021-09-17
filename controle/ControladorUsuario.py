@@ -144,6 +144,7 @@ class ControladorUsuario():
       self.__tela_usuario.mostra_mensagem("ATENÇÃO!!! Usuário inexistente")
 
   def retornar(self):
+    self.__tela_usuario.close()
     self.__controlador_sistema.abre_tela()
 
   def abre_tela(self):

@@ -31,6 +31,7 @@ class TelaUsuario():
 
   def close(self):
     self.__window.Close()
+    self.__window = None
 
   def mostra_info_usuario(self, dados_usuario):
     sg.ChangeLookAndFeel('DarkBlue')
@@ -57,12 +58,8 @@ class TelaUsuario():
     self.__window2 = sg.Window("Informações", default_element_size=(40, 1)).Layout(layout)
 
 
-  # [sg.Listbox(values=('Listbox 1', 'Listbox 2', 'Listbox 3'), size=(30, 3))]
-
   def listar_todos_usuarios_info(self, lista_usuarios):
     botoes = [[sg.Button("Editar", key=1), sg.Button("Sair", key=0)]]
-
-    print(lista_usuarios)
     layout = [
       [sg.Text('Todos Usuários', size=(15, 1), font=("Helvetica", 15))],
       [sg.Listbox(values=lista_usuarios, key="email", size=(20, 10))],
@@ -87,16 +84,13 @@ class TelaUsuario():
         sg.InputText(dados_usuario["senha"], key="senha")],        
 
       [sg.Text('ADM', size=(8, 1), font=("Helvetica", 15)),
-      
-        sg.Radio('Sim', "radio", key="adm",default = dados_usuario["adm"]), sg.Radio('Não', "radio", key="n_adm")
-      
-      ]
-      ]
+        sg.Radio('Sim', "radio", key="adm", default = dados_usuario["adm"]), sg.Radio('Não', "radio", key="n_adm", default = (not dados_usuario["adm"]))
+      ]]
 
     layout = [[sg.Text('Informações', size=(15,1), font=("Helvetica", 25), justification='center')],
               [sg.Column(infos, justification='center')],
               [sg.Column(botoes, justification='center', k='-C-')],
-    ]
+            ]
 
     self.__window2 = sg.Window("Informações", default_element_size=(40, 1)).Layout(layout)
 
