@@ -65,6 +65,7 @@ class TelaUsuario():
   def listar_todos_usuarios_info(self, lista_usuarios):
     botoes = [[sg.Button("Editar", key=1), sg.Button("Sair", key=0)]]
 
+    print(lista_usuarios)
     layout = [
       [sg.Text('Todos Usuários', size=(15, 1), font=("Helvetica", 15))],
       [sg.Listbox(values=lista_usuarios, key="username", size=(20, 10))],
