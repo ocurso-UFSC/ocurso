@@ -80,7 +80,7 @@ Digite a opção: '''))
 
     entrada = [
               [sg.Text("Usuário")],
-              [sg.InputText(size=(20,2), key="nome")],
+              [sg.Input(size=(20,2), key="nome")],
               [sg.Text("Email")],
               [sg.InputText(size=(20,2), key="email")],
               [sg.Text("Senha")],
@@ -100,6 +100,7 @@ Digite a opção: '''))
   def open_cadastro(self):
     self.pega_dados_cadastro()
     button, values = self.__window2.Read()
+    print(button, values)
     return values
 
   def close_cadastro(self):
