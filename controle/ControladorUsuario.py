@@ -96,6 +96,10 @@ class ControladorUsuario():
       self.__tela_usuario.close_opcao()
       self.alterar_usuario_info(usuario)
 
+    elif button == 2:
+      self.excluir_usuario(usuario)
+      self.__tela_usuario.close_opcao()
+
   def lista_usuarios(self, usuario = None):
     if len(self.__usuarios) == 0:
       self.__tela_usuario.mostra_mensagem("Nenhum usuário cadastrado")
@@ -126,39 +130,24 @@ class ControladorUsuario():
   def mostra_usuario_logado(self):
     self.lista_usuarios(self.__controlador_sistema.usuario_logado)
 
-  def excluir_minha_conta(self):
-    self.__tela_usuario.mostra_mensagem("Adeus")
-    self.excluir_usuario(self.__controlador_sistema.usuario_logado)
-    exit()
-
   def excluir_usuario(self, usuario = None):
-    if usuario == None:
-      email_usuario = self.__tela_usuario.seleciona_usuario()
-      usuario = self.pega_usuario_por_email(email_usuario)
-
     if (usuario != None):
+      if self.__controlador_sistema.usuario_logado == usuario:
+        self.__controlador_sistema.deslogar_usuario()
       self.__usuarios.remove(usuario)
-      self.__tela_usuario.mostra_mensagem("Usuario removido")
-
-    else:
-      self.__tela_usuario.mostra_mensagem("ATENÇÃO!!! Usuário inexistente")
+      self.__tela_usuario.show_message("Feito", "Usuario removido")
 
   def retornar(self):
     self.__tela_usuario.close()
     self.__controlador_sistema.abre_tela()
 
   def abre_tela(self):
-    # lista_opcoes = {1: self.minha_informacao, 2: self.alterar_meus_dados, 3: self.excluir_minha_conta, 0: self.retornar}
     
     lista_opcoes_adm = {1: self.informacao_user, 2: self.lista_usuarios, 4: self.incluir_usuario, 0: self.retornar}
     continua = True
     while continua:
-
-      # em caso de ADM
       if self.__controlador_sistema.usuario_logado.adm == True:
         lista_opcoes_adm[self.__tela_usuario.open()]()
 
-      # em caso de NÃO ADM
       else:
-        # lista_opcoes[self.__tela_usuario.tela_opcoes()]()
         pass

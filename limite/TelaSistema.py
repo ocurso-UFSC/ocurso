@@ -23,8 +23,9 @@ class TelaSistema():
         return button
 
     def close(self):
-        self.__window.Close()
-        self.__window = None
+        if self.__window != None:
+            self.__window.Close()
+            self.__window = None
 
     def mostra_mensagem(self, mensagem):
         sg.Popup(mensagem)
