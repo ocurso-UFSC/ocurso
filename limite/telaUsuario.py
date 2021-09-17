@@ -145,31 +145,3 @@ class TelaUsuario():
 
   def show_message(self, titulo: str, mensagem: str):
     sg.Popup(titulo, mensagem)
-
-  def pega_dados_usuario(self):
-    nome = input("Nome: ")
-    email = input("Email: ")
-    senha = input("Senha: ")
-    adm = input("Adm? s/Sim n/Nao: ")
-  
-    return {"nome": nome, "email": email, "senha": senha, "adm": adm}
-
-  def pega_login(self):
-    print("Entre com login do usuário: ")
-    email = input("Email: ")
-    senha = input("Senha: ")
-  
-    return {"email": email, "senha": senha}
-
-  def mostra_usuario(self, usuario):
-    print("Nome: ", usuario.nome)
-    print("Email: ", usuario.email)
-    print("Senha: ", usuario.senha)
-    print("ADM: ", usuario.adm, '\n')
-
-  def seleciona_usuario(self):
-    email = input("Qual o o email do usuario deseja buscar? ")
-    return email
-
-  def mostra_mensagem(self, msg):
-    print(msg)

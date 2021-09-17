@@ -147,6 +147,7 @@ class ControladorSistema:
         self.__controlador_questao.cadastra_questao_aut("python", infos_questao, desc_alternativas)
 
     def progresso(self):
+        self.__tela_sistema.close()
         self.__controlador_progresso.abre_tela()
 
     def abre_tela(self):

@@ -23,6 +23,116 @@ class ControladorProgresso():
       if progresso.usuario == usuario and progresso.curso == curso:
         return progresso
     return None
+
+  def cursos_ja_cadastrado_por_usuario(self, usuario = None):
+    if usuario == None:
+      usuario = self.__controlador_sistema.usuario_logado
+
+    lista_cursos = []
+    for progresso in self.__progressos:
+      if progresso.usuario == usuario:
+        lista_cursos.append(progresso.curso.nome_do_curso)
+  
+    return lista_cursos
+
+  def progresso_to_json(self, progresso):
+    dados_progresso = {}
+    dados_progresso["nome_aluno"] = progresso.usuario.nome
+    dados_progresso["nome_curso"] = progresso.curso.nome_do_curso
+
+    if progresso.nota != None:
+      dados_progresso["nota"] = progresso.nota
+    else:
+      dados_progresso["nota"] = "Sem nota"
+
+    if len(progresso.curso.lista_aulas) != 0:
+      ptg_conc = (progresso.ultima_aula / len(progresso.curso.lista_aulas)) * 100
+    else:
+      ptg_conc = "Nenhuma"
+      
+    dados_progresso["aula_concluida"] = ptg_conc
+
+    return dados_progresso
+
+  def todos_usuarios(self):
+    lista_usuarios_email = []
+
+    for progresso in self.__progressos:
+      if progresso.usuario.email not in lista_usuarios_email:
+        lista_usuarios_email.append(progresso.usuario.email)
+
+    while True:
+
+      button, values = self.__tela_progresso.open_opcao(3, lista_usuarios_email)
+
+
+      if button == 0:
+        self.__tela_progresso.close_opcao()
+        self.__tela_progresso.close()
+        return False
+
+      elif len(values["email"]) == 0:
+        self.__tela_progresso.show_message("Erro", "Nenhum selecionado")
+        self.__tela_progresso.close_opcao()
+        self.__tela_progresso.close()
+        return False
+
+      else:
+        usuario = self.__controlador_sistema.controlador_usuario.pega_usuario_por_email(values["email"][0])
+        self.__tela_progresso.close_opcao()
+        self.__tela_progresso.close()
+        self.relatorio_ind(usuario)
+        # self.informacao_user(usuario)
+        return True
+
+  def relatorio_ind(self, usuario = None):
+    if usuario == None:
+      usuario = self.__controlador_sistema.usuario_logado
+
+    self.__tela_progresso.close()
+    lista_cursos = self.cursos_ja_cadastrado_por_usuario(usuario)
+    
+    while True:
+      button, values = self.__tela_progresso.open_opcao(1, lista_cursos)
+
+      if button == 0:
+        self.__tela_progresso.close_opcao()
+        return False
+
+      elif button == 1: 
+        if len(values["nome_curso"]) == 0:
+          self.__tela_progresso.show_message("Erro", "Nenhum selecionado")
+          self.__tela_progresso.close_opcao()
+
+        else:
+          # se estiver ok..
+          nome_curso = values["nome_curso"][0]
+          curso = self.__controlador_sistema.controlador_curso.pega_curso_por_nome(nome_curso)
+          progresso = self.progresso_por_curso_e_usuario(curso, usuario)
+          self.__tela_progresso.close_opcao()
+          self.detalhes_progresso(progresso)
+          return True
+
+
+  def gerar_certificado(self, progresso):
+    if progresso.nota != None:
+      self.__tela_progresso.show_message("Parabéns", "Show de bola cara")
+      # implementar certificado
+
+    else:
+      self.__tela_progresso.show_message("Erro", "Curso não concluído")
+
+  def detalhes_progresso(self, progresso):
+    dados_progresso = self.progresso_to_json(progresso)
+    button, values = self.__tela_progresso.open_opcao(2, dados_progresso)
+
+    if button == 1:
+      self.__tela_progresso.close_opcao()
+      self.gerar_certificado(progresso)
+      print("Seu certificado...")
+      
+    else:
+      self.__tela_progresso.close_opcao()
         
   def cadastrar_no_curso(self, usuario = None):
     self.__tela_progresso.mostra_mensagem('Opções de Cursos:')
@@ -90,7 +200,12 @@ class ControladorProgresso():
     if len(prog) != 0:
       for progresso in prog:
         self.__tela_progresso.mostra_mensagem("\nCurso: {}".format(progresso.curso.nome_do_curso))
-        ptg_conc = (progresso.ultima_aula / len(progresso.curso.lista_aulas)) * 100
+        
+        if len(progresso.curso.lista_aulas) != 0:
+          ptg_conc = (progresso.ultima_aula / len(progresso.curso.lista_aulas)) * 100
+        else:
+          ptg_conc = "NaN"
+
         self.__tela_progresso.mostra_mensagem("Concluiu: {} ptg  das aulas".format(ptg_conc))
         
         if progresso.nota != None:
@@ -101,35 +216,14 @@ class ControladorProgresso():
     else:
       print('Nenhum progresso encontrado')
 
-  def mostra_relatorio_todos(self):
-    usuarios = self.__controlador_sistema.controlador_usuario.usuarios
-    for usuario in usuarios:
-      self.mostra_relatorio_indv(usuario)
-
-  def gerar_certificado(self, usuario = None):
-    if usuario == None:
-      usuario = self.__controlador_sistema.usuario_logado
-    
-    nome_curso = self.__tela_progresso.pega_entrada("Qual curso? ")
-    curso = self.__controlador_sistema.controlador_curso.pega_curso_por_nome(nome_curso)
-
-    progresso = self.progresso_por_curso_e_usuario(curso, usuario)
-
-    if progresso.nota != None:
-      certificado = f"Declaramos que o Aluno {usuario.nome} completou o curso {curso.nome_do_curso} de carga horária de {curso.quantidade_horas} horas,\
- com um aproveitamento de {progresso.nota * 10}% do curso"
-      
-      self.__tela_progresso.mostra_mensagem(certificado)
-      
-    else:
-      self.__tela_progresso.mostra_mensagem("Sem nota no curso")
-
   def retornar(self):
+    self.__tela_progresso.close()
+    self.__tela_progresso.close_opcao()
     self.__controlador_sistema.abre_tela()
 
   def abre_tela(self):
-    lista_opcoes = {1: self.cadastrar_no_curso, 2: self.mostra_relatorio_indv, 3: self.mostra_relatorio_todos, 4: self.gerar_certificado, 0: self.retornar}
+    lista_opcoes = {1: self.relatorio_ind, 2: self.todos_usuarios, 0: self.retornar}
 
     continua = True
     while continua:
-      lista_opcoes[self.__tela_progresso.tela_opcoes()]()
+      lista_opcoes[self.__tela_progresso.open()]()
