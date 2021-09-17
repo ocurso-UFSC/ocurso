@@ -15,10 +15,7 @@ class TelaUsuario():
               [sg.Button('Minhas Informações', size=(20,2), key=1)],
               [sg.Button('Listar Todos Usuários', size=(20,2), key=2)],
               [sg.Button('Cadastrar Usuário', size=(20,2), key=3)],
-              [sg.Button('Alterar Usuário', size=(20,2), key=4)],
-              [sg.Button('Excluir Usuário', size=(20,2), key=5)],
-              [sg.Button('Excluir a Minha Conta', size=(20,2), key=6)],
-              [sg.Button('Sair do Sistema', size=(20,2), key=0)]
+              [sg.Button('Voltar', size=(20,2), key=0)]
     ]
 
     layout = [
@@ -38,7 +35,7 @@ class TelaUsuario():
   def mostra_info_usuario(self, dados_usuario):
     sg.ChangeLookAndFeel('DarkBlue')
 
-    botoes = [[sg.Button("Editar", key=1), sg.Button("Sair", key=0)]]
+    botoes = [[sg.Button("Editar", key=1), sg.Button("Excluir", key=2), sg.Button("Sair", key=0)]]
 
     infos = [
       [sg.Text('Usuario', size=(8, 1), font=("Helvetica", 15)), 
@@ -67,7 +64,7 @@ class TelaUsuario():
 
     layout = [
       [sg.Text('Todos Usuários', size=(15, 1), font=("Helvetica", 15))],
-      [sg.Listbox(values=lista_usuarios, key="username", size=(20, 10))],
+      [sg.Listbox(values=lista_usuarios, key="email", size=(20, 10))],
       [sg.Column(botoes, justification='center', k='-C-')],
     ]
 
@@ -120,6 +117,7 @@ class TelaUsuario():
 
   def close_opcao(self):
     self.__window2.Close()
+    self.__window2 = None
 
   def show_message(self, titulo: str, mensagem: str):
     sg.Popup(titulo, mensagem)

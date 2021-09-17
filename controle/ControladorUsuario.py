@@ -49,47 +49,6 @@ class ControladorUsuario():
     return False
 
 
-  def alterar_meus_dados(self):
-    self.__tela_usuario.mostra_mensagem("Alterando seus dados")
-    self.__tela_usuario.mostra_mensagem("\n")
-    self.minha_informacao()
-    self.__tela_usuario.mostra_mensagem("Entre com os novos dados: ")
-    novos_dados_usuario = self.__tela_usuario.pega_dados_usuario()
-    self.__controlador_sistema.usuario_logado.nome = novos_dados_usuario["nome"]
-    self.__controlador_sistema.usuario_logado.email = novos_dados_usuario["email"]
-    self.__controlador_sistema.usuario_logado.senha = novos_dados_usuario["senha"]
-
-    self.__tela_usuario.mostra_mensagem("\n")
-
-  def alterar_usuario(self):
-    # Em caso de ser ADM
-    if self.__controlador_sistema.usuario_logado.adm == True:
-      self.lista_usuarios()
-      email_usuario = self.__tela_usuario.seleciona_usuario()
-      usuario = self.pega_usuario_por_email(email_usuario)
-
-      # Solicitacao de novos dados
-      if (usuario != None):
-        novos_dados_usuario = self.__tela_usuario.pega_dados_usuario()
-      
-      if novos_dados_usuario["adm"].lower() == "s" or novos_dados_usuario["adm"].lower() == "sim":
-        novos_dados_usuario["adm"] = True
-      elif novos_dados_usuario["adm"].lower() == "n" or novos_dados_usuario["adm"].lower() == "nao":
-        novos_dados_usuario["adm"] = False
-      else:
-        self.__tela_login.mostra_mensagem("Opcao ADM inválida")
-        return False
-
-      usuario.nome = novos_dados_usuario["nome"]
-      usuario.email = novos_dados_usuario["email"]
-      usuario.senha = novos_dados_usuario["senha"]
-      usuario.adm = novos_dados_usuario["adm"]
-      self.__tela_usuario.mostra_mensagem("\n")
-
-    # Caso o 'pega_usuario_por_email' retornar 'Null'
-    else:
-      self.__tela_usuario.mostra_mensagem("ATENÇÃO!!! Usuário inexistente")
-
   def user_to_json(self, usuario):
     dados_usuario = {}
     dados_usuario["nome"] = usuario.nome
@@ -99,7 +58,6 @@ class ControladorUsuario():
 
     return dados_usuario
 
-
   def alterar_usuario(self, usuario, novos_dados):
     try:
       usuario.nome = novos_dados["nome"]
@@ -108,10 +66,9 @@ class ControladorUsuario():
       usuario.adm = novos_dados["adm"]
       
       return True
-    
+
     except:
       return False
-
 
   def alterar_usuario_info(self, usuario):
     dados_antigos = self.user_to_json(usuario)
@@ -125,8 +82,10 @@ class ControladorUsuario():
     elif button == 0:
       self.__tela_usuario.close_opcao()
 
-  def minha_informacao(self):
-    usuario = self.__controlador_sistema.usuario_logado
+  def informacao_user(self, usuario = None):
+    if usuario == None:
+      usuario = self.__controlador_sistema.usuario_logado
+    
     dados_usuario = self.user_to_json(usuario)
     button, values = self.__tela_usuario.open_opcao(1, dados_usuario)
     
@@ -137,18 +96,32 @@ class ControladorUsuario():
       self.__tela_usuario.close_opcao()
       self.alterar_usuario_info(usuario)
 
-
   def lista_usuarios(self, usuario = None):
     if len(self.__usuarios) == 0:
       self.__tela_usuario.mostra_mensagem("Nenhum usuário cadastrado")
 
-    lista_nomes = []
+    lista_emails = []
     for usuario in self.__usuarios:
-      lista_nomes.append(usuario.nome)
+      lista_emails.append(usuario.email)
 
-    button, values = self.__tela_usuario.open_opcao(2, lista_nomes)
+    while True:
 
-    print(values)
+      button, values = self.__tela_usuario.open_opcao(2, lista_emails)
+
+      if button == 0:
+        self.__tela_usuario.close_opcao()
+        return False
+
+      elif len(values["email"]) == 0:
+        self.__tela_usuario.show_message("Erro", "Nenhum selecionado")
+        self.__tela_usuario.close_opcao()
+        return False
+
+      else:
+        usuario = self.pega_usuario_por_email(values["email"][0])
+        self.__tela_usuario.close_opcao()
+        self.informacao_user(usuario)
+        return True
 
   def mostra_usuario_logado(self):
     self.lista_usuarios(self.__controlador_sistema.usuario_logado)
@@ -174,9 +147,9 @@ class ControladorUsuario():
     self.__controlador_sistema.abre_tela()
 
   def abre_tela(self):
-    lista_opcoes = {1: self.minha_informacao, 2: self.alterar_meus_dados, 3: self.excluir_minha_conta, 0: self.retornar}
-    lista_opcoes_adm = {1: self.minha_informacao, 2: self.lista_usuarios, 3: self.alterar_meus_dados, 4: self.incluir_usuario, 
-                          5: self.alterar_usuario, 6: self.excluir_usuario, 7: self.excluir_minha_conta, 0: self.retornar}
+    # lista_opcoes = {1: self.minha_informacao, 2: self.alterar_meus_dados, 3: self.excluir_minha_conta, 0: self.retornar}
+    
+    lista_opcoes_adm = {1: self.informacao_user, 2: self.lista_usuarios, 4: self.incluir_usuario, 0: self.retornar}
     continua = True
     while continua:
 
