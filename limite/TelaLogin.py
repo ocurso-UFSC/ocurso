@@ -6,7 +6,6 @@ class TelaLogin():
     self.__window = None
     self.__window2 = None
     self.__window3 = None
-    self.init_components()
 
   def init_components(self):
     sg.ChangeLookAndFeel('DarkBlue')
@@ -26,6 +25,8 @@ class TelaLogin():
     self.__window = sg.Window("Login", default_element_size=(40, 1)).Layout(layout)
 
   def open(self):
+    self.__window = None
+    self.init_components()
     button, values = self.__window.Read()
     return button
 
@@ -87,7 +88,7 @@ Digite a opção: '''))
               [sg.InputText(size=(20,2), key="senha")],
               [sg.Text("Repita a senha")],
               [sg.InputText(size=(20,2), key="senha2")],
-              [sg.Button("Salvar")]
+              [sg.Button("Salvar", key = 1), sg.Button("Voltar", key = 0)]
             ]
 
     layout = [
@@ -100,7 +101,7 @@ Digite a opção: '''))
   def open_cadastro(self):
     self.pega_dados_cadastro()
     button, values = self.__window2.Read()
-    return values
+    return button, values
 
   def close_cadastro(self):
     self.__window2.Close()

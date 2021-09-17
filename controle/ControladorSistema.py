@@ -72,14 +72,12 @@ class ControladorSistema:
     def abre_aulas(self):
         self.__controlador_aula.abre_tela()
 
-    def encerra_sistema(self):
-        self.__tela_sistema.mostra_mensagem("Adios")
-        exit(0)
-
-    def deslogar(self):
-        self.__tela_sistema.mostra_mensagem("Usuario Deslogado")
-        self.usuario_logado = None
-        self.__controlador_login.abre_tela()
+    def deslogar_usuario(self):
+        self.__tela_sistema.mostra_mensagem("Usuário Deslogado")
+        self.__usuario_logado = None
+        self.__tela_sistema.close()
+        self.__controlador_login.inicializa_sistema()
+          
 
     def automatico(self):
         # cria usuarios
@@ -147,7 +145,7 @@ class ControladorSistema:
         self.__controlador_progresso.abre_tela()
 
     def abre_tela(self):
-        lista_opcoes = {1: self.usuario, 2: self.ver_curso, 3: self.progresso, 9: self.automatico, 0: self.encerra_sistema}
+        lista_opcoes = {1: self.usuario, 2: self.ver_curso, 3: self.progresso, 9: self.automatico, 0: self.deslogar_usuario}
 
         while True:
             opcao_escolhida = self.__tela_sistema.open()

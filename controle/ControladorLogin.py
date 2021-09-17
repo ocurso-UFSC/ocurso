@@ -1,19 +1,20 @@
 from limite.TelaLogin import TelaLogin
 
 class ControladorLogin:
-  __instance = None
-
   def __init__(self, controladorSistema):
     self.__tela_login = TelaLogin()
     self.__controlador_sistema = controladorSistema
 
   def inicializa_sistema(self):
-    # self.abre_tela()
-    (botao, dados) = self.__tela_login.open()
+    self.abre_tela()
 
   def logar(self):
     while True:
       dados_login = self.__tela_login.open_login()
+      
+      if (dados_login["email"] == "" or dados_login["email"] == None) and (dados_login["senha"] == "" or dados_login["senha"] == None):
+        self.__tela_login.close_login()
+        return False
       usuario = self.__controlador_sistema.controlador_usuario.pega_usuario_por_email_e_senha(dados_login["email"], dados_login["senha"])
       
       if usuario != None:
@@ -28,7 +29,12 @@ class ControladorLogin:
 
   def cadastrar(self):
     while True:
-      dados = self.__tela_login.open_cadastro()
+      button, dados = self.__tela_login.open_cadastro()
+
+      if button == 0:
+        self.__tela_login.close_cadastro()
+        return False
+
       dados["adm"] = "s"
       if (dados["nome"] != '' and dados["nome"] != None) and (dados["email"] != '' and dados["email"] != None)\
           and (dados["senha"] != '' and dados["senha"] != None) and (dados["senha2"] != '' and dados["senha2"] != None):
