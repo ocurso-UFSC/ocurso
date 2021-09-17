@@ -5,13 +5,12 @@ class TelaAula:
         self.__aulas = []
 
     def init_components(self):
-        self.__window = None
         aulas = self.__aulas
         sg.ChangeLookAndFeel('DarkBlue')
         ver_aulas = [[sg.Button('Ver aulas', size=(20,2), key=1, button_color='#7B68EE')]]
-        botoes = [[sg.Button('Adicionar \naula', size=(5,2), key=2, button_color='#7B68EE'),
-                  sg.Button('Alterar \naula', size=(5,2), key=3, button_color='#7B68EE'),
-                  sg.Button('Remover \naula', size=(5,2), key=4, button_color='#7B68EE')]]
+        botoes = [[sg.Button('+', size=(5,2), key=2, button_color='#7B68EE'),
+                  sg.Button('Alterar', size=(5,2), key=3, button_color='#7B68EE'),
+                  sg.Button('X', size=(5,2), key=4, button_color='#7B68EE')]]
 
         layout = [[sg.Text('Aulas', size=(15, 2), font=('Helvetica', 20), justification=('center'))],
                   [sg.Column(aulas, vertical_alignment='center', justification='center')],
@@ -19,11 +18,12 @@ class TelaAula:
                   [sg.Column(botoes, vertical_alignment='center', justification='center')],
                   [sg.Button('<-', size=(2,1), key=0)]]
 
-        return sg.Window("Aulas", default_element_size=(40, 1)).Layout(layout)
-    
+        self.__window = sg.Window("Aulas", layout)
+
     def open(self):
-        self.__window = self.init_components()
+        self.init_components()
         button, values = self.__window.Read()
+        print(button, values)
         return button
 
     def close(self):
@@ -50,6 +50,9 @@ class TelaAula:
 
     def lista_aulas(self, index_aula, descricao_aula):
         self.__aulas.append([sg.Text(f'{index_aula} - {descricao_aula}')])
+    
+    def limpar_lista_aulas(self):
+        self.__aulas = []
 
     def mostra_aulas(self, numero_aula, descricao, link):
         print ('\n' + '-'*50)

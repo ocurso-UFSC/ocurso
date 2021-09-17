@@ -10,6 +10,7 @@ class ControladorAula():
     self.__aula = Aula
   
   def listar_aulas(self):
+    self.__tela_aula.limpar_lista_aulas()
     curso = self.__controlador_sistema.controlador_curso._ControladorCurso__curso_escolhido
     for aula in curso._Curso__lista_aulas:
       numero_aula = curso._Curso__lista_aulas.index(aula) + 1
@@ -17,6 +18,7 @@ class ControladorAula():
       self.__tela_aula.lista_aulas(numero_aula, descricao_aula)
 
   def mostra_aulas(self):
+    self.__tela_aula.close()
     curso = self.__controlador_sistema.controlador_curso._ControladorCurso__curso_escolhido
     progresso = self.__controlador_sistema.controlador_progresso.progresso_por_curso_e_usuario(curso)
     aulas_restantes = len(curso._Curso__lista_aulas) - progresso.ultima_aula
@@ -31,6 +33,7 @@ class ControladorAula():
 
       if progresso.ultima_aula == len(curso._Curso__lista_aulas):
         self.__tela_aula.mostra_mensagem('\nParabéns! Você concluiu as aulas deste curso.')
+    self.listar_aulas()
 
   def cadastra_aula(self, dados):
     aula = Aula(dados['descricao_aula'], dados['link_aula'])
@@ -46,16 +49,20 @@ class ControladorAula():
     self.listar_aulas()
 
   def altera_aula(self):
-    numero_aula = self.__tela_aula.mexe_na_aula('Qual aula você deseja alterar? ')
+    self.__tela_aula.close()
+    numero_aula = self.__tela_aula.mexe_na_aula('')
     dados_aula = self.__tela_aula.pega_dados_aula()
     descricao_aula = dados_aula['descricao_aula']
     link_aula = dados_aula['link_aula']
     aula = self.__aula(descricao_aula, link_aula)
     self.__controlador_sistema.controlador_curso.alterar_aula(numero_aula, aula)
+    self.listar_aulas()
 
   def exclui_aula(self):
+    self.__tela_aula.close()
     numero_aula = self.__tela_aula.mexe_na_aula('Qual aula você deseja excluir? ')
     self.__controlador_sistema.controlador_curso.remover_aula(numero_aula)
+    self.listar_aulas()
 
   def retornar(self):
     self.__tela_aula.close()
@@ -66,4 +73,4 @@ class ControladorAula():
     lista_opcoes = {1:self.mostra_aulas, 2:self.adiciona_aula, 3:self.altera_aula, 4:self.exclui_aula, 0:self.retornar}
 
     while True:
-      lista_opcoes[self.__tela_aula.open()]()
+      print (lista_opcoes[self.__tela_aula.open()]())

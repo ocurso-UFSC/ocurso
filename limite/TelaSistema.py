@@ -20,6 +20,7 @@ class TelaSistema():
     
     def open(self):
         button, values = self.__window.Read()
+        print (button, values)
         return button
 
     def close(self):

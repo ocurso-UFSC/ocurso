@@ -81,7 +81,7 @@ Digite a opção: '''))
 
     entrada = [
               [sg.Text("Usuário")],
-              [sg.InputText(size=(20,2), key="nome")],
+              [sg.Input(size=(20,2), key="nome")],
               [sg.Text("Email")],
               [sg.InputText(size=(20,2), key="email")],
               [sg.Text("Senha")],
