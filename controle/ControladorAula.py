@@ -41,27 +41,31 @@ class ControladorAula():
 
   def adiciona_aula(self):                                     #adicionando aula
     self.__tela_aula.close()
-    dados_aula = self.__tela_aula.pega_dados_aula()
+    dados_aula = self.__tela_aula.open_pega_dados_aula()
     descricao_aula = dados_aula['descricao_aula']
     link_aula = dados_aula['link_aula']
     aula = self.__aula(descricao_aula, link_aula)
     self.__controlador_sistema.controlador_curso.adicionar_aula(aula)
+    self.__tela_aula.close_pega_dados_aula()
     self.listar_aulas()
 
   def altera_aula(self):
     self.__tela_aula.close()
-    numero_aula = self.__tela_aula.mexe_na_aula('')
-    dados_aula = self.__tela_aula.pega_dados_aula()
+    numero_aula = self.__tela_aula.open_mexe_na_aula('Alterar aulas')
+    dados_aula = self.__tela_aula.open_pega_dados_aula()
     descricao_aula = dados_aula['descricao_aula']
     link_aula = dados_aula['link_aula']
     aula = self.__aula(descricao_aula, link_aula)
     self.__controlador_sistema.controlador_curso.alterar_aula(numero_aula, aula)
+    self.__tela_aula.close_mexe_na_aula()
+    self.__tela_aula.close_pega_dados_aula()
     self.listar_aulas()
 
   def exclui_aula(self):
     self.__tela_aula.close()
-    numero_aula = self.__tela_aula.mexe_na_aula('Qual aula você deseja excluir? ')
+    numero_aula = self.__tela_aula.open_mexe_na_aula('Excluir aulas')
     self.__controlador_sistema.controlador_curso.remover_aula(numero_aula)
+    self.__tela_aula.close_mexe_na_aula()
     self.listar_aulas()
 
   def retornar(self):
