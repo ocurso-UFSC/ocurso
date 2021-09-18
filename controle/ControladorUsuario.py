@@ -11,7 +11,7 @@ class ControladorUsuario():
 
   @property
   def usuarios(self):
-    return self.__dao.get_all()
+    return self.__usuarios
 
   # def pega_usuario_por_email_e_senha(self, email: str, senha: str):
   #   for usuario in self.__usuarios:

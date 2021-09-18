@@ -34,7 +34,7 @@ class TelaQuestao():
     
     def alternativa(self, index):
         sg.ChangeLookAndFeel('DarkBlue')
-        descricao_alternativa = [[sg.Text(f'Alternativa {index}', size=(30, 1), font=("Helvetica", 15))],
+        descricao_alternativa = [[sg.Text(f'Descrição da questão {index}', size=(30, 1), font=("Helvetica", 15))],
                                  [sg.InputText('', key="descricao_alternativa")]]
 
         layout = [[sg.Column(descricao_alternativa, vertical_alignment='center', justification='center')],
@@ -92,6 +92,13 @@ class TelaQuestao():
         print (button, values)
         print (values['alternativa'][0][0])
         return values['alternativa'][0][0]
+
+    def alterando_questao(self):
+        numero_questao = int(input('Informe o número da questão: '))
+        return numero_questao
+
+    def mostra_descricao(self, numero_questao, descricao):
+        print(f'{numero_questao} - {descricao}')
 
     def mostra_pergunta(self, questao, alternativas):
         sg.ChangeLookAndFeel('DarkBlue')

@@ -1,16 +1,22 @@
 class Curso:
   def __init__(
       self,
+      codigo: int,
       nome_do_curso: str,
       descricao: str,
       quantidade_horas: str
       ):
 
+    self.__codigo = codigo
     self.__nome_do_curso = nome_do_curso
     self.__descricao = descricao
     self.__quantidade_horas = quantidade_horas
     self.__lista_aulas = []
     self.__avaliacao = []
+
+  @property
+  def codigo(self):
+    return self.__codigo
 
   @property
   def nome_do_curso(self):

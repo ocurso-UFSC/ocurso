@@ -1,25 +1,35 @@
 from limite.TelaProgresso import TelaProgresso
 from entidade.progresso import Progresso
+from dao.progresso_dao import progressoDAO
 
 class ControladorProgresso():
   def __init__(self, controlador_sistema):
-    self.__progressos = []
+    self.__dao = progressoDAO()
+    # self.__progressos = self.__dao.get_all()
     self.__tela_progresso = TelaProgresso()
     self.__controlador_sistema = controlador_sistema
+
+  def get_next_key(self):
+    all = self.__dao.get_all()
+    return len(all) + 1
 
   def cria_progresso(self, curso, usuario = None):
     if usuario == None:
       usuario = self.__controlador_sistema.usuario_logado
 
-    progresso = Progresso(usuario, curso)
+    codigo = self.get_next_key()
+    progresso = Progresso(codigo, usuario, curso)
+    
     self.adiciona_progresso(progresso)
+    
     return True
 
   def progresso_por_curso_e_usuario(self, curso, usuario = None):
     if usuario == None:
       usuario = self.__controlador_sistema.usuario_logado
-    
-    for progresso in self.__progressos:
+
+    progressos = self.__dao.get_all()
+    for progresso in progressos:
       if progresso.usuario == usuario and progresso.curso == curso:
         return progresso
     return None
@@ -29,7 +39,9 @@ class ControladorProgresso():
       usuario = self.__controlador_sistema.usuario_logado
 
     lista_cursos = []
-    for progresso in self.__progressos:
+    
+    progressos = self.__dao.get_all()
+    for progresso in progressos:
       if progresso.usuario == usuario:
         lista_cursos.append(progresso.curso.nome_do_curso)
   
@@ -57,7 +69,8 @@ class ControladorProgresso():
   def todos_usuarios(self):
     lista_usuarios_email = []
 
-    for progresso in self.__progressos:
+    progressos = self.__dao.get_all()
+    for progresso in progressos:
       if progresso.usuario.email not in lista_usuarios_email:
         lista_usuarios_email.append(progresso.usuario.email)
 
@@ -155,7 +168,7 @@ class ControladorProgresso():
     return False
 
   def adiciona_progresso(self, progresso):
-    self.__progressos.append(progresso)
+    self.__dao.add(progresso)
     return True
 
   def definir_ultima_aula(self, aula, curso, usuario = None):
@@ -184,11 +197,14 @@ class ControladorProgresso():
     progresso.nota = nota
 
   def todos_progressos_por_usuario(self, usuario):
-    progressos = []
-    for progresso in self.__progressos:
+    progressos_user = []
+    progressos = self.__dao.get_all()
+
+    for progresso in progressos:
       if progresso.usuario == usuario:
-        progressos.append(progresso)
-    return progressos
+        progressos_user.append(progresso)
+
+    return progressos_user
 
   def mostra_relatorio_indv(self, usuario = None):
     if usuario == None:
