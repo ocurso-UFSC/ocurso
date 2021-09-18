@@ -41,6 +41,10 @@ class ControladorSistema:
         return self.__controlador_usuario
 
     @property
+    def controlador_login(self):
+        return self.__controlador_login
+
+    @property
     def controlador_progresso(self):
         return self.__controlador_progresso
 
@@ -143,6 +147,7 @@ class ControladorSistema:
         # self.__controlador_questao.cadastra_questao_aut(infos_questao, desc_alternativas)
 
     def progresso(self):
+        self.__tela_sistema.close()
         self.__controlador_progresso.abre_tela()
 
     def abre_tela(self):
