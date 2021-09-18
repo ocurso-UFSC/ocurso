@@ -1,27 +1,47 @@
 from limite.telaUsuario import TelaUsuario
 from entidade.usuario import Usuario
+from dao.usuario_dao import usuarioDAO
 
 class ControladorUsuario():
   def __init__(self, controlador_sistema):
     self.__usuarios = []
     self.__tela_usuario = TelaUsuario()
     self.__controlador_sistema = controlador_sistema
+    self.__dao = usuarioDAO()
 
   @property
   def usuarios(self):
     return self.__usuarios
 
+  # def pega_usuario_por_email_e_senha(self, email: str, senha: str):
+  #   for usuario in self.__usuarios:
+  #     if (usuario.email == email) and (usuario.senha == senha):
+  #       return usuario
+  #     return None
+
   def pega_usuario_por_email_e_senha(self, email: str, senha: str):
-    for usuario in self.__usuarios:
-      if (usuario.email == email) and (usuario.senha == senha):
+    try:
+      usuario = self.__dao.get(email)
+      if usuario.senha == senha:
+        print("Usuario", usuario)
         return usuario
-      return None
+    except:
+      pass
+    return None
+
+  # def pega_usuario_por_email(self, email: str):
+  #   for usuario in self.__usuarios:
+  #     if (usuario.email == email):
+  #       return usuario
+  #   return None
 
   def pega_usuario_por_email(self, email: str):
-    for usuario in self.__usuarios:
-      if (usuario.email == email):
-        return usuario
-    return None
+    try:
+      usuario = self.__dao.get(email)
+      return usuario
+    
+    except:
+      return None
 
   def criar_usuario(self, dados_usuario):
     usuario = Usuario(dados_usuario["nome"], dados_usuario["email"], dados_usuario["senha"], dados_usuario["adm"])
@@ -29,8 +49,8 @@ class ControladorUsuario():
     return usuario
 
   def cadastrar_usuario(self, usuario):
-    self.__usuarios.append(usuario)
-
+    # self.__usuarios.append(usuario)
+    self.__dao.add(usuario)
   
   def cadastrar(self):
     while True:
@@ -93,6 +113,7 @@ class ControladorUsuario():
       usuario.email = novos_dados["email"]
       usuario.senha = novos_dados["senha"]
       usuario.adm = novos_dados["adm"]
+      self.__dao.update()
       
       return True
 
@@ -137,11 +158,10 @@ class ControladorUsuario():
       self.__tela_usuario.close_opcao()
 
   def lista_usuarios(self, usuario = None):
-    if len(self.__usuarios) == 0:
-      self.__tela_usuario.mostra_mensagem("Nenhum usuário cadastrado")
 
     lista_emails = []
-    for usuario in self.__usuarios:
+    # for usuario in self.__usuarios:
+    for usuario in self.__dao.get_all():
       lista_emails.append(usuario.email)
 
     while True:
@@ -166,9 +186,6 @@ class ControladorUsuario():
         self.informacao_user(usuario)
         return True
 
-  def mostra_usuario_logado(self):
-    self.lista_usuarios(self.__controlador_sistema.usuario_logado)
-
   def excluir_usuario(self, usuario = None):
     if (usuario != None):
       if self.__controlador_sistema.usuario_logado == usuario:
@@ -176,7 +193,8 @@ class ControladorUsuario():
         self.__tela_usuario.close_opcao()
         self.__controlador_sistema.deslogar_usuario()
 
-      self.__usuarios.remove(usuario)
+      # self.__usuarios.remove(usuario)
+      self.__dao.remove(usuario.email)
       self.__tela_usuario.show_message("Feito", "Usuario removido")
 
   def retornar(self):
