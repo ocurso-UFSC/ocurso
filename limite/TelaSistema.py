@@ -9,7 +9,6 @@ class TelaSistema():
         botoes = [[sg.Button('Usuário', size=(20,2), key=1, button_color='#7B68EE')],
                   [sg.Button('Cursos', size=(20,2), key=2, button_color='#7B68EE')],
                   [sg.Button('Progresso', size=(20,2), key=3, button_color='#7B68EE')],
-                  [sg.Button('AUTOMATICO', size=(20,2), key=9, button_color='#7B68EE')],
                   [sg.Button('Deslogar', size=(20,2), key=0)]]
 
         layout = [[sg.Text('oCurso', size=(15, 2), font=('Helvetica', 20), justification=('center'))],
