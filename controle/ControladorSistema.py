@@ -142,9 +142,9 @@ class ControladorSistema:
 
 
         # Questao curso
-        infos_questao = {'descricao_questao':'Qual é a certa?', 'alternativa_correta': 'a'}
-        desc_alternativas = ["Lorem ipsum, lorem ipsum", "Ipsum lorem, ipsum lorem"]
-        self.__controlador_questao.cadastra_questao_aut("python", infos_questao, desc_alternativas)
+        # infos_questao = {'descricao_questao':'Qual é a certa?', 'alternativa_correta': 'a'}
+        # desc_alternativas = ["Lorem ipsum, lorem ipsum", "Ipsum lorem, ipsum lorem"]
+        # self.__controlador_questao.cadastra_questao_aut(infos_questao, desc_alternativas)
 
     def progresso(self):
         self.__tela_sistema.close()
