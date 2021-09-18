@@ -4,14 +4,14 @@ from dao.usuario_dao import usuarioDAO
 
 class ControladorUsuario():
   def __init__(self, controlador_sistema):
-    self.__usuarios = []
+    # self.__usuarios = []
     self.__tela_usuario = TelaUsuario()
     self.__controlador_sistema = controlador_sistema
     self.__dao = usuarioDAO()
 
   @property
   def usuarios(self):
-    return self.__usuarios
+    return self.__dao.get_all()
 
   # def pega_usuario_por_email_e_senha(self, email: str, senha: str):
   #   for usuario in self.__usuarios:
