@@ -2,15 +2,21 @@
 class Progresso:
   def __init__(
       self,
+      codigo: int,
       usuario: object,
       curso: object,
       ultima_aula: int = 0,
       nota: float = None):
 
+    self.__codigo = codigo
     self.__usuario = usuario
     self.__curso = curso
     self.__ultima_aula = ultima_aula
     self.__nota = nota
+
+  @property
+  def codigo(self):
+    return self.__codigo
 
   @property
   def usuario(self):
