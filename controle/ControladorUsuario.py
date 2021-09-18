@@ -109,7 +109,6 @@ class ControladorUsuario():
       lista_emails.append(usuario.email)
 
     while True:
-
       button, values = self.__tela_usuario.open_opcao(2, lista_emails)
 
       if button == 0:

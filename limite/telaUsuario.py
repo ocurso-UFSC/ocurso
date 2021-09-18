@@ -84,7 +84,8 @@ class TelaUsuario():
         sg.InputText(dados_usuario["senha"], key="senha")],        
 
       [sg.Text('ADM', size=(8, 1), font=("Helvetica", 15)),
-        sg.Radio('Sim', "radio", key="adm", default = dados_usuario["adm"]), sg.Radio('Não', "radio", key="n_adm", default = (not dados_usuario["adm"]))
+        sg.Radio('Sim', "radio", key="adm", default = dados_usuario["adm"]),
+        sg.Radio('Não', "radio", key="n_adm", default = (not dados_usuario["adm"]))
       ]]
 
     layout = [[sg.Text('Informações', size=(15,1), font=("Helvetica", 25), justification='center')],
@@ -97,6 +98,7 @@ class TelaUsuario():
   def open_edit_user(self, dados):
     self.edita_usuario(dados)
     button, values = self.__window2.Read()
+    print (button, values)
     
     return button, values
 
@@ -108,6 +110,7 @@ class TelaUsuario():
       self.listar_todos_usuarios_info(dados)
 
     button, values = self.__window2.Read()
+    print (button, values)
     return button, values
 
   def close_opcao(self):

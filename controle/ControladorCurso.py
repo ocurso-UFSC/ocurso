@@ -70,19 +70,16 @@ class ControladorCurso():
     else:
       self.__tela_curso.mostra_mensagem("ATENÇÃO!!! Curso inexistente")
     
-  def incluir_questao(self, nome_curso, questao):
-    curso = self.pega_curso_por_nome(nome_curso)
-    index_do_curso = self.__cursos.index(curso)
+  def incluir_questao(self, questao):
+    index_do_curso = self.__cursos.index(self.__curso_escolhido)
     self.__cursos[index_do_curso]._Curso__avaliacao.append(questao)
   
-  def alterar_questao(self, nome_curso, numero_questao, questao):
-    curso = self.pega_curso_por_nome(nome_curso)
-    index_do_curso = self.__cursos.index(curso)
+  def alterar_questao(self, numero_questao, questao):
+    index_do_curso = self.__cursos.index(self.__curso_escolhido)
     self.__cursos[index_do_curso]._Curso__avaliacao[numero_questao - 1] = questao
 
-  def remover_questao(self, nome_curso, numero_questao):
-    curso = self.pega_curso_por_nome(nome_curso)
-    index_do_curso = self.__cursos.index(curso)
+  def remover_questao(self, numero_questao):
+    index_do_curso = self.__cursos.index(self.__curso_escolhido)
     self.__cursos[index_do_curso]._Curso__avaliacao.pop(numero_questao - 1)
     
   def abre_aulas(self):
