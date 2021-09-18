@@ -70,7 +70,7 @@ class TelaProgresso():
       [sg.Text('Curso', size=(8, 1), font=("Helvetica", 15)), 
         sg.Text(dados_progresso["nome_curso"], font=("Helvetica", 15))],
       [sg.Text('Aulas Concluidas', size=(8, 1), font=("Helvetica", 15)), 
-        sg.Text((dados_progresso["aula_concluida"] + "%"), font=("Helvetica", 15))], 
+        sg.Text((str(dados_progresso["aula_concluida"]) + "%"), font=("Helvetica", 15))], 
       [sg.Text('Nota', size=(8, 1), font=("Helvetica", 15)), 
         sg.Text(dados_progresso["nota"], font=("Helvetica", 15))],
       ]
