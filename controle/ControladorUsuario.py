@@ -23,7 +23,6 @@ class ControladorUsuario():
     try:
       usuario = self.__dao.get(email)
       if usuario.senha == senha:
-        print("Usuario", usuario)
         return usuario
     except:
       pass
@@ -110,11 +109,10 @@ class ControladorUsuario():
   def alterar_usuario(self, usuario, novos_dados):
     try:
       usuario.nome = novos_dados["nome"]
-      usuario.email = novos_dados["email"]
+      # usuario.email = novos_dados["email"] # nao pode atualizar a PK
       usuario.senha = novos_dados["senha"]
       usuario.adm = novos_dados["adm"]
       self.__dao.update()
-      
       return True
 
     except:

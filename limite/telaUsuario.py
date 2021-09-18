@@ -65,16 +65,15 @@ class TelaUsuario():
     botoes = [[sg.Button("Editar", key=1), sg.Button("Excluir", key=2), sg.Button("Sair", key=0)]]
 
     infos = [
-      [sg.Text('Usuario', size=(8, 1), font=("Helvetica", 15)), 
-        sg.Text(dados_usuario["nome"], font=("Helvetica", 15))],
       [sg.Text('Email', size=(8, 1), font=("Helvetica", 15)), 
         sg.Text(dados_usuario["email"], font=("Helvetica", 15))],
+      [sg.Text('Nome', size=(8, 1), font=("Helvetica", 15)), 
+        sg.Text(dados_usuario["nome"], font=("Helvetica", 15))],
       [sg.Text('Senha', size=(8, 1), font=("Helvetica", 15)), 
         sg.Text(dados_usuario["senha"], font=("Helvetica", 15))], 
       [sg.Text('ADM', size=(8, 1), font=("Helvetica", 15)), 
         sg.Text(dados_usuario["adm"], font=("Helvetica", 15))],
       ]
-      # [sg.Column(text, vertical_alignment='center', justification='center', k='-C-')]
 
     layout = [[sg.Text('Informações', size=(15,1), font=("Helvetica", 25), justification='center')],
               [sg.Column(infos, justification='center')],
@@ -100,11 +99,12 @@ class TelaUsuario():
     botoes = [[sg.Button("Salvar", key=1), sg.Button("Sair", key=0)]]
 
     infos = [
-      [sg.Text('Usuario', size=(8, 1), font=("Helvetica", 15)),
-        sg.InputText(dados_usuario["nome"], key="nome")],
 
       [sg.Text('Email', size=(8, 1), font=("Helvetica", 15)),
-        sg.InputText(dados_usuario["email"], key="email")],        
+        sg.Text(dados_usuario["email"], key="email")],
+
+      [sg.Text('Usuario', size=(8, 1), font=("Helvetica", 15)),
+        sg.InputText(dados_usuario["nome"], key="nome")],
 
       [sg.Text('Senha', size=(8, 1), font=("Helvetica", 15)),
         sg.InputText(dados_usuario["senha"], key="senha")],        
