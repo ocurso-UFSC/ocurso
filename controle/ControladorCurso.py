@@ -148,6 +148,7 @@ class ControladorCurso():
           pass
 
       self.__tela_curso.close_opcao()
+      return False
 
 
 
