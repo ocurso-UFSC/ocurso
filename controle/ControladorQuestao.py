@@ -168,8 +168,9 @@ class ControladorQuestao():
         self.__controlador_sistema.abre_tela()
 
     def abre_tela(self):
+        usuario_logado = self.__controlador_sistema._ControladorSistema__usuario_logado
+        adm = usuario_logado._Usuario__adm
         lista_opcoes = {1:self.mostra_perguntas, 2: self.incluir_questao, 5:self.listar_questoes, 9:self.mostrar_respostas, 0:self.retornar}
-
         continua = True
         while continua:
-          lista_opcoes[self.__tela_questao.open_window()]()
+          lista_opcoes[self.__tela_questao.open_window(adm)]()
