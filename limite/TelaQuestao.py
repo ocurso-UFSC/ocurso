@@ -5,8 +5,8 @@ class TelaQuestao():
         self.__window2 = None
         self.__window3 = None
 
+    #telas e microtelas
     def tela_opcoes(self, adm=False):
-        print(adm)
         sg.ChangeLookAndFeel('DarkBlue')
         if adm == True:
             botoes = [[sg.Button('Avaliação', size=(20,2), key=1, button_color='#7B68EE')],
@@ -24,15 +24,6 @@ class TelaQuestao():
         
         self.__window = sg.Window('oCurso').Layout(layout)
     
-    def open_window(self, adm):
-        self.tela_opcoes(adm)
-        button, values = self.__window.Read()
-        return button
-    
-    def close_window(self):
-        self.__window.Close()
-        self.__window = None
-    
     def quantidade(self, msg):
         quantidade = int(input(msg))
         return quantidade
@@ -46,12 +37,6 @@ class TelaQuestao():
                   [sg.Button('->', size=(2,1), key=0)]]
         
         self.__window2 = sg.Window("Adicionando questão", default_element_size=(40, 3)).Layout(layout)
-
-    def open_alternativa(self, index):
-        self.alternativa(index)
-        button, values = self.__window2.Read()
-        print (button, values)
-        return values['descricao_alternativa']
 
     def infos_questao(self):
         sg.ChangeLookAndFeel('DarkBlue')
@@ -67,19 +52,6 @@ class TelaQuestao():
         
         self.__window3 = sg.Window("Adicionando questão", default_element_size=(40, 3)).Layout(layout)
 
-        # descricao_questao = str(input('Escreva a sua descrição: '))
-        # quantidade_alternativas = int(input('qnts alternativas: '))
-        # return {
-        #     'descricao_questao':descricao_questao,
-        #     'quantidade_alternativas':quantidade_alternativas,
-        # }
-    
-    def open_infos_questao(self):
-        self.infos_questao()
-        button, values = self.__window3.Read()
-        print (button, values)
-        return values
-
     def alternativa_correta(self, alternativas):
         sg.ChangeLookAndFeel('DarkBlue')
         botoes = [[sg.Button("->", key=1)]]
@@ -90,13 +62,6 @@ class TelaQuestao():
         ]
 
         self.__window2 = sg.Window("Avaliação", default_element_size=(100, 1)).Layout(layout)
-    
-    def open_alternativa_correta(self, alternativas):
-        self.alternativa_correta(alternativas)
-        button, values = self.__window2.Read()
-        print (button, values)
-        print (values['alternativa'][0][0])
-        return values['alternativa'][0][0]
 
     def mostra_pergunta(self, questao, alternativas):
         sg.ChangeLookAndFeel('DarkBlue')
@@ -105,22 +70,6 @@ class TelaQuestao():
                   [sg.Button('->', size=(5,2), button_color='#7B68EE')]]
 
         self.__window2 = sg.Window("Avaliação").Layout(layout)
-    
-    def open_mostra_pergunta(self, questao=None, alternativas=None):
-        while True:
-            self.mostra_pergunta(questao, alternativas)
-            button, values = self.__window2.Read()
-            print (button, values)
-            try:
-                resposta = values['questao'][0][0]
-                break
-            except:
-                self.show_message('Atenção!', 'Selecione uma alternativa.')
-        return resposta
-
-    def pega_resposta(self):
-        resposta_usuario = str(input('\nSua resposta: '))
-        return resposta_usuario
 
     def mostra_mensagem(self, titulo, mensagem):
         sg.ChangeLookAndFeel('DarkBlue')
@@ -135,11 +84,6 @@ class TelaQuestao():
                     [sg.Button('OK', size=(5,2), button_color='#7B68EE')]]
 
         self.__window2 = sg.Window('oCurso').Layout(layout)
-    
-    def open_mostra_mensagem(self, titulo, mensagem):
-        self.mostra_mensagem(titulo, mensagem)
-        button, values = self.__window2.Read()
-        return button
 
     def listar_questoes(self, lista_questoes):
         botoes = [[sg.Button("X", key=2), sg.Button("Editar", key=1), sg.Button("<-", key=0)]]
@@ -151,11 +95,55 @@ class TelaQuestao():
 
         self.__window2 = sg.Window("Avaliação", default_element_size=(100, 1)).Layout(layout)
 
+    def show_message(self, titulo: str, mensagem: str):
+        sg.Popup(titulo, mensagem)
+
+    #Open's:
+    def open_window(self, adm):
+        self.tela_opcoes(adm)
+        button, values = self.__window.Read()
+        return button
+
+    def open_alternativa(self, index):
+        self.alternativa(index)
+        button, values = self.__window2.Read()
+        return values['descricao_alternativa']
+
+    def open_infos_questao(self):
+        self.infos_questao()
+        button, values = self.__window3.Read()
+        return values
+
+    def open_alternativa_correta(self, alternativas):
+        self.alternativa_correta(alternativas)
+        button, values = self.__window2.Read()
+        return values['alternativa'][0][0]
+
+    def open_mostra_pergunta(self, questao=None, alternativas=None):
+        while True:
+            self.mostra_pergunta(questao, alternativas)
+            button, values = self.__window2.Read()
+            try:
+                resposta = values['questao'][0][0]
+                break
+            except:
+                self.show_message('Atenção!', 'Selecione uma alternativa.')
+        return resposta
+
+    def open_mostra_mensagem(self, titulo, mensagem):
+        self.mostra_mensagem(titulo, mensagem)
+        button, values = self.__window2.Read()
+        return button
+
     def open_listar_questoes(self, lista_questoes):
         self.listar_questoes(lista_questoes)
         button, values = self.__window2.Read()
-        print (button, values)
         return button, values
+
+    #Close's:
+    def close_window(self):
+        self.__window.Close()
+        self.__window = None
 
     def close_window2(self):
         if self.__window2 != None:
@@ -165,6 +153,3 @@ class TelaQuestao():
     def close_window3(self):
         self.__window3.Close()
         self.__window3 = None
-
-    def show_message(self, titulo: str, mensagem: str):
-        sg.Popup(titulo, mensagem)

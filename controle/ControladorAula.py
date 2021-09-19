@@ -6,7 +6,6 @@ class ControladorAula():
   def __init__(self, controlador_sistema):
     self.__controlador_sistema = controlador_sistema
     self.__tela_aula = TelaAula()
-    # self.__ultimas_aulas = {}         # este dict possui o nome do curso e a aula em que o usuário parou. Deve ser atribuido ao usuario "curso | ultima aula parada"
     self.__aula = Aula
   
   def listar_aulas(self):
@@ -33,7 +32,7 @@ class ControladorAula():
       aula = curso.lista_aulas[progresso.ultima_aula]
       continuar = self.__tela_aula.open_mostra_aulas(progresso.ultima_aula + 1, aula._Aula__descricao_aula, aula._Aula__link_aula)
       if continuar == 'S':
-        progresso.ultima_aula += 1 # talvez precisa repetir
+        progresso.ultima_aula += 1
       if continuar == 'N':
         break
       if progresso.ultima_aula == len(curso._Curso__lista_aulas):
@@ -46,7 +45,7 @@ class ControladorAula():
     aula = Aula(dados['descricao_aula'], dados['link_aula'])
     self.__controlador_sistema.controlador_curso.adicionar_aula(aula)
 
-  def adiciona_aula(self):                                     #adicionando aula
+  def adiciona_aula(self):
     self.__tela_aula.close()
     dados_aula = self.__tela_aula.open_pega_dados_aula()
     descricao_aula = dados_aula['descricao_aula']
@@ -86,4 +85,4 @@ class ControladorAula():
     lista_opcoes = {1:self.mostra_aulas, 2:self.adiciona_aula, 3:self.altera_aula, 4:self.exclui_aula, 0:self.retornar}
 
     while True:
-      print (lista_opcoes[self.__tela_aula.open(adm)]())
+      lista_opcoes[self.__tela_aula.open(adm)]()
