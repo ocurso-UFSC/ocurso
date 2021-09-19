@@ -28,6 +28,10 @@ class ControladorProgresso():
     else:
       return 1
 
+  def adiciona_progresso(self, progresso):
+    self.__dao.add(progresso)
+    return True
+
   def cria_progresso(self, curso_cod, usuario_cod = None):
     if usuario_cod == None:
       usuario_cod = self.__controlador_sistema.usuario_logado.email
@@ -90,16 +94,12 @@ class ControladorProgresso():
     progressos = self.__dao.get_all()
 
     for progresso in progressos:
-      usuario = self.__controlador_sistema.controlador_usuario.pega_usuario_por_email(progresso.usuario_cod)
-
-      if usuario.email not in lista_usuarios_email:
-        lista_usuarios_email.append(usuario.email)
+      if progresso.usuario_cod not in lista_usuarios_email:
+        lista_usuarios_email.append(progresso.usuario_cod)
 
     while True:
-
       button, values = self.__tela_progresso.open_opcao(3, lista_usuarios_email)
-
-
+      
       if button == 0:
         self.__tela_progresso.close_opcao()
         self.__tela_progresso.close()
@@ -187,10 +187,6 @@ class ControladorProgresso():
     
     return False
 
-  def adiciona_progresso(self, progresso):
-    self.__dao.add(progresso)
-    return True
-
   def definir_ultima_aula(self, aula, curso, usuario = None):
     if type(curso) != int:
       curso = curso.codigo
@@ -205,12 +201,17 @@ class ControladorProgresso():
     except:
       return False
 
-  def pegar_ultima_aula(self, curso, usuario = None):
+  def pegar_ultima_aula(self, curso, usuario_cod = None):
     try:
-      if usuario == None:
-        usuario = self.__controlador_sistema.usuario_logado
+      if usuario_cod == None:
+        usuario = self.__controlador_sistema.usuario_logado.email
+
+      else:
+        # caso receber um objeto ao inves da chave
+        if type(usuario_cod) != str:
+          usuario_cod = usuario_cod.email
       
-      progresso = self.progresso_por_curso_e_usuario(curso, usuario)
+      progresso = self.progresso_por_curso_e_usuario(curso, usuario_cod)
       return progresso.ultima_aula
     
     except:
@@ -220,50 +221,25 @@ class ControladorProgresso():
     progresso.nota = nota
     self.__dao.update()
 
-  def todos_progressos_por_usuario(self, usuario):
+  def todos_progressos_por_usuario(self, usuario_cod):
     progressos_user = []
     progressos = self.__dao.get_all()
 
     for progresso in progressos:
-      if progresso.usuario_cod == usuario:
+      if progresso.usuario_cod == usuario_cod:
         progressos_user.append(progresso)
 
     return progressos_user
-
-  def mostra_relatorio_indv(self, usuario = None):
-    if usuario == None:
-      usuario = self.__controlador_sistema.usuario_logado
-
-    self.__tela_progresso.mostra_mensagem("\nUsuário: {}" .format(usuario.nome))
-    prog = self.todos_progressos_por_usuario(usuario)
-    
-    if len(prog) != 0:
-      for progresso in prog:
-        self.__tela_progresso.mostra_mensagem("\nCurso: {}".format(progresso.curso.nome_do_curso))
-        
-        if len(progresso.curso.lista_aulas) != 0:
-          ptg_conc = (progresso.ultima_aula / len(progresso.curso.lista_aulas)) * 100
-        else:
-          ptg_conc = "NaN"
-
-        self.__tela_progresso.mostra_mensagem("Concluiu: {} ptg  das aulas".format(ptg_conc))
-        
-        if progresso.nota != None:
-          self.__tela_progresso.mostra_mensagem("Nota: {}".format(progresso.nota))
-        else:
-          self.__tela_progresso.mostra_mensagem("Sem nota cadastrada")
-    
-    else:
-      print('Nenhum progresso encontrado')
-
+  
   def retornar(self):
     self.__tela_progresso.close()
     self.__tela_progresso.close_opcao()
     self.__controlador_sistema.abre_tela()
 
   def abre_tela(self):
+    adm = self.__controlador_sistema.usuario_logado.adm
     lista_opcoes = {1: self.relatorio_ind, 2: self.todos_usuarios, 0: self.retornar}
 
     continua = True
     while continua:
-      lista_opcoes[self.__tela_progresso.open()]()
+      lista_opcoes[self.__tela_progresso.open(adm)]()
