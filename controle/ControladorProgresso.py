@@ -10,6 +10,10 @@ class ControladorProgresso():
     self.__controlador_sistema = controlador_sistema
     self.temporario()
 
+  @property
+  def progressos(self):
+    return self.__dao.get_all()
+
   def temporario(self):
     lista_usuarios = list(self.__controlador_sistema.controlador_usuario.usuarios)
     lista_cursos = list(self.__controlador_sistema.controlador_curso.lista_cursos)
@@ -30,6 +34,9 @@ class ControladorProgresso():
     progresso = Progresso(codigo, usuario, curso)
     
     self.adiciona_progresso(progresso)
+
+    print(self.progressos)
+    input("")
     
     return True
 
