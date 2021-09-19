@@ -40,7 +40,7 @@ class ControladorAula():
         self.__tela_aula.open_mensagem('Parabéns!', 'Você concluiu as aulas deste curso!')
         self.__tela_aula.close_mexe_na_aula()
       self.__tela_aula.close_pega_dados_aula()
-    # self.listar_aulas()
+    self.listar_aulas()
 
   def cadastra_aula(self, dados):
     aula = Aula(dados['descricao_aula'], dados['link_aula'])
@@ -54,6 +54,7 @@ class ControladorAula():
     aula = self.__aula(descricao_aula, link_aula)
     self.__controlador_sistema.controlador_curso.adicionar_aula(aula)
     self.__tela_aula.close_pega_dados_aula()
+    self.listar_aulas()
 
   def altera_aula(self):
     self.__tela_aula.close()
@@ -65,14 +66,14 @@ class ControladorAula():
     self.__controlador_sistema.controlador_curso.alterar_aula(numero_aula, aula)
     self.__tela_aula.close_mexe_na_aula()
     self.__tela_aula.close_pega_dados_aula()
-    # self.listar_aulas()
+    self.listar_aulas()
 
   def exclui_aula(self):
     self.__tela_aula.close()
     numero_aula = self.__tela_aula.open_mexe_na_aula('Excluir aulas')
     self.__controlador_sistema.controlador_curso.remover_aula(numero_aula)
     self.__tela_aula.close_mexe_na_aula()
-    # self.listar_aulas()
+    self.listar_aulas()
 
   def retornar(self):
     self.__tela_aula.close()

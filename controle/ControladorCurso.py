@@ -89,18 +89,16 @@ class ControladorCurso():
     self.__controlador_sistema.abre_tela()
    
   def adicionar_aula(self, aula):
-    print("CURSOS", self.lista_cursos)
-    input("")
-    index_do_curso = self.lista_cursos[0].index(self.__curso_escolhido)
-    self.lista_cursos[index_do_curso]._Curso__lista_aulas.append(aula)
+    curso = self.busca_curso_escolhido()
+    curso._Curso__lista_aulas.append(aula)
   
   def alterar_aula(self, numero_aula, aula):
-    index_do_curso = self.lista_cursos.index(self.__curso_escolhido)
-    self.lista_cursos[index_do_curso]._Curso__lista_aulas[numero_aula] = aula
+    curso = self.busca_curso_escolhido()
+    curso._Curso__lista_aulas[numero_aula] = aula
 
   def remover_aula(self, numero_aula):
-    index_do_curso = self.lista_cursos.index(self.__curso_escolhido)
-    self.lista_cursos[index_do_curso]._Curso__lista_aulas.pop(numero_aula)
+    curso = self.busca_curso_escolhido()
+    curso._Curso__lista_aulas.pop(numero_aula)
 
   def cadastrar_curso(self, dados_curso):
 
@@ -175,7 +173,6 @@ class ControladorCurso():
       else:
         self.__tela_curso.close_opcao()
         return False
-    
 
   # def abre_tela(self):
   #   nome_curso = self.__tela_curso.seleciona_curso()
