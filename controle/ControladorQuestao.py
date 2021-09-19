@@ -9,7 +9,6 @@ class ControladorQuestao():
         self.__questao = Questao
         self.__respostas_usuario = {}
         self.__indexes = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-        # self.__nota_usuario = {} # levar para a classe Usuario | "nome curso, nota usuario"
 
     def procura_questao_por_descricao(self, descricao):
         curso = self.__controlador_sistema.controlador_curso.busca_curso_escolhido()
@@ -18,8 +17,6 @@ class ControladorQuestao():
                 return questao
     
     def cadastra_questao_aut(self, infos_questao, desc_alternativas):
-        #infos_questao = {'descricao_questao':'descricao_questao', 'alternativa_correta': 'alternativa_correta'}
-        #desc_alternativas = ["descricao_alternativa"]
         a1 = Alternativa("a", desc_alternativas[0])
         a2 = Alternativa("b", desc_alternativas[1])
         lista_alternativas = [a1, a2]
@@ -55,7 +52,6 @@ class ControladorQuestao():
         self.__tela_questao.close_window3()
 
     def alterar_questao(self, numero):
-        print(numero)
         self.__tela_questao.close_window()
         infos_questao = self.__tela_questao.open_infos_questao()
         lista_alternativas = []
@@ -84,11 +80,6 @@ class ControladorQuestao():
         curso = self.__controlador_sistema.controlador_curso._ControladorCurso__curso_escolhido
         nome_curso = curso._Curso__nome_do_curso
         self.__respostas_usuario[nome_curso] = list()
-        # cursos = self.__controlador_sistema.controlador_curso._ControladorCurso__cursos
-        # index_do_curso = cursos.index(self.__controlador_sistema.controlador_curso.pega_curso_por_nome(nome_curso))
-        # curso = cursos[index_do_curso]
-        # progresso = self.__controlador_sistema.controlador_progresso.progresso_por_curso_e_usuario(curso)
-        # if progresso._Progresso__ultima_aula == len(curso._Curso__lista_aulas):
         for questao in curso._Curso__avaliacao:
             alternativas = []
             for alternativa in questao._Questao__lista_alternativas:
@@ -96,9 +87,7 @@ class ControladorQuestao():
             resposta_usuario = self.__tela_questao.open_mostra_pergunta(f'{curso._Curso__avaliacao.index(questao)+1}) {questao._Questao__descricao_questao}', alternativas)
             self.__respostas_usuario[nome_curso].append(resposta_usuario)
             self.__tela_questao.close_window2()
-        # else:
-        #     self.__tela_questao.show_message('Erro', 'Você precisa concluir todas as aulas \ndo curso para fazer a avaliação!')
-    
+
     def remover_questao(self, numero):
         self.__controlador_sistema.controlador_curso.remover_questao(numero)
 
@@ -106,12 +95,7 @@ class ControladorQuestao():
         self.__tela_questao.close_window()
         curso = self.__controlador_sistema.controlador_curso._ControladorCurso__curso_escolhido
         nome_curso = curso._Curso__nome_do_curso
-        # cursos = self.__controlador_sistema.controlador_curso._ControladorCurso__cursos
-        # index_do_curso = cursos.index(self.__controlador_sistema.controlador_curso.pega_curso_por_nome(nome_curso))
-        # curso = cursos[index_do_curso]
         acertos = 0
-        # if len(self.__respostas_usuario[nome_curso] == 0:
-        #     #Você ainda não realizou a avaliação deste curso!
 
         if nome_curso not in self.__respostas_usuario:
             self.__tela_questao.show_message(f'Atenção!', 'Você ainda não realizou a avaliação deste curso.')
@@ -125,7 +109,6 @@ class ControladorQuestao():
             nota = acertos/len(self.__respostas_usuario[nome_curso]) * 10
             
             self.__controlador_sistema.controlador_progresso.dar_nota(progresso, nota)
-            # self.__nota_usuario[nome_curso] = acertos/len(self.__respostas_usuario[nome_curso]) * 10
             self.__tela_questao.open_mostra_mensagem(f'Sua nota em {nome_curso.upper()} é', progresso.nota)
         self.__tela_questao.close_window2()
     
@@ -146,13 +129,10 @@ class ControladorQuestao():
                 return False
             elif button == 1:
                 self.__tela_questao.close_window2()
-                print(values['questao'][0])
                 input('')
                 questao = self.procura_questao_por_descricao(values['questao'][0])
-                print (questao)
                 curso = self.__controlador_sistema.controlador_curso._ControladorCurso__curso_escolhido
                 numero_questao = curso._Curso__avaliacao.index(questao)
-                print (numero_questao)
                 self.alterar_questao(numero_questao)
                 return False
 
@@ -171,6 +151,5 @@ class ControladorQuestao():
         usuario_logado = self.__controlador_sistema._ControladorSistema__usuario_logado
         adm = usuario_logado._Usuario__adm
         lista_opcoes = {1:self.mostra_perguntas, 2: self.incluir_questao, 5:self.listar_questoes, 9:self.mostrar_respostas, 0:self.retornar}
-        continua = True
-        while continua:
+        while True:
           lista_opcoes[self.__tela_questao.open_window(adm)]()
