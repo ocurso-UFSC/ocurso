@@ -7,7 +7,6 @@ class ControladorQuestao():
         self.__controlador_sistema = controlador_sistema
         self.__tela_questao = TelaQuestao()
         self.__questao = Questao
-        self.__usuario_logado = self.__controlador_sistema._ControladorSistema__usuario_logado
         self.__respostas_usuario = {}
         self.__indexes = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
 

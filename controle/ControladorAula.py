@@ -24,14 +24,16 @@ class ControladorAula():
     if aulas_restantes <= 0:
       see_again = self.__tela_aula.open_pergunta()
       if see_again == 'yes':
-        progresso.ultima_aula = 0
+        ultima_aula = progresso.ultima_aula = 0
+        self.__controlador_sistema.controlador_progresso.atualizar_ultima_aula(progresso, ultima_aula)
       self.__tela_aula.close_mexe_na_aula()
 
     for _ in range(aulas_restantes):
       aula = curso.lista_aulas[progresso.ultima_aula]
       continuar = self.__tela_aula.open_mostra_aulas(progresso.ultima_aula + 1, aula._Aula__descricao_aula, aula._Aula__link_aula)
       if continuar == 'S':
-        progresso.ultima_aula += 1
+        ultima_aula = progresso.ultima_aula + 1
+        self.__controlador_sistema.controlador_progresso.atualizar_ultima_aula(progresso, ultima_aula)
       if continuar == 'N':
         self.__tela_aula.close_pega_dados_aula()
         break

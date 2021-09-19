@@ -98,7 +98,7 @@ class ControladorProgresso():
   
     return lista_cursos
 
-  def definir_ultima_aula(self, progresso, ultima_aula):
+  def atualizar_ultima_aula(self, progresso, ultima_aula):
     progresso.ultima_aula = ultima_aula
     self.__dao.update()
 
