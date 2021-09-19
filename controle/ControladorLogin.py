@@ -42,8 +42,12 @@ class ControladorLogin:
 
   # funcao teste - logar automatico 
   def logar_visitante(self):
-    dados = {"nome": "visitante", "email": "visitante", "senha": "visitante", "adm": True}
-    usuario = self.__controlador_sistema.controlador_usuario.criar_usuario(dados)
+    usuario = self.__controlador_sistema.controlador_usuario.pega_usuario_por_email('visitante')
+    
+    if usuario == None:
+      dados = {"nome": "visitante", "email": "visitante", "senha": "visitante", "adm": True}
+      usuario = self.__controlador_sistema.controlador_usuario.criar_usuario(dados)
+    
     self.__controlador_sistema.usuario_logado = usuario
     self.__tela_login.close()
 
