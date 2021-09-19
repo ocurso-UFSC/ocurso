@@ -94,12 +94,9 @@ class TelaUsuario():
     self.__window2 = sg.Window("Informações", default_element_size=(100, 1)).Layout(layout)
   
   def edita_usuario(self, dados_usuario):
-    sg.ChangeLookAndFeel('DarkBlue')
-
     botoes = [[sg.Button("Salvar", key=1), sg.Button("Sair", key=0)]]
 
     infos = [
-
       [sg.Text('Email', size=(8, 1), font=("Helvetica", 15)),
         sg.Text(dados_usuario["email"], key="email")],
 

@@ -13,12 +13,6 @@ class ControladorUsuario():
   def usuarios(self):
     return self.__dao.get_all()
 
-  # def pega_usuario_por_email_e_senha(self, email: str, senha: str):
-  #   for usuario in self.__usuarios:
-  #     if (usuario.email == email) and (usuario.senha == senha):
-  #       return usuario
-  #     return None
-
   def pega_usuario_por_email_e_senha(self, email: str, senha: str):
     try:
       usuario = self.__dao.get(email)
@@ -27,12 +21,6 @@ class ControladorUsuario():
     except:
       pass
     return None
-
-  # def pega_usuario_por_email(self, email: str):
-  #   for usuario in self.__usuarios:
-  #     if (usuario.email == email):
-  #       return usuario
-  #   return None
 
   def pega_usuario_por_email(self, email: str):
     try:
@@ -48,7 +36,6 @@ class ControladorUsuario():
     return usuario
 
   def cadastrar_usuario(self, usuario):
-    # self.__usuarios.append(usuario)
     self.__dao.add(usuario)
   
   def cadastrar(self):
@@ -65,25 +52,20 @@ class ControladorUsuario():
           self.__controlador_sistema.controlador_login.tela_login.close()
         return False
 
-      dados["adm"] = "s"
+      # Por padrão, novos usuarios não serão ADM. Um ADM deve setar outro ADM
+      dados["adm"] = False
 
       if (dados["nome"] != '' and dados["nome"] != None) and (dados["email"] != '' and dados["email"] != None)\
           and (dados["senha"] != '' and dados["senha"] != None) and (dados["senha2"] != '' and dados["senha2"] != None):
         if dados["senha"] == dados["senha2"]:
-          if dados["adm"].lower() == "s" or dados["adm"].lower() == "sim":
-            dados["adm"] = True
-          elif dados["adm"].lower() == "n" or dados["adm"].lower() == "nao":
-            dados["adm"] = False
-          else:
-            self.__tela_usuario.mostra_mensagem("Opcao ADM inválida")
-            self.__tela_usuario.close_opcao()
-            return False
           self.criar_usuario(dados)
 
+          # Opcao para a tela no próprio usuário
           if self.__tela_usuario.window != None:
             self.__tela_usuario.show_message("Sucesso", "Usuário Cadastrado")
             self.__tela_usuario.close()
-            
+
+          # Opcao para tela no LOGIN            
           else:
             self.__tela_usuario.show_message("Bem Vindo", "Cadastrado com sucesso")
             self.__controlador_sistema.controlador_login.tela_login.close()
@@ -94,7 +76,7 @@ class ControladorUsuario():
         self.__tela_usuario.show_message("Erro", "Senhas não correspondem")
       else:
         self.__tela_usuario.show_message("Erro", "Preencha todos os campos")
-      
+
       self.__tela_usuario.close_opcao()
 
   def user_to_json(self, usuario):
@@ -109,7 +91,6 @@ class ControladorUsuario():
   def alterar_usuario(self, usuario, novos_dados):
     try:
       usuario.nome = novos_dados["nome"]
-      # usuario.email = novos_dados["email"] # nao pode atualizar a PK
       usuario.senha = novos_dados["senha"]
       usuario.adm = novos_dados["adm"]
       self.__dao.update()
@@ -128,11 +109,9 @@ class ControladorUsuario():
         self.__tela_usuario.close_opcao()
         self.__tela_usuario.close()
 
-
     elif button == 0:
       self.__tela_usuario.close_opcao()
       self.__tela_usuario.close()
-
 
   # card das informações do usuario, opcao de editar e excluir
   def informacao_user(self, usuario = None):
