@@ -40,31 +40,6 @@ class ControladorCurso():
     
     self.__dao.add(curso)
 
-  def alterar_curso(self):
-    self.__tela_curso.mostra_mensagem("Alterar curso \n")
-    nome_do_curso = self.__tela_curso.seleciona_curso()
-    curso = self.pega_curso_por_nome(nome_do_curso)
-
-    if (curso != None):
-      novos_dados_curso = self.__tela_curso.pega_dados_curso()
-      curso.nome_do_curso = novos_dados_curso["nome_do_curso"]
-      curso.descricao = novos_dados_curso["descricao"]
-      curso.quantidade_horas = novos_dados_curso["quantidade_horas"]
-      self.lista_cursos()
-
-    else:
-      self.__tela_curso.mostra_mensagem("ATENÇÃO!!! Curso inexistente")
-
-  def excluir_curso(self):
-    self.lista_cursos()
-    nome_do_curso = self.__tela_curso.seleciona_curso()
-    curso = self.pega_curso_por_nome(nome_do_curso)
-
-    if (curso != None):
-      self.lista_cursos()
-    else:
-      self.__tela_curso.mostra_mensagem("ATENÇÃO!!! Curso inexistente")
-    
   def incluir_questao(self, questao):
     curso = self.busca_curso_escolhido()
     curso._Curso__avaliacao.append(questao)
@@ -112,14 +87,45 @@ class ControladorCurso():
                     dados_curso["horas"])
     
     self.__dao.add(curso)
-  
-  def cadastrar_curso(self):
+
+  def excluir_curso(self, curso):
+    try:
+      self.__dao.remove(curso.codigo)
+      self.__tela_curso.show_message('Sucesso', 'Curso Removido')
+      return True
+    except:     
+      pass
+
+  def alterar_curso(self, curso, novos_dados):
+    try:
+      curso.nome_do_curso = novos_dados['nome_curso']
+      curso.descricao = novos_dados['descricao']
+      curso.quantidade_horas = novos_dados['horas']
+      return True
+
+    except:
+      return False
+
+  def alterar_curso_info(self, dados_antigos, curso):
+    self.cadastrar_curso(dados_antigos, curso)
+    self.__dao.update()
+    self.__tela_curso.show_message('Sucesso', "Curso Alterado")
+
+  def cadastrar_curso(self, curso = None, dados = None):
+    # Tambem serve para alterar um curso existente
     self.__tela_curso.close()
 
     while True:
-      button, values = self.__tela_curso.open_opcao(3)
+
+      if dados: # caso de alteracao
+        button, values = self.__tela_curso.open_opcao(4, dados)
+
+      else:  # caso de cadastro
+        button, values = self.__tela_curso.open_opcao(3)
 
       if button == 1:
+        self.__tela_curso.close_opcao()
+
         if (values["nome_curso"] != None and values["nome_curso"] != '') and (values["descricao"] != None and values["descricao"] != '') \
             and (values["horas"] != None and values["horas"] != ''):
 
@@ -134,8 +140,13 @@ class ControladorCurso():
             self.__tela_curso.show_message("Erro", "Horas deve ser um valor inteiro")
 
           if not erro:
-            self.__tela_curso.close_opcao()
-            self.incluir_curso(values)
+            # Em caso de cadastro (dados antigos is null)
+            if not dados:
+              self.incluir_curso(values)
+            # Em caso de alteracao
+            else:
+              self.alterar_curso(curso, values)
+
             return True
 
         else:
@@ -149,7 +160,6 @@ class ControladorCurso():
   def curso_to_json(self, curso):
     infos_curso = {}
     infos_curso["nome_curso"] = curso.nome_do_curso
-    infos_curso["descricao"] = curso.descricao
     infos_curso["descricao"] = curso.descricao
     infos_curso["horas"] = curso.quantidade_horas
 
@@ -177,12 +187,13 @@ class ControladorCurso():
           return True
 
         elif button == 3:
-          # editar curso
-          pass
+          self.alterar_curso_info(curso, infos_curso)
+          return True
         
         elif button == 4:
-          # Excluir Curso
-          pass
+          self.excluir_curso(curso)
+          return True
+
 
       self.__tela_curso.close_opcao()
       return False

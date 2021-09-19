@@ -84,7 +84,29 @@ class TelaCurso():
     self.__window2 = sg.Window("Informações", default_element_size=(100, 1)).Layout(layout)
 
 
+  def alterar_curso(self, dados_antigos):
+    # tambem serve para alterar curso, caso receber dados
+    horas = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+
+    entrada = [
+              [sg.Text("Nome")],
+              [sg.Input(size=(20,2), default_text= dados_antigos['nome_curso'], key="nome_curso")],
+              [sg.Text("Descricao")],
+              [sg.Multiline(key="descricao", default_text= dados_antigos['descricao'], size=(35, 3))],
+              [sg.Text("Qnt. Horas"),
+                sg.Spin(values=horas, size=(5, 5), initial_value= dados_antigos['horas'], key="horas")],
+              [sg.Button("Salvar", key = 1), sg.Button("Voltar", key = 0)]
+            ]
+
+    layout = [
+      [sg.Text('Cadastrar Curso', size=(18,1), font=("Helvetica", 25), justification='center')],
+      [sg.Column(entrada, vertical_alignment='center', justification='center', k='-C-')]
+    ]
+
+    self.__window2 = sg.Window("Cadastro Curso", default_element_size=(50, 1)).Layout(layout)
+
   def cadastrar_curso(self):
+    # tambem serve para alterar curso, caso receber dados
     horas = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
 
     entrada = [
@@ -93,7 +115,7 @@ class TelaCurso():
               [sg.Text("Descricao")],
               [sg.Multiline(key="descricao", size=(35, 3))],
               [sg.Text("Qnt. Horas"),
-                sg.Spin(values=horas, size=(5, 5), initial_value=2, key="horas")],
+                sg.Spin(values=horas, size=(5, 5), key="horas")],
               [sg.Button("Salvar", key = 1), sg.Button("Voltar", key = 0)]
             ]
 
@@ -113,6 +135,9 @@ class TelaCurso():
 
     elif opcao == 3:
       self.cadastrar_curso()
+
+    elif opcao == 4:
+      self.alterar_curso(dados)
 
     button, values = self.__window2.Read()
     return button, values
