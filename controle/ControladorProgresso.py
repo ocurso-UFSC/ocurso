@@ -8,7 +8,7 @@ class ControladorProgresso():
     # self.__progressos = self.__dao.get_all()
     self.__tela_progresso = TelaProgresso()
     self.__controlador_sistema = controlador_sistema
-    # self.temporario()
+    self.temporario()
 
   def temporario(self):
     lista_usuarios = list(self.__controlador_sistema.controlador_usuario.usuarios)
