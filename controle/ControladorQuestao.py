@@ -11,12 +11,11 @@ class ControladorQuestao():
         self.__indexes = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
         # self.__nota_usuario = {} # levar para a classe Usuario | "nome curso, nota usuario"
 
-    def procura_questao_por_descricao(self, descricao=str):
-        curso = self.__controlador_sistema.controlador_curso._ControladorCurso__curso_escolhido
+    def procura_questao_por_descricao(self, descricao):
+        curso = self.__controlador_sistema.controlador_curso.busca_curso_escolhido()
         for questao in curso._Curso__avaliacao:
             if (questao._Questao__descricao_questao == descricao):
                 return questao
-            return None
     
     def cadastra_questao_aut(self, infos_questao, desc_alternativas):
         #infos_questao = {'descricao_questao':'descricao_questao', 'alternativa_correta': 'alternativa_correta'}
@@ -56,6 +55,7 @@ class ControladorQuestao():
         self.__tela_questao.close_window3()
 
     def alterar_questao(self, numero):
+        print(numero)
         self.__tela_questao.close_window()
         infos_questao = self.__tela_questao.open_infos_questao()
         lista_alternativas = []
@@ -146,9 +146,13 @@ class ControladorQuestao():
                 return False
             elif button == 1:
                 self.__tela_questao.close_window2()
+                print(values['questao'][0])
+                input('')
                 questao = self.procura_questao_por_descricao(values['questao'][0])
+                print (questao)
                 curso = self.__controlador_sistema.controlador_curso._ControladorCurso__curso_escolhido
                 numero_questao = curso._Curso__avaliacao.index(questao)
+                print (numero_questao)
                 self.alterar_questao(numero_questao)
                 return False
 
