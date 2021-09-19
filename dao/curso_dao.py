@@ -10,8 +10,8 @@ class cursoDAO(DAO):
         and isinstance(curso, Curso):
       super().add(curso.codigo, curso)
 
-  def get(self, key: str):
-    if isinstance(key, str):
+  def get(self, key: int):
+    if isinstance(key, int):
       return super().get(key)
 
   def get_all(self):

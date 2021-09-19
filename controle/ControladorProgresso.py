@@ -5,75 +5,81 @@ from dao.progresso_dao import progressoDAO
 class ControladorProgresso():
   def __init__(self, controlador_sistema):
     self.__dao = progressoDAO()
-    # self.__progressos = self.__dao.get_all()
     self.__tela_progresso = TelaProgresso()
     self.__controlador_sistema = controlador_sistema
-    self.temporario()
+    # self.gera_automatico()
 
   @property
   def progressos(self):
     return self.__dao.get_all()
 
-  def temporario(self):
+  def gera_automatico(self):
     lista_usuarios = list(self.__controlador_sistema.controlador_usuario.usuarios)
     lista_cursos = list(self.__controlador_sistema.controlador_curso.lista_cursos)
 
     for usuario in lista_usuarios:
       for curso in lista_cursos:
-        self.cria_progresso(curso, usuario)
+        self.cria_progresso(curso.codigo, usuario.email)
 
   def get_next_key(self):
     all = list(self.__dao.get_all())
-    return all[-1].codigo + 1
+    if len(all) > 0:
+      return all[-1].codigo + 1
+    else:
+      return 1
 
-  def cria_progresso(self, curso, usuario = None):
-    if usuario == None:
-      usuario = self.__controlador_sistema.usuario_logado
+  def cria_progresso(self, curso_cod, usuario_cod = None):
+    if usuario_cod == None:
+      usuario_cod = self.__controlador_sistema.usuario_logado.email
 
     codigo = self.get_next_key()
-    progresso = Progresso(codigo, usuario, curso)
-    
+    progresso = Progresso(codigo, usuario_cod, curso_cod)
     self.adiciona_progresso(progresso)
     
     return True
 
-  def progresso_por_curso_e_usuario(self, curso, usuario = None):
-    if usuario == None:
-      usuario = self.__controlador_sistema.usuario_logado
+  def progresso_por_curso_e_usuario(self, curso_cod, usuario_cod = None):
+    if usuario_cod == None:
+      usuario_cod = self.__controlador_sistema.usuario_logado.email
 
     progressos = self.__dao.get_all()
     for progresso in progressos:
-      if progresso.usuario == usuario and progresso.curso == curso:
+      if progresso.usuario_cod == usuario_cod and progresso.curso_cod == curso_cod:
         return progresso
     return None
 
-  def cursos_ja_cadastrado_por_usuario(self, usuario = None):
-    if usuario == None:
-      usuario = self.__controlador_sistema.usuario_logado
+  def cursos_ja_cadastrado_por_usuario(self, usuario_cod = None):
+    if usuario_cod == None:
+      usuario_cod = self.__controlador_sistema.usuario_logado.email
 
     lista_cursos = []
     
     progressos = self.__dao.get_all()
     for progresso in progressos:
-      if progresso.usuario == usuario:
-        lista_cursos.append(progresso.curso.nome_do_curso)
+      if progresso.usuario_cod == usuario_cod:
+        curso = self.__controlador_sistema.controlador_curso.get_curso_por_key(progresso.curso_cod)
+        lista_cursos.append(curso.nome_do_curso)
   
     return lista_cursos
 
   def progresso_to_json(self, progresso):
     dados_progresso = {}
-    dados_progresso["nome_aluno"] = progresso.usuario.nome
-    dados_progresso["nome_curso"] = progresso.curso.nome_do_curso
+
+    usuario = self.__controlador_sistema.controlador_usuario.pega_usuario_por_email(progresso.usuario_cod)
+    dados_progresso["nome_aluno"] = usuario.nome
+
+    curso = self.__controlador_sistema.controlador_curso.get_curso_por_key(progresso.curso_cod)
+    dados_progresso["nome_curso"] = curso.nome_do_curso
 
     if progresso.nota != None:
       dados_progresso["nota"] = progresso.nota
     else:
       dados_progresso["nota"] = "Sem nota"
 
-    if len(progresso.curso.lista_aulas) != 0:
-      ptg_conc = (progresso.ultima_aula / len(progresso.curso.lista_aulas)) * 100
+    if len(curso.lista_aulas) != 0:
+      ptg_conc = (progresso.ultima_aula / len(curso.lista_aulas)) * 100
     else:
-      ptg_conc = "Nenhuma"
+      ptg_conc = "0"
       
     dados_progresso["aula_concluida"] = ptg_conc
 
@@ -81,11 +87,13 @@ class ControladorProgresso():
 
   def todos_usuarios(self):
     lista_usuarios_email = []
-
     progressos = self.__dao.get_all()
+
     for progresso in progressos:
-      if progresso.usuario.email not in lista_usuarios_email:
-        lista_usuarios_email.append(progresso.usuario.email)
+      usuario = self.__controlador_sistema.controlador_usuario.pega_usuario_por_email(progresso.usuario_cod)
+
+      if usuario.email not in lista_usuarios_email:
+        lista_usuarios_email.append(usuario.email)
 
     while True:
 
@@ -104,19 +112,18 @@ class ControladorProgresso():
         return False
 
       else:
-        usuario = self.__controlador_sistema.controlador_usuario.pega_usuario_por_email(values["email"][0])
         self.__tela_progresso.close_opcao()
         self.__tela_progresso.close()
-        self.relatorio_ind(usuario)
+        self.relatorio_ind(values["email"][0])
         # self.informacao_user(usuario)
         return True
 
-  def relatorio_ind(self, usuario = None):
-    if usuario == None:
-      usuario = self.__controlador_sistema.usuario_logado
+  def relatorio_ind(self, usuario_cod = None):
+    if usuario_cod == None:
+      usuario_cod = self.__controlador_sistema.usuario_logado.email
 
     self.__tela_progresso.close()
-    lista_cursos = self.cursos_ja_cadastrado_por_usuario(usuario)
+    lista_cursos = self.cursos_ja_cadastrado_por_usuario(usuario_cod)
     
     while True:
       button, values = self.__tela_progresso.open_opcao(1, lista_cursos)
@@ -134,7 +141,7 @@ class ControladorProgresso():
           # se estiver ok..
           nome_curso = values["nome_curso"][0]
           curso = self.__controlador_sistema.controlador_curso.pega_curso_por_nome(nome_curso)
-          progresso = self.progresso_por_curso_e_usuario(curso, usuario)
+          progresso = self.progresso_por_curso_e_usuario(curso.codigo, usuario_cod)
           self.__tela_progresso.close_opcao()
           self.detalhes_progresso(progresso)
           return True
@@ -185,9 +192,12 @@ class ControladorProgresso():
     return True
 
   def definir_ultima_aula(self, aula, curso, usuario = None):
+    if type(curso) != int:
+      curso = curso.codigo
+
     try:
       if usuario == None:
-        usuario = self.__controlador_sistema.usuario_logado
+        usuario = self.__controlador_sistema.usuario_logado.email
       
       progresso = self.progresso_por_curso_e_usuario(curso, usuario)
       progresso.ultima_aula = aula
@@ -208,13 +218,14 @@ class ControladorProgresso():
 
   def dar_nota(self, progresso, nota):
     progresso.nota = nota
+    self.__dao.update()
 
   def todos_progressos_por_usuario(self, usuario):
     progressos_user = []
     progressos = self.__dao.get_all()
 
     for progresso in progressos:
-      if progresso.usuario == usuario:
+      if progresso.usuario_cod == usuario:
         progressos_user.append(progresso)
 
     return progressos_user

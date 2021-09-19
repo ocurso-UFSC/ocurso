@@ -121,8 +121,10 @@ class ControladorQuestao():
                 if self.__respostas_usuario[nome_curso][resposta] == curso._Curso__avaliacao[resposta]._Questao__alternativa_correta:
                     acertos += 1
 
-            progresso = self.__controlador_sistema.controlador_progresso.progresso_por_curso_e_usuario(curso)
-            progresso.nota = acertos/len(self.__respostas_usuario[nome_curso]) * 10
+            progresso = self.__controlador_sistema.controlador_progresso.progresso_por_curso_e_usuario(curso.codigo)
+            nota = acertos/len(self.__respostas_usuario[nome_curso]) * 10
+            
+            self.__controlador_sistema.controlador_progresso.dar_nota(progresso, nota)
             # self.__nota_usuario[nome_curso] = acertos/len(self.__respostas_usuario[nome_curso]) * 10
             self.__tela_questao.open_mostra_mensagem(f'Sua nota em {nome_curso.upper()} é', progresso.nota)
         self.__tela_questao.close_window2()

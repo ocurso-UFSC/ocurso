@@ -19,6 +19,9 @@ class ControladorCurso():
     all = list(self.__dao.get_all())
     return all[-1].codigo + 1
 
+  def get_curso_por_key(self, key):
+    return self.__dao.get(key)
+
   def pega_curso_por_nome(self, nome: str = None):
     for curso in self.lista_cursos:
       if (curso.nome_do_curso == nome):

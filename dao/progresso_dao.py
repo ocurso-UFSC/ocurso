@@ -18,7 +18,7 @@ class progressoDAO(DAO):
     return super().get_all()
 
   def update(self):
-    return super().get_all()
+    return super().update()
 
   def remove(self, key: str):
     if isinstance(key, str):

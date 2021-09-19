@@ -3,14 +3,14 @@ class Progresso:
   def __init__(
       self,
       codigo: int,
-      usuario: object,
-      curso: object,
+      usuario_cod: str,
+      curso_cod: int,
       ultima_aula: int = 0,
       nota: float = None):
 
     self.__codigo = codigo
-    self.__usuario = usuario
-    self.__curso = curso
+    self.__usuario_cod = usuario_cod
+    self.__curso_cod = curso_cod
     self.__ultima_aula = ultima_aula
     self.__nota = nota
 
@@ -19,12 +19,12 @@ class Progresso:
     return self.__codigo
 
   @property
-  def usuario(self):
-    return self.__usuario
+  def usuario_cod(self):
+    return self.__usuario_cod
 
   @property
-  def curso(self):
-    return self.__curso
+  def curso_cod(self):
+    return self.__curso_cod
   
   @property
   def ultima_aula(self):
@@ -34,13 +34,13 @@ class Progresso:
   def nota(self):
     return self.__nota
   
-  @usuario.setter
-  def usuario(self, usuario):
-    self.__usuario = usuario
+  @usuario_cod.setter
+  def usuario_cod(self, usuario_cod):
+    self.__usuario_cod = usuario_cod
 
-  @curso.setter
-  def curso(self, curso):
-    self.__curso = curso
+  @curso_cod.setter
+  def curso_cod(self, curso_cod):
+    self.__curso_cod = curso_cod
 
   @ultima_aula.setter
   def ultima_aula(self, ultima_aula):

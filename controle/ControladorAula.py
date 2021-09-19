@@ -20,7 +20,7 @@ class ControladorAula():
   def mostra_aulas(self):
     self.__tela_aula.close()
     curso = self.__controlador_sistema.controlador_curso._ControladorCurso__curso_escolhido
-    progresso = self.__controlador_sistema.controlador_progresso.progresso_por_curso_e_usuario(curso)
+    progresso = self.__controlador_sistema.controlador_progresso.progresso_por_curso_e_usuario(curso.codigo)
     aulas_restantes = len(curso._Curso__lista_aulas) - progresso.ultima_aula
     if aulas_restantes <= 0:
       see_again = self.__tela_aula.open_pergunta()

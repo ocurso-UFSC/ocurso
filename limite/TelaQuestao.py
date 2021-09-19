@@ -153,7 +153,8 @@ class TelaQuestao():
         return button, values
 
     def close_window2(self):
-        self.__window2.Close()
+        if self.__window2 != None:
+            self.__window2.Close()
         self.__window2 = None
 
     def close_window3(self):
