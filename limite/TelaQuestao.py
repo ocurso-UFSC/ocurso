@@ -5,22 +5,27 @@ class TelaQuestao():
         self.__window2 = None
         self.__window3 = None
 
-    def tela_opcoes(self):
-        adm = True
+    def tela_opcoes(self, adm=False):
+        print(adm)
         sg.ChangeLookAndFeel('DarkBlue')
-        botoes = [[sg.Button('Avaliação', size=(20,2), key=1, button_color='#7B68EE')],
-                  [sg.Button('Adicionar questão', size=(20,2), key=2)],
-                  [sg.Button('Editar avaliação', size=(20,2), key=5)],
-                  [sg.Button('Minha nota', size=(20,2), key=9)],
-                  [sg.Button('<-', size=(20,2), key=0)]]
+        if adm == True:
+            botoes = [[sg.Button('Avaliação', size=(20,2), key=1, button_color='#7B68EE')],
+                      [sg.Button('Adicionar questão', size=(20,2), key=2)],
+                      [sg.Button('Editar avaliação', size=(20,2), key=5)],
+                      [sg.Button('Minha nota', size=(20,2), key=9)],
+                      [sg.Button('<-', size=(20,2), key=0)]]
+        else:
+            botoes = [[sg.Button('Avaliação', size=(20,2), key=1, button_color='#7B68EE')],
+                      [sg.Button('Minha nota', size=(20,2), key=9)],
+                      [sg.Button('<-', size=(20,2), key=0)]]
 
         layout = [[sg.Text('oCurso', size=(15, 2), font=('Helvetica', 20), justification=('center'))],
                   [sg.Column(botoes, vertical_alignment='center', justification='center')]]
         
         self.__window = sg.Window('oCurso').Layout(layout)
     
-    def open_window(self):
-        self.tela_opcoes()
+    def open_window(self, adm):
+        self.tela_opcoes(adm)
         button, values = self.__window.Read()
         return button
     

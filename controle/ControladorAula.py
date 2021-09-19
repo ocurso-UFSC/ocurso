@@ -80,8 +80,10 @@ class ControladorAula():
     self.__controlador_sistema.ver_curso()
 
   def abre_tela(self):
+    usuario_logado = self.__controlador_sistema._ControladorSistema__usuario_logado
+    adm = usuario_logado._Usuario__adm
     self.listar_aulas()
     lista_opcoes = {1:self.mostra_aulas, 2:self.adiciona_aula, 3:self.altera_aula, 4:self.exclui_aula, 0:self.retornar}
 
     while True:
-      print (lista_opcoes[self.__tela_aula.open()]())
+      print (lista_opcoes[self.__tela_aula.open(adm)]())

@@ -6,30 +6,35 @@ class TelaAula:
         self.__window2 = None
         self.__window3 = None
         self.__aulas = []
-        self.init_components()
 
-    def init_components(self):
+    def tela_aula(self, adm):
         aulas = []
         for aula in self.__aulas:
             aulas.append([sg.Text(f'{aula[0]} - {aula[1]}')])
         sg.ChangeLookAndFeel('DarkBlue')
         ver_aulas = [[sg.Button('Ver aulas', size=(20,2), key=1, button_color='#7B68EE')]]
 
-        # if adm
         botoes = [[sg.Button('+', size=(5,2), key=2, button_color='#7B68EE'),
                   sg.Button('Alterar', size=(5,2), key=3, button_color='#7B68EE'),
                   sg.Button('X', size=(5,2), key=4, button_color='#7B68EE')]]
+        
+        if adm == True:
+            layout = [[sg.Text('Aulas', size=(15, 2), font=('Helvetica', 20), justification=('center'))],
+                    [sg.Column(aulas, vertical_alignment='center', justification='center')],
+                    [sg.Column(ver_aulas, vertical_alignment='center', justification='center')],
+                    [sg.Column(botoes, vertical_alignment='center', justification='center')],
+                    [sg.Button('<-', size=(2,1), key=0)]]
+        else:
+            layout = [[sg.Text('Aulas', size=(15, 2), font=('Helvetica', 20), justification=('center'))],
+                    [sg.Column(aulas, vertical_alignment='center', justification='center')],
+                    [sg.Column(ver_aulas, vertical_alignment='center', justification='center')],
+                    [sg.Button('<-', size=(2,1), key=0)]]
 
-        layout = [[sg.Text('Aulas', size=(15, 2), font=('Helvetica', 20), justification=('center'))],
-                  [sg.Column(aulas, vertical_alignment='center', justification='center')],
-                  [sg.Column(ver_aulas, vertical_alignment='center', justification='center')],
-                  [sg.Column(botoes, vertical_alignment='center', justification='center')],
-                  [sg.Button('<-', size=(2,1), key=0)]]
 
         self.__window = sg.Window("Aulas", layout)
 
-    def open(self):
-        self.init_components()
+    def open(self, adm):
+        self.tela_aula(adm)
         button, values = self.__window.Read()
         print(button, values)
         return button
