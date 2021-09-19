@@ -75,11 +75,13 @@ class ControladorCurso():
   
   def alterar_questao(self, numero_questao, questao):
     curso = self.busca_curso_escolhido()
-    curso._Curso__avaliacao[numero_questao - 1] = questao
+    curso._Curso__avaliacao[numero_questao] = questao
+    self.__dao.update()
 
   def remover_questao(self, numero_questao):
     curso = self.busca_curso_escolhido()
-    curso._Curso__avaliacao.pop(numero_questao - 1)
+    curso._Curso__avaliacao.pop(numero_questao)
+    self.__dao.update()
     
   def abre_aulas(self):
     self.__controlador_sistema.controlador_aula.listar_aulas()
@@ -100,10 +102,12 @@ class ControladorCurso():
   def alterar_aula(self, numero_aula, aula):
     curso = self.busca_curso_escolhido()
     curso._Curso__lista_aulas[numero_aula] = aula
+    self.__dao.update()
 
   def remover_aula(self, numero_aula):
     curso = self.busca_curso_escolhido()
     curso._Curso__lista_aulas.pop(numero_aula)
+    self.__dao.update()
 
   def cadastrar_curso(self, dados_curso):
 
