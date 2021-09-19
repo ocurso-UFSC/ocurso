@@ -71,6 +71,7 @@ class ControladorCurso():
   def incluir_questao(self, questao):
     curso = self.busca_curso_escolhido()
     curso._Curso__avaliacao.append(questao)
+    self.__dao.update()
   
   def alterar_questao(self, numero_questao, questao):
     curso = self.busca_curso_escolhido()
@@ -94,6 +95,7 @@ class ControladorCurso():
   def adicionar_aula(self, aula):
     curso = self.busca_curso_escolhido()
     curso._Curso__lista_aulas.append(aula)
+    self.__dao.update()
   
   def alterar_aula(self, numero_aula, aula):
     curso = self.busca_curso_escolhido()
