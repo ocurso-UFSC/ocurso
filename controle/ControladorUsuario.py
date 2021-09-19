@@ -103,6 +103,9 @@ class ControladorUsuario():
     dados_antigos = self.user_to_json(usuario)
     button, values = self.__tela_usuario.open_edit_user(dados_antigos, adm)
     
+    if adm == False:
+      values["adm"] = False
+    
     if button == 1:
       if self.alterar_usuario(usuario, values):
         self.__tela_usuario.show_message("Sucesso", "Dados alterados")
@@ -115,6 +118,8 @@ class ControladorUsuario():
 
   # card das informações do usuario, opcao de editar e excluir
   def informacao_user(self, usuario = None):
+    self.__tela_usuario.close()
+
     if usuario == None:
       usuario = self.__controlador_sistema.usuario_logado
 
@@ -123,11 +128,9 @@ class ControladorUsuario():
     
     if button == 0:
       self.__tela_usuario.close_opcao()
-      self.__tela_usuario.close()
 
     elif button == 1:
       self.__tela_usuario.close_opcao()
-      self.__tela_usuario.close()
       self.alterar_usuario_info(usuario, usuario.adm)
 
     elif button == 2:
@@ -135,41 +138,40 @@ class ControladorUsuario():
       self.__tela_usuario.close_opcao()
 
   def lista_usuarios(self, usuario = None):
-
     lista_emails = []
     # for usuario in self.__usuarios:
     for usuario in self.__dao.get_all():
       lista_emails.append(usuario.email)
 
     while True:
+      self.__tela_usuario.close()
       button, values = self.__tela_usuario.open_opcao(2, lista_emails)
 
       if button == 0:
         self.__tela_usuario.close_opcao()
-        self.__tela_usuario.close()
         return False
 
       elif len(values["email"]) == 0:
         self.__tela_usuario.show_message("Erro", "Nenhum selecionado")
         self.__tela_usuario.close_opcao()
-        self.__tela_usuario.close()
         return False
 
       else:
         usuario = self.pega_usuario_por_email(values["email"][0])
         self.__tela_usuario.close_opcao()
-        self.__tela_usuario.close()
         self.informacao_user(usuario)
         return True
 
   def excluir_usuario(self, usuario = None):
+    self.__tela_usuario.close()
+    self.__tela_usuario.close_opcao()
+
+
     if (usuario != None):
       if self.__controlador_sistema.usuario_logado == usuario:
-        self.__tela_usuario.close()
-        self.__tela_usuario.close_opcao()
         self.__controlador_sistema.deslogar_usuario()
 
-      # self.__usuarios.remove(usuario)
+      self.__controlador_sistema.controlador_progresso.remove_progresso_por_usuario_cod(usuario.email)
       self.__dao.remove(usuario.email)
       self.__tela_usuario.show_message("Feito", "Usuario removido")
 

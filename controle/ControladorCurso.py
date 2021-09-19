@@ -1,3 +1,4 @@
+from os import error
 from limite.telaCurso import TelaCurso
 from entidade.curso import Curso
 from dao.curso_dao import cursoDAO
@@ -39,31 +40,6 @@ class ControladorCurso():
     
     self.__dao.add(curso)
 
-  def alterar_curso(self):
-    self.__tela_curso.mostra_mensagem("Alterar curso \n")
-    nome_do_curso = self.__tela_curso.seleciona_curso()
-    curso = self.pega_curso_por_nome(nome_do_curso)
-
-    if (curso != None):
-      novos_dados_curso = self.__tela_curso.pega_dados_curso()
-      curso.nome_do_curso = novos_dados_curso["nome_do_curso"]
-      curso.descricao = novos_dados_curso["descricao"]
-      curso.quantidade_horas = novos_dados_curso["quantidade_horas"]
-      self.lista_cursos()
-
-    else:
-      self.__tela_curso.mostra_mensagem("ATENÇÃO!!! Curso inexistente")
-
-  def excluir_curso(self):
-    self.lista_cursos()
-    nome_do_curso = self.__tela_curso.seleciona_curso()
-    curso = self.pega_curso_por_nome(nome_do_curso)
-
-    if (curso != None):
-      self.lista_cursos()
-    else:
-      self.__tela_curso.mostra_mensagem("ATENÇÃO!!! Curso inexistente")
-    
   def incluir_questao(self, questao):
     curso = self.busca_curso_escolhido()
     curso._Curso__avaliacao.append(questao)
@@ -105,46 +81,105 @@ class ControladorCurso():
     curso._Curso__lista_aulas.pop(numero_aula)
     self.__dao.update()
 
-  def cadastrar_curso(self, dados_curso):
+  def incluir_curso(self, dados_curso):
     codigo = self.get_next_key()
-    curso = Curso(codigo, dados_curso["nome_do_curso"], dados_curso["descricao"], 
-                    dados_curso["quantidade_horas"])
+    curso = Curso(codigo, dados_curso["nome_curso"], dados_curso["descricao"], 
+                    dados_curso["horas"])
     
     self.__dao.add(curso)
-    # self.__cursos.append(curso)
-  
-  def cadastro_curso_infos(self):
+
+  def excluir_curso(self, curso):
+    self.__dao.remove(curso.codigo)
+    self.__controlador_sistema.controlador_progresso.remove_progresso_por_curso_cod(curso.codigo)
+    self.__tela_curso.show_message('Sucesso', 'Curso Removido')
+
+  def alterar_curso(self, curso, novos_dados):
+    try:
+      curso.nome_do_curso = novos_dados['nome_curso']
+      curso.descricao = novos_dados['descricao']
+      curso.quantidade_horas = novos_dados['horas']
+      return True
+
+    except:
+      return False
+
+  def alterar_curso_info(self, dados_antigos, curso):
+    self.cadastrar_curso(dados_antigos, curso)
+    self.__dao.update()
+    self.__tela_curso.show_message('Sucesso', "Curso Alterado")
+
+  def cadastrar_curso(self, curso = None, dados = None):
+    # Tambem serve para alterar um curso existente
     self.__tela_curso.close()
 
     while True:
-      button, values = self.__tela_curso.open_opcao(3)
+
+      if dados: # caso de alteracao
+        button, values = self.__tela_curso.open_opcao(4, dados)
+
+      else:  # caso de cadastro
+        button, values = self.__tela_curso.open_opcao(3)
 
       if button == 1:
-        #if 
-        print('Cadastrar')
-        print(values)
-        self.__tela_curso.close()
+        self.__tela_curso.close_opcao()
+
+        if (values["nome_curso"] != None and values["nome_curso"] != '') and (values["descricao"] != None and values["descricao"] != '') \
+            and (values["horas"] != None and values["horas"] != ''):
+
+          erro = False
+
+          try:
+            int(values["horas"])
+          
+          except ValueError:
+            erro = True
+            # Colocar Exception aqui!!
+            self.__tela_curso.show_message("Erro", "Horas deve ser um valor inteiro")
+
+          if not erro:
+            # Em caso de cadastro (dados antigos is null)
+            if not dados:
+              self.incluir_curso(values)
+            # Em caso de alteracao
+            else:
+              self.alterar_curso(curso, values)
+
+            return True
+
+        else:
+          self.__tela_curso.show_message("Erro", "Preencha todas as caixas")
+          self.__tela_curso.close_opcao()
 
       else:
-        self.__tela_curso.close()
+        self.__tela_curso.close_opcao()
         return False
 
   def curso_to_json(self, curso):
     infos_curso = {}
     infos_curso["nome_curso"] = curso.nome_do_curso
     infos_curso["descricao"] = curso.descricao
-    infos_curso["descricao"] = curso.descricao
     infos_curso["horas"] = curso.quantidade_horas
 
     return infos_curso
 
+  def cadastrar_usuario_curso(self, curso):
+    self.__controlador_sistema.controlador_progresso.cria_progresso(curso.codigo)
+
   def detalhes_curso(self, nome_curso):
+    adm = self.__controlador_sistema.usuario_logado.adm
     self.__tela_curso.close()
     curso = self.pega_curso_por_nome(nome_curso)
     infos_curso = self.curso_to_json(curso)
+    verifica_cadastrado = self.__controlador_sistema.controlador_progresso.progresso_por_curso_e_usuario(curso.codigo)
+    
+    if verifica_cadastrado != None: 
+      cadastrado = True 
+    
+    else: 
+      cadastrado = False
     
     while True:
-      button, values = self.__tela_curso.open_opcao(2, infos_curso)
+      button, values = self.__tela_curso.open_opcao(2, infos_curso, cadastrado, adm)
 
       if button != 0:
         self.__curso_escolhido = curso
@@ -159,16 +194,20 @@ class ControladorCurso():
           return True
 
         elif button == 3:
-          # editar curso
-          pass
+          self.alterar_curso_info(curso, infos_curso)
+          return True
         
         elif button == 4:
-          # Excluir Curso
-          pass
+          self.excluir_curso(curso)
+          return True
+
+        elif button == 9:
+          self.cadastrar_usuario_curso(curso)
+          self.__tela_curso.show_message("Parabéns", "Você se cadastrou nesse Curso")
+          self.detalhes_curso(curso.nome_do_curso)
 
       self.__tela_curso.close_opcao()
       return False
-
 
   def listar_nome_cursos(self):
     self.__tela_curso.close()
@@ -194,7 +233,8 @@ class ControladorCurso():
         return False
 
   def abre_tela(self):
+    adm = self.__controlador_sistema.usuario_logado.adm
     lista_opcoes = {1: self.listar_nome_cursos, 2: self.cadastrar_curso, 0: self.retornar}
 
     while True:
-      lista_opcoes[self.__tela_curso.open()]()
+      lista_opcoes[self.__tela_curso.open(adm)]()

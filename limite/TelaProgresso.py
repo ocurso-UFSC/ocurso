@@ -10,14 +10,18 @@ class TelaProgresso():
   def window(self):
     return self.__window
 
-  def init_components(self):
+  def init_components(self, adm):
     sg.ChangeLookAndFeel('DarkBlue')
 
-    botoes = [
-      [sg.Button('Meu relatório', size=(20,2), key=1)],
-      [sg.Button('Todos Usuários', size=(20,2), key=2)],
-      [sg.Button('Voltar', size=(20,2), key=0)]
-    ]
+    botao_1 = [[sg.Button('Meu relatório', size=(20,2), key=1)]]
+    botao_adm = [[sg.Button('Todos Usuários', size=(20,2), key=2)]]
+    botao_2 = [[sg.Button('Voltar', size=(20,2), key=0)]]
+
+    if adm:
+      botoes = botao_1 + botao_adm + botao_2
+    
+    else:
+      botoes = botao_1 + botao_2
 
     layout = [
       [sg.Text('Usuário - oCurso', size=(15,1), font=("Helvetica", 25), justification='center')],
@@ -26,9 +30,8 @@ class TelaProgresso():
 
     self.__window = sg.Window("Progresso", default_element_size=(40, 1)).Layout(layout)
 
-  
-  def open(self):
-    self.init_components()
+  def open(self, adm):
+    self.init_components(adm)
     button, values = self.__window.Read()
     return button
 
@@ -36,9 +39,6 @@ class TelaProgresso():
     if self.__window != None:
       self.__window.Close()
     self.__window = None
-
-  def show_message(self, titulo: str, mensagem: str):
-    sg.Popup(titulo, mensagem)
 
 
   def listar_todos_usuarios(self, lista_usuarios):
@@ -74,7 +74,6 @@ class TelaProgresso():
       [sg.Text('Nota', size=(8, 1), font=("Helvetica", 15)), 
         sg.Text(dados_progresso["nota"], font=("Helvetica", 15))],
       ]
-      # [sg.Column(text, vertical_alignment='center', justification='center', k='-C-')]
 
     layout = [[sg.Text('Informações', size=(15,1), font=("Helvetica", 25), justification='center')],
               [sg.Column(infos, justification='center')],
@@ -82,7 +81,6 @@ class TelaProgresso():
     ]
 
     self.__window2 = sg.Window("Informações", default_element_size=(40, 1)).Layout(layout)
-
 
   def open_opcao(self, opcao, dados = None): #dados eh opcional
     if opcao == 1:
@@ -101,25 +99,6 @@ class TelaProgresso():
     if self.__window2 != None:
       self.__window2.Close()
     self.__window2 = None
-  
 
-  def pega_entrada(self, msg):
-    entrada = input(msg)
-    return entrada
-
-  def tela_opcoes(self):
-    entrada = int(input(
-'''
----------- oCurso  ------------
-Escolha uma das opções a seguir
-1 - Me cadastrar no curso
-2 - Meu Relatório
-3 - Todos Relatórios
-4 - Emitir meu certificado
-0 - Voltar
-Digite a opção: '''))
-
-    return entrada
-
-  def mostra_mensagem(self, msg):
-    print(msg)
+  def show_message(self, titulo: str, mensagem: str):
+    sg.Popup(titulo, mensagem)
