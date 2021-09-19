@@ -127,6 +127,7 @@ class TelaQuestao():
                 resposta = values['questao'][0][0]
                 break
             except:
+                self.close_window2()
                 self.show_message('Atenção!', 'Selecione uma alternativa.')
         return resposta
 

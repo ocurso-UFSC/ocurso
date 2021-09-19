@@ -7,6 +7,7 @@ class ControladorQuestao():
         self.__controlador_sistema = controlador_sistema
         self.__tela_questao = TelaQuestao()
         self.__questao = Questao
+        self.__usuario_logado = self.__controlador_sistema._ControladorSistema__usuario_logado
         self.__respostas_usuario = {}
         self.__indexes = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
 
@@ -76,17 +77,28 @@ class ControladorQuestao():
         self.__tela_questao.close_window3()
 
     def mostra_perguntas(self):
-        self.__tela_questao.close_window()
+        usuario_logado = self.__controlador_sistema._ControladorSistema__usuario_logado
         curso = self.__controlador_sistema.controlador_curso._ControladorCurso__curso_escolhido
-        nome_curso = curso._Curso__nome_do_curso
-        self.__respostas_usuario[nome_curso] = list()
-        for questao in curso._Curso__avaliacao:
-            alternativas = []
-            for alternativa in questao._Questao__lista_alternativas:
-                alternativas.append(f'{alternativa._Alternativa__index} - {alternativa._Alternativa__descricao_alternativa}')
-            resposta_usuario = self.__tela_questao.open_mostra_pergunta(f'{curso._Curso__avaliacao.index(questao)+1}) {questao._Questao__descricao_questao}', alternativas)
-            self.__respostas_usuario[nome_curso].append(resposta_usuario)
-            self.__tela_questao.close_window2()
+        usuario_cod = usuario_logado._Usuario__email
+        curso_cod = curso._Curso__codigo
+        progresso = self.__controlador_sistema.controlador_progresso.progresso_por_curso_e_usuario(curso_cod, usuario_cod)
+        print(progresso._Progresso__ultima_aula)
+        print(len(curso._Curso__lista_aulas))
+
+        if len(curso._Curso__lista_aulas) == progresso._Progresso__ultima_aula:
+            self.__tela_questao.close_window()
+            curso = self.__controlador_sistema.controlador_curso._ControladorCurso__curso_escolhido
+            nome_curso = curso._Curso__nome_do_curso
+            self.__respostas_usuario[nome_curso] = list()
+            for questao in curso._Curso__avaliacao:
+                alternativas = []
+                for alternativa in questao._Questao__lista_alternativas:
+                    alternativas.append(f'{alternativa._Alternativa__index} - {alternativa._Alternativa__descricao_alternativa}')
+                resposta_usuario = self.__tela_questao.open_mostra_pergunta(f'{curso._Curso__avaliacao.index(questao)+1}) {questao._Questao__descricao_questao}', alternativas)
+                self.__respostas_usuario[nome_curso].append(resposta_usuario)
+                self.__tela_questao.close_window2()
+        else:
+            self.__tela_questao.show_message(f'Atenção!', 'Você precisa assistir todas as aulas \ndeste curso para fazer a avaliação.')
 
     def remover_questao(self, numero):
         self.__controlador_sistema.controlador_curso.remover_questao(numero)
@@ -124,8 +136,8 @@ class ControladorQuestao():
                 self.__tela_questao.close_window2()
                 return False
             elif len(values["questao"]) == 0:
-                self.__tela_questao.show_message("Erro", "Nenhuma questão selecionada")
                 self.__tela_questao.close_window2()
+                self.__tela_questao.show_message("Erro", "Nenhuma questão selecionada")
                 return False
             elif button == 1:
                 self.__tela_questao.close_window2()
@@ -145,6 +157,7 @@ class ControladorQuestao():
                 return False
 
     def retornar(self):
+        self.__tela_questao.close_window()
         self.__controlador_sistema.abre_tela()
 
     def abre_tela(self):
