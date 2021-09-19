@@ -34,9 +34,6 @@ class ControladorProgresso():
     progresso = Progresso(codigo, usuario, curso)
     
     self.adiciona_progresso(progresso)
-
-    print(self.progressos)
-    input("")
     
     return True
 
