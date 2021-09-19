@@ -98,6 +98,10 @@ class ControladorProgresso():
   
     return lista_cursos
 
+  def definir_ultima_aula(self, progresso, ultima_aula):
+    progresso.ultima_aula = ultima_aula
+    self.__dao.update()
+
   def progresso_to_json(self, progresso):
     dados_progresso = {}
 
