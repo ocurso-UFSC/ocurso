@@ -8,14 +8,17 @@ class TelaCurso():
     self.__window = None
     self.__window2 = None
 
-  def init_components(self):
-    sg.ChangeLookAndFeel('DarkBlue')
+  def init_components(self, adm):
 
-    botoes = [
-              [sg.Button('Listar Cursos', size=(20,2), key=1)],
-              [sg.Button('Cadastrar Curso', size=(20,2), key=2)],
-              [sg.Button('Voltar', size=(20,2), key=0)]
-    ]
+    botao_1 = [[sg.Button('Listar Cursos', size=(20,2), key=1)]]
+    botao_adm = [[sg.Button('Cadastrar Curso', size=(20,2), key=2)]]
+    botao_2 = [[sg.Button('Voltar', size=(20,2), key=0)]]
+
+    if adm:
+      botoes = botao_1 + botao_adm + botao_2
+
+    else:
+      botoes = botao_1 + botao_2
 
     layout = [
       [sg.Text('Cursos - oCurso', size=(15,1), font=("Helvetica", 25), justification='center')],
@@ -24,8 +27,8 @@ class TelaCurso():
 
     self.__window = sg.Window("Cursos", default_element_size=(40, 1)).Layout(layout)
 
-  def open(self):
-    self.init_components()
+  def open(self, adm):
+    self.init_components(adm)
     button, values = self.__window.Read()
     return button
 
@@ -45,9 +48,12 @@ class TelaCurso():
 
     self.__window2 = sg.Window("Cursos", default_element_size=(100, 1)).Layout(layout)
 
-  def detalhe_curso(self, infos_curso):
+  def detalhe_curso(self, infos_curso, adm):
     botoes = [[sg.Button("Aulas", key=1), sg.Button("Avaliação", key=2), sg.Button("Sair", key=0)]]
     botoes_adm = [[sg.Button("Editar Curso", key=3), sg.Button("Excluir Curso", key=4)]]
+
+    if adm:
+      botoes.extend(botoes_adm)
 
     infos = [
       [sg.Text('Nome', size=(8, 1), font=("Helvetica", 15)), 
@@ -63,7 +69,6 @@ class TelaCurso():
     layout = [[sg.Text('Curso', size=(15,1), font=("Helvetica", 25), justification='center')],
               [sg.Column(infos, justification='center')],
               [sg.Column(botoes, justification='center')],
-              [sg.Column(botoes_adm, justification='center')],
     ]
 
     self.__window2 = sg.Window("Curso", default_element_size=(40, 1)).Layout(layout)
@@ -80,30 +85,31 @@ class TelaCurso():
 
 
   def cadastrar_curso(self):
+    horas = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
 
     entrada = [
               [sg.Text("Nome")],
               [sg.Input(size=(20,2), key="nome_curso")],
               [sg.Text("Descricao")],
               [sg.Multiline(key="descricao", size=(35, 3))],
-              [sg.Text("Qnt. Horas")],
-              [sg.InputText(size=(20,2), key="horas")],
+              [sg.Text("Qnt. Horas"),
+                sg.Spin(values=horas, size=(5, 5), initial_value=2, key="horas")],
               [sg.Button("Salvar", key = 1), sg.Button("Voltar", key = 0)]
             ]
 
     layout = [
-      [sg.Text('Cadastrar Curso', size=(10,1), font=("Helvetica", 25), justification='center')],
+      [sg.Text('Cadastrar Curso', size=(18,1), font=("Helvetica", 25), justification='center')],
       [sg.Column(entrada, vertical_alignment='center', justification='center', k='-C-')]
     ]
 
-    self.__window2 = sg.Window("Cadastro Curso", default_element_size=(30, 1)).Layout(layout)
+    self.__window2 = sg.Window("Cadastro Curso", default_element_size=(50, 1)).Layout(layout)
 
-  def open_opcao(self, opcao, dados = None): #dados eh opcional
+  def open_opcao(self, opcao, dados = None, adm = None): #dados eh opcional
     if opcao == 1:
       self.listar_todos_cursos_info(dados)
 
     elif opcao == 2:
-      self.detalhe_curso(dados)
+      self.detalhe_curso(dados, adm)
 
     elif opcao == 3:
       self.cadastrar_curso()

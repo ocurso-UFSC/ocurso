@@ -1,3 +1,4 @@
+from os import error
 from limite.telaCurso import TelaCurso
 from entidade.curso import Curso
 from dao.curso_dao import cursoDAO
@@ -105,28 +106,44 @@ class ControladorCurso():
     curso._Curso__lista_aulas.pop(numero_aula)
     self.__dao.update()
 
-  def cadastrar_curso(self, dados_curso):
+  def incluir_curso(self, dados_curso):
     codigo = self.get_next_key()
-    curso = Curso(codigo, dados_curso["nome_do_curso"], dados_curso["descricao"], 
-                    dados_curso["quantidade_horas"])
+    curso = Curso(codigo, dados_curso["nome_curso"], dados_curso["descricao"], 
+                    dados_curso["horas"])
     
     self.__dao.add(curso)
-    # self.__cursos.append(curso)
   
-  def cadastro_curso_infos(self):
+  def cadastrar_curso(self):
     self.__tela_curso.close()
 
     while True:
       button, values = self.__tela_curso.open_opcao(3)
 
       if button == 1:
-        #if 
-        print('Cadastrar')
-        print(values)
-        self.__tela_curso.close()
+        if (values["nome_curso"] != None and values["nome_curso"] != '') and (values["descricao"] != None and values["descricao"] != '') \
+            and (values["horas"] != None and values["horas"] != ''):
+
+          erro = False
+
+          try:
+            int(values["horas"])
+          
+          except ValueError:
+            erro = True
+            # Colocar Exception aqui!!
+            self.__tela_curso.show_message("Erro", "Horas deve ser um valor inteiro")
+
+          if not erro:
+            self.__tela_curso.close_opcao()
+            self.incluir_curso(values)
+            return True
+
+        else:
+          self.__tela_curso.show_message("Erro", "Preencha todas as caixas")
+          self.__tela_curso.close_opcao()
 
       else:
-        self.__tela_curso.close()
+        self.__tela_curso.close_opcao()
         return False
 
   def curso_to_json(self, curso):
@@ -139,12 +156,13 @@ class ControladorCurso():
     return infos_curso
 
   def detalhes_curso(self, nome_curso):
+    adm = self.__controlador_sistema.usuario_logado.adm
     self.__tela_curso.close()
     curso = self.pega_curso_por_nome(nome_curso)
     infos_curso = self.curso_to_json(curso)
     
     while True:
-      button, values = self.__tela_curso.open_opcao(2, infos_curso)
+      button, values = self.__tela_curso.open_opcao(2, infos_curso, adm)
 
       if button != 0:
         self.__curso_escolhido = curso
@@ -194,7 +212,8 @@ class ControladorCurso():
         return False
 
   def abre_tela(self):
+    adm = self.__controlador_sistema.usuario_logado.adm
     lista_opcoes = {1: self.listar_nome_cursos, 2: self.cadastrar_curso, 0: self.retornar}
 
     while True:
-      lista_opcoes[self.__tela_curso.open()]()
+      lista_opcoes[self.__tela_curso.open(adm)]()
