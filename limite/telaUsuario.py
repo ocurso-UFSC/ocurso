@@ -31,7 +31,6 @@ class TelaUsuario():
       [sg.Column(botoes, vertical_alignment='center', justification='center')], 
     ]
 
-    
     self.__window = sg.Window("Usuário", default_element_size=(40, 1)).Layout(layout)
 
   def open(self, adm):
@@ -150,7 +149,8 @@ class TelaUsuario():
     return button, values
 
   def close_opcao(self):
-    self.__window2.Close()
+    if self.__window2 != None:
+      self.__window2.Close()
     self.__window2 = None
 
   def show_message(self, titulo: str, mensagem: str):
