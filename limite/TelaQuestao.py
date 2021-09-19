@@ -102,10 +102,16 @@ class TelaQuestao():
         self.__window2 = sg.Window("Avaliação").Layout(layout)
     
     def open_mostra_pergunta(self, questao=None, alternativas=None):
-        self.mostra_pergunta(questao, alternativas)
-        button, values = self.__window2.Read()
-        print (button, values)
-        return values['questao'][0][0]
+        while True:
+            self.mostra_pergunta(questao, alternativas)
+            button, values = self.__window2.Read()
+            print (button, values)
+            try:
+                resposta = values['questao'][0][0]
+                break
+            except:
+                self.show_message('Atenção!', 'Selecione uma alternativa.')
+        return resposta
 
     def pega_resposta(self):
         resposta_usuario = str(input('\nSua resposta: '))

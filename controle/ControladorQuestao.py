@@ -84,20 +84,20 @@ class ControladorQuestao():
         curso = self.__controlador_sistema.controlador_curso._ControladorCurso__curso_escolhido
         nome_curso = curso._Curso__nome_do_curso
         self.__respostas_usuario[nome_curso] = list()
-        cursos = self.__controlador_sistema.controlador_curso._ControladorCurso__cursos
-        index_do_curso = cursos.index(self.__controlador_sistema.controlador_curso.pega_curso_por_nome(nome_curso))
-        curso = cursos[index_do_curso]
-        progresso = self.__controlador_sistema.controlador_progresso.progresso_por_curso_e_usuario(curso)
-        if progresso._Progresso__ultima_aula == len(curso._Curso__lista_aulas):
-            for questao in curso._Curso__avaliacao:
-                alternativas = []
-                for alternativa in questao._Questao__lista_alternativas:
-                    alternativas.append(f'{alternativa._Alternativa__index} - {alternativa._Alternativa__descricao_alternativa}')
-                resposta_usuario = self.__tela_questao.open_mostra_pergunta(f'{curso._Curso__avaliacao.index(questao)+1}) {questao._Questao__descricao_questao}', alternativas)
-                self.__respostas_usuario[nome_curso].append(resposta_usuario)
-                self.__tela_questao.close_window2()
-        else:
-            self.__tela_questao.show_message('Erro', 'Você precisa concluir todas as aulas \ndo curso para fazer a avaliação!')
+        # cursos = self.__controlador_sistema.controlador_curso._ControladorCurso__cursos
+        # index_do_curso = cursos.index(self.__controlador_sistema.controlador_curso.pega_curso_por_nome(nome_curso))
+        # curso = cursos[index_do_curso]
+        # progresso = self.__controlador_sistema.controlador_progresso.progresso_por_curso_e_usuario(curso)
+        # if progresso._Progresso__ultima_aula == len(curso._Curso__lista_aulas):
+        for questao in curso._Curso__avaliacao:
+            alternativas = []
+            for alternativa in questao._Questao__lista_alternativas:
+                alternativas.append(f'{alternativa._Alternativa__index} - {alternativa._Alternativa__descricao_alternativa}')
+            resposta_usuario = self.__tela_questao.open_mostra_pergunta(f'{curso._Curso__avaliacao.index(questao)+1}) {questao._Questao__descricao_questao}', alternativas)
+            self.__respostas_usuario[nome_curso].append(resposta_usuario)
+            self.__tela_questao.close_window2()
+        # else:
+        #     self.__tela_questao.show_message('Erro', 'Você precisa concluir todas as aulas \ndo curso para fazer a avaliação!')
     
     def remover_questao(self, numero):
         self.__controlador_sistema.controlador_curso.remover_questao(numero)
@@ -106,9 +106,9 @@ class ControladorQuestao():
         self.__tela_questao.close_window()
         curso = self.__controlador_sistema.controlador_curso._ControladorCurso__curso_escolhido
         nome_curso = curso._Curso__nome_do_curso
-        cursos = self.__controlador_sistema.controlador_curso._ControladorCurso__cursos
-        index_do_curso = cursos.index(self.__controlador_sistema.controlador_curso.pega_curso_por_nome(nome_curso))
-        curso = cursos[index_do_curso]
+        # cursos = self.__controlador_sistema.controlador_curso._ControladorCurso__cursos
+        # index_do_curso = cursos.index(self.__controlador_sistema.controlador_curso.pega_curso_por_nome(nome_curso))
+        # curso = cursos[index_do_curso]
         acertos = 0
         # if len(self.__respostas_usuario[nome_curso] == 0:
         #     #Você ainda não realizou a avaliação deste curso!
