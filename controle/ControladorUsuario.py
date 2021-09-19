@@ -99,9 +99,9 @@ class ControladorUsuario():
     except:
       return False
 
-  def alterar_usuario_info(self, usuario):
+  def alterar_usuario_info(self, usuario, adm = False):
     dados_antigos = self.user_to_json(usuario)
-    button, values = self.__tela_usuario.open_edit_user(dados_antigos)
+    button, values = self.__tela_usuario.open_edit_user(dados_antigos, adm)
     
     if button == 1:
       if self.alterar_usuario(usuario, values):
@@ -117,7 +117,7 @@ class ControladorUsuario():
   def informacao_user(self, usuario = None):
     if usuario == None:
       usuario = self.__controlador_sistema.usuario_logado
-    
+
     dados_usuario = self.user_to_json(usuario)
     button, values = self.__tela_usuario.open_opcao(1, dados_usuario)
     
@@ -128,7 +128,7 @@ class ControladorUsuario():
     elif button == 1:
       self.__tela_usuario.close_opcao()
       self.__tela_usuario.close()
-      self.alterar_usuario_info(usuario)
+      self.alterar_usuario_info(usuario, usuario.adm)
 
     elif button == 2:
       self.excluir_usuario(usuario)
@@ -182,8 +182,5 @@ class ControladorUsuario():
     lista_opcoes_adm = {1: self.informacao_user, 2: self.lista_usuarios, 3: self.cadastrar, 0: self.retornar}
     continua = True
     while continua:
-      if self.__controlador_sistema.usuario_logado.adm == True:
-        lista_opcoes_adm[self.__tela_usuario.open()]()
-
-      else:
-        pass
+      adm = self.__controlador_sistema.usuario_logado.adm
+      lista_opcoes_adm[self.__tela_usuario.open(adm)]()

@@ -10,25 +10,32 @@ class TelaUsuario():
   def window(self):
     return self.__window
 
-  def init_components(self):
+  def init_components(self, adm):
     sg.ChangeLookAndFeel('DarkBlue')
 
-    botoes = [
-              [sg.Button('Minhas Informações', size=(20,2), key=1)],
-              [sg.Button('Listar Todos Usuários', size=(20,2), key=2)],
-              [sg.Button('Cadastrar Usuário', size=(20,2), key=3)],
-              [sg.Button('Voltar', size=(20,2), key=0)]
-    ]
+    botoes_1 = [[sg.Button('Minhas Informações', size=(20,2), key=1)]]
+    botoes_adm = [
+        [sg.Button('Listar Todos Usuários', size=(20,2), key=2)],
+        [sg.Button('Cadastrar Usuário', size=(20,2), key=3)]
+      ]
+    botoes_2 = [[sg.Button('Voltar', size=(20,2), key=0)]]
+
+    if adm:
+      botoes = botoes_1 + botoes_adm + botoes_2
+
+    else:
+      botoes = botoes_1 + botoes_2
 
     layout = [
       [sg.Text('Usuário - oCurso', size=(15,1), font=("Helvetica", 25), justification='center')],
-      [sg.Column(botoes, vertical_alignment='center', justification='center', k='-C-')]
+      [sg.Column(botoes, vertical_alignment='center', justification='center')], 
     ]
 
+    
     self.__window = sg.Window("Usuário", default_element_size=(40, 1)).Layout(layout)
 
-  def open(self):
-    self.init_components()
+  def open(self, adm):
+    self.init_components(adm)
     button, values = self.__window.Read()
     return button
 
@@ -93,7 +100,7 @@ class TelaUsuario():
 
     self.__window2 = sg.Window("Informações", default_element_size=(100, 1)).Layout(layout)
   
-  def edita_usuario(self, dados_usuario):
+  def edita_usuario(self, dados_usuario, adm): # adm is boolean
     botoes = [[sg.Button("Salvar", key=1), sg.Button("Sair", key=0)]]
 
     infos = [
@@ -105,11 +112,14 @@ class TelaUsuario():
 
       [sg.Text('Senha', size=(8, 1), font=("Helvetica", 15)),
         sg.InputText(dados_usuario["senha"], key="senha")],        
+      ]
 
-      [sg.Text('ADM', size=(8, 1), font=("Helvetica", 15)),
+    if adm:
+      infos.extend([
+        [sg.Text('ADM', size=(8, 1), font=("Helvetica", 15)),
         sg.Radio('Sim', "radio", key="adm", default = dados_usuario["adm"]),
-        sg.Radio('Não', "radio", key="n_adm", default = (not dados_usuario["adm"]))
-      ]]
+        sg.Radio('Não', "radio", key="n_adm", default = (not dados_usuario["adm"]))]
+        ])
 
     layout = [[sg.Text('Informações', size=(15,1), font=("Helvetica", 25), justification='center')],
               [sg.Column(infos, justification='center')],
@@ -118,8 +128,8 @@ class TelaUsuario():
 
     self.__window2 = sg.Window("Informações", default_element_size=(40, 1)).Layout(layout)
 
-  def open_edit_user(self, dados):
-    self.edita_usuario(dados)
+  def open_edit_user(self, dados, adm):
+    self.edita_usuario(dados, adm)
     button, values = self.__window2.Read()
     print (button, values)
     
