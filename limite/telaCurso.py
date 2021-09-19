@@ -45,10 +45,6 @@ class TelaCurso():
 
     self.__window2 = sg.Window("Cursos", default_element_size=(100, 1)).Layout(layout)
 
-  # def seleciona_curso(self):
-  #   nome_curso = input("Qual o nome do curso deseja buscar? ")
-  #   return nome_curso
-
   def detalhe_curso(self, infos_curso):
     botoes = [[sg.Button("Aulas", key=1), sg.Button("Avaliação", key=2), sg.Button("Sair", key=0)]]
     botoes_adm = [[sg.Button("Editar Curso", key=3), sg.Button("Excluir Curso", key=4)]]
@@ -82,12 +78,35 @@ class TelaCurso():
 
     self.__window2 = sg.Window("Informações", default_element_size=(100, 1)).Layout(layout)
 
+
+  def cadastrar_curso(self):
+
+    entrada = [
+              [sg.Text("Nome")],
+              [sg.Input(size=(20,2), key="nome_curso")],
+              [sg.Text("Descricao")],
+              [sg.Multiline(key="descricao", size=(35, 3))],
+              [sg.Text("Qnt. Horas")],
+              [sg.InputText(size=(20,2), key="horas")],
+              [sg.Button("Salvar", key = 1), sg.Button("Voltar", key = 0)]
+            ]
+
+    layout = [
+      [sg.Text('Cadastrar Curso', size=(10,1), font=("Helvetica", 25), justification='center')],
+      [sg.Column(entrada, vertical_alignment='center', justification='center', k='-C-')]
+    ]
+
+    self.__window2 = sg.Window("Cadastro Curso", default_element_size=(30, 1)).Layout(layout)
+
   def open_opcao(self, opcao, dados = None): #dados eh opcional
     if opcao == 1:
       self.listar_todos_cursos_info(dados)
 
     elif opcao == 2:
       self.detalhe_curso(dados)
+
+    elif opcao == 3:
+      self.cadastrar_curso()
 
     button, values = self.__window2.Read()
     return button, values
@@ -96,26 +115,6 @@ class TelaCurso():
     if self.__window2 != None:
       self.__window2.Close()
     self.__window2 = None
-
-  def pega_dados_curso(self):
-    print("Entre com os dados do curso: ")
-    nome_do_curso = input("Nome Curso: ")
-    descricao = input("Descricao: ")
-    quantidade_horas = input("Quantidade horas: ")
-  
-    return {"nome_do_curso": nome_do_curso, 
-      "descricao": descricao, 
-      "quantidade_horas": quantidade_horas,}
-
-  def mostra_curso(self, dados_curso):
-    print("\n")
-    print("Nome do Curso: ", dados_curso["nome_do_curso"])
-    print("Descricao: ", dados_curso["descricao"])
-    print("Quantidade horas: ", dados_curso["quantidade_horas"])
-
-
-  def mostra_mensagem(self, msg):
-    print(msg)
 
   def show_message(self, titulo: str, mensagem: str):
     sg.Popup(titulo, mensagem)

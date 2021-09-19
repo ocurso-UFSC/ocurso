@@ -109,14 +109,33 @@ class ControladorCurso():
     curso._Curso__lista_aulas.pop(numero_aula)
     self.__dao.update()
 
-  def cadastrar_curso(self, dados_curso):
 
+  def cadastrar_curso(self, dados_curso):
     codigo = self.get_next_key()
     curso = Curso(codigo, dados_curso["nome_do_curso"], dados_curso["descricao"], 
                     dados_curso["quantidade_horas"])
     
     self.__dao.add(curso)
     # self.__cursos.append(curso)
+
+  
+  def cadastro_curso_infos(self):
+    self.__tela_curso.close()
+
+    while True:
+      button, values = self.__tela_curso.open_opcao(3)
+
+      if button == 1:
+        #if 
+        print('Cadastrar')
+        print(values)
+        self.__tela_curso.close()
+
+      else:
+        self.__tela_curso.close()
+        return False
+
+
 
   
   def curso_to_json(self, curso):
