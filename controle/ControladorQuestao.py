@@ -124,8 +124,8 @@ class ControladorQuestao():
                 self.__tela_questao.close_window2()
                 return False
             elif len(values["questao"]) == 0:
-                self.__tela_questao.show_message("Erro", "Nenhuma questão selecionada")
                 self.__tela_questao.close_window2()
+                self.__tela_questao.show_message("Erro", "Nenhuma questão selecionada")
                 return False
             elif button == 1:
                 self.__tela_questao.close_window2()
@@ -145,6 +145,7 @@ class ControladorQuestao():
                 return False
 
     def retornar(self):
+        self.__tela_questao.close_window()
         self.__controlador_sistema.abre_tela()
 
     def abre_tela(self):
