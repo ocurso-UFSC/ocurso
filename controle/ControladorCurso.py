@@ -89,12 +89,9 @@ class ControladorCurso():
     self.__dao.add(curso)
 
   def excluir_curso(self, curso):
-    try:
-      self.__dao.remove(curso.codigo)
-      self.__tela_curso.show_message('Sucesso', 'Curso Removido')
-      return True
-    except:     
-      pass
+    self.__dao.remove(curso.codigo)
+    self.__controlador_sistema.controlador_progresso.remove_progresso_por_curso_cod(curso.codigo)
+    self.__tela_curso.show_message('Sucesso', 'Curso Removido')
 
   def alterar_curso(self, curso, novos_dados):
     try:
@@ -194,10 +191,8 @@ class ControladorCurso():
           self.excluir_curso(curso)
           return True
 
-
       self.__tela_curso.close_opcao()
       return False
-
 
   def listar_nome_cursos(self):
     self.__tela_curso.close()

@@ -171,6 +171,7 @@ class ControladorUsuario():
       if self.__controlador_sistema.usuario_logado == usuario:
         self.__controlador_sistema.deslogar_usuario()
 
+      self.__controlador_sistema.controlador_progresso.remove_progresso_por_usuario_cod(usuario.email)
       self.__dao.remove(usuario.email)
       self.__tela_usuario.show_message("Feito", "Usuario removido")
 

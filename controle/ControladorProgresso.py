@@ -28,6 +28,38 @@ class ControladorProgresso():
     else:
       return 1
 
+  def excluir_progresso(self, progresso):
+    self.__dao.remove(progresso.codigo)
+  
+  def excluir_progresso_por_key(self, progresso_codigo):
+    self.__dao.remove(progresso_codigo)
+
+  def remove_progresso_por_curso_cod(self, curso_cod):
+    lista_progressos = self.__dao.get_all()
+    lista_codigos = []
+
+    # salva todos os progressos do curso
+    for progresso in lista_progressos:
+      if progresso.curso_cod == curso_cod:
+        lista_codigos.append(progresso.codigo)
+
+    # apaga eles
+    for progresso_codigo in lista_codigos:
+      self.excluir_progresso_por_key(progresso_codigo)
+
+  def remove_progresso_por_usuario_cod(self, usuario_cod):
+    lista_progressos = self.__dao.get_all()
+    lista_codigos = []
+
+    # salva todos os progressos do curso
+    for progresso in lista_progressos:
+      if progresso.usuario_cod == usuario_cod:
+        lista_codigos.append(progresso.codigo)
+
+    # apaga eles
+    for progresso_codigo in lista_codigos:
+      self.excluir_progresso_por_key(progresso_codigo)
+    
   def adiciona_progresso(self, progresso):
     self.__dao.add(progresso)
     return True

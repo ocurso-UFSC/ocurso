@@ -20,6 +20,6 @@ class progressoDAO(DAO):
   def update(self):
     return super().update()
 
-  def remove(self, key: str):
-    if isinstance(key, str):
+  def remove(self, key: int):
+    if isinstance(key, int):
       return super().remove(key)
