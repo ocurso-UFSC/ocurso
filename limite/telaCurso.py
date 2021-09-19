@@ -48,8 +48,11 @@ class TelaCurso():
 
     self.__window2 = sg.Window("Cursos", default_element_size=(100, 1)).Layout(layout)
 
-  def detalhe_curso(self, infos_curso, adm):
-    botoes = [[sg.Button("Aulas", key=1), sg.Button("Avaliação", key=2), sg.Button("Sair", key=0)]]
+  def detalhe_curso(self, infos_curso, cadastrado, adm):
+    if cadastrado:
+      botoes = [[sg.Button("Aulas", key= 1), sg.Button("Avaliação", key=2), sg.Button("Sair", key=0)]]
+    else:
+      botoes = [[sg.Button("Cadastrar", key=9), sg.Button("Sair", key=0)]]
     botoes_adm = [[sg.Button("Editar Curso", key=3), sg.Button("Excluir Curso", key=4)]]
 
     if adm:
@@ -126,12 +129,12 @@ class TelaCurso():
 
     self.__window2 = sg.Window("Cadastro Curso", default_element_size=(50, 1)).Layout(layout)
 
-  def open_opcao(self, opcao, dados = None, adm = None): #dados eh opcional
+  def open_opcao(self, opcao, dados = None, cadastrado = None, adm = None): #dados eh opcional
     if opcao == 1:
       self.listar_todos_cursos_info(dados)
 
     elif opcao == 2:
-      self.detalhe_curso(dados, adm)
+      self.detalhe_curso(dados, cadastrado, adm)
 
     elif opcao == 3:
       self.cadastrar_curso()

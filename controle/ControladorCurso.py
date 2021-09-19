@@ -162,14 +162,24 @@ class ControladorCurso():
 
     return infos_curso
 
+  def cadastrar_usuario_curso(self, curso):
+    self.__controlador_sistema.controlador_progresso.cria_progresso(curso.codigo)
+
   def detalhes_curso(self, nome_curso):
     adm = self.__controlador_sistema.usuario_logado.adm
     self.__tela_curso.close()
     curso = self.pega_curso_por_nome(nome_curso)
     infos_curso = self.curso_to_json(curso)
+    verifica_cadastrado = self.__controlador_sistema.controlador_progresso.progresso_por_curso_e_usuario(curso.codigo)
+    
+    if verifica_cadastrado != None: 
+      cadastrado = True 
+    
+    else: 
+      cadastrado = False
     
     while True:
-      button, values = self.__tela_curso.open_opcao(2, infos_curso, adm)
+      button, values = self.__tela_curso.open_opcao(2, infos_curso, cadastrado, adm)
 
       if button != 0:
         self.__curso_escolhido = curso
@@ -190,6 +200,11 @@ class ControladorCurso():
         elif button == 4:
           self.excluir_curso(curso)
           return True
+
+        elif button == 9:
+          self.cadastrar_usuario_curso(curso)
+          self.__tela_curso.show_message("Parabéns", "Você se cadastrou nesse Curso")
+          self.detalhes_curso(curso.nome_do_curso)
 
       self.__tela_curso.close_opcao()
       return False
