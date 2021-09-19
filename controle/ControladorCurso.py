@@ -16,8 +16,8 @@ class ControladorCurso():
     return self.__dao.get_all()
 
   def get_next_key(self):
-    all = self.__dao.get_all()
-    return len(all) + 1
+    all = list(self.__dao.get_all())
+    return all[-1].codigo + 1
 
   def pega_curso_por_nome(self, nome: str = None):
     for curso in self.lista_cursos:
@@ -91,7 +91,6 @@ class ControladorCurso():
   def adicionar_aula(self, aula):
     curso = self.busca_curso_escolhido()
     curso._Curso__lista_aulas.append(aula)
-    self.__dao.update()
   
   def alterar_aula(self, numero_aula, aula):
     curso = self.busca_curso_escolhido()
