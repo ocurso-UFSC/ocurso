@@ -27,13 +27,13 @@ class ControladorAula():
         progresso.ultima_aula = 0
       self.__tela_aula.close_mexe_na_aula()
 
-
     for _ in range(aulas_restantes):
       aula = curso.lista_aulas[progresso.ultima_aula]
       continuar = self.__tela_aula.open_mostra_aulas(progresso.ultima_aula + 1, aula._Aula__descricao_aula, aula._Aula__link_aula)
       if continuar == 'S':
         progresso.ultima_aula += 1
       if continuar == 'N':
+        self.__tela_aula.close_pega_dados_aula()
         break
       if progresso.ultima_aula == len(curso._Curso__lista_aulas):
         self.__tela_aula.open_mensagem('Parabéns!', 'Você concluiu as aulas deste curso!')
