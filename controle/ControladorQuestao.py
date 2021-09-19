@@ -43,7 +43,7 @@ class ControladorQuestao():
             self.__tela_questao.close_window2()
             self.__alternativa = Alternativa(index, descricao_alternativa)
             lista_alternativas.append(self.__alternativa)
-            alternativas_para_selecao.append(f'{index} - {descricao_alternativa}')
+            alternativas_para_selecao.append(f'{index}) {descricao_alternativa}')
 
         alternativa_correta = self.__tela_questao.open_alternativa_correta(alternativas_para_selecao)
         self.__tela_questao.close_window2()
@@ -67,7 +67,7 @@ class ControladorQuestao():
             self.__tela_questao.close_window2()
             self.__alternativa = Alternativa(index, descricao_alternativa)
             lista_alternativas.append(self.__alternativa)
-            alternativas_para_selecao.append(f'{index} - {descricao_alternativa}')
+            alternativas_para_selecao.append(f'{index}) {descricao_alternativa}')
 
         alternativa_correta = self.__tela_questao.open_alternativa_correta(alternativas_para_selecao)
         self.__tela_questao.close_window2()
@@ -80,6 +80,7 @@ class ControladorQuestao():
         self.__tela_questao.close_window3()
 
     def mostra_perguntas(self):
+        self.__tela_questao.close_window()
         curso = self.__controlador_sistema.controlador_curso._ControladorCurso__curso_escolhido
         nome_curso = curso._Curso__nome_do_curso
         self.__respostas_usuario[nome_curso] = list()
@@ -92,9 +93,9 @@ class ControladorQuestao():
                 alternativas = []
                 for alternativa in questao._Questao__lista_alternativas:
                     alternativas.append(f'{alternativa._Alternativa__index} - {alternativa._Alternativa__descricao_alternativa}')
-                resposta_usuario = self.__tela_questao.open_mostra_pergunta(f'{curso._Curso__avaliacao.index(questao)+1} - {questao._Questao__descricao_questao}', alternativas)
+                resposta_usuario = self.__tela_questao.open_mostra_pergunta(f'{curso._Curso__avaliacao.index(questao)+1}) {questao._Questao__descricao_questao}', alternativas)
                 self.__respostas_usuario[nome_curso].append(resposta_usuario)
-            self.__tela_questao.close_window2()
+                self.__tela_questao.close_window2()
         else:
             self.__tela_questao.show_message('Erro', 'Você precisa concluir todas as aulas \ndo curso para fazer a avaliação!')
     
@@ -102,6 +103,7 @@ class ControladorQuestao():
         self.__controlador_sistema.controlador_curso.remover_questao(numero)
 
     def mostrar_respostas(self):
+        self.__tela_questao.close_window()
         curso = self.__controlador_sistema.controlador_curso._ControladorCurso__curso_escolhido
         nome_curso = curso._Curso__nome_do_curso
         cursos = self.__controlador_sistema.controlador_curso._ControladorCurso__cursos
@@ -123,6 +125,7 @@ class ControladorQuestao():
             progresso.nota = acertos/len(self.__respostas_usuario[nome_curso]) * 10
             # self.__nota_usuario[nome_curso] = acertos/len(self.__respostas_usuario[nome_curso]) * 10
             self.__tela_questao.open_mostra_mensagem(f'Sua nota em {nome_curso.upper()} é', progresso.nota)
+        self.__tela_questao.close_window2()
     
     def listar_questoes(self):
         curso = self.__controlador_sistema.controlador_curso._ControladorCurso__curso_escolhido
