@@ -23,8 +23,8 @@ class ControladorProgresso():
         self.cria_progresso(curso, usuario)
 
   def get_next_key(self):
-    all = self.__dao.get_all()
-    return len(all) + 1
+    all = list(self.__dao.get_all())
+    return all[-1].codigo + 1
 
   def cria_progresso(self, curso, usuario = None):
     if usuario == None:
