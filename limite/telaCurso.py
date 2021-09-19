@@ -45,8 +45,6 @@ class TelaCurso():
 
     self.__window2 = sg.Window("Cursos", default_element_size=(100, 1)).Layout(layout)
 
-
-  
   # def seleciona_curso(self):
   #   nome_curso = input("Qual o nome do curso deseja buscar? ")
   #   return nome_curso

@@ -8,6 +8,15 @@ class ControladorProgresso():
     # self.__progressos = self.__dao.get_all()
     self.__tela_progresso = TelaProgresso()
     self.__controlador_sistema = controlador_sistema
+    # self.temporario()
+
+  def temporario(self):
+    lista_usuarios = list(self.__controlador_sistema.controlador_usuario.usuarios)
+    lista_cursos = list(self.__controlador_sistema.controlador_curso.lista_cursos)
+
+    for usuario in lista_usuarios:
+      for curso in lista_cursos:
+        self.cria_progresso(curso, usuario)
 
   def get_next_key(self):
     all = self.__dao.get_all()
