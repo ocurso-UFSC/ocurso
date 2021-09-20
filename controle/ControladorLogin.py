@@ -39,20 +39,8 @@ class ControladorLogin:
     self.__tela_login.show_message("Bye", "Até a próxima")
     exit()
 
-  # funcao teste - logar automatico 
-  def logar_visitante(self):
-    self.__tela_login.close()
-
-    usuario = self.__controlador_sistema.controlador_usuario.pega_usuario_por_email('visitante')
-    
-    if usuario == None:
-      dados = {"nome": "visitante", "email": "visitante", "senha": "visitante", "adm": True}
-      usuario = self.__controlador_sistema.controlador_usuario.criar_usuario(dados)
-    
-    self.__controlador_sistema.usuario_logado = usuario
-
   def abre_tela(self):
-    lista_opcoes = {1: self.logar, 2: self.cadastrar, 3: self.logar_visitante, 0: self.finaliza_sistema}
+    lista_opcoes = {1: self.logar, 2: self.cadastrar, 0: self.finaliza_sistema}
     
     while self.__controlador_sistema.usuario_logado == None:
       opcao_escolhida = self.__tela_login.open()

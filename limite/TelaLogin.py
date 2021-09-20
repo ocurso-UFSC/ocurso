@@ -12,7 +12,6 @@ class TelaLogin():
     botoes = [
               [sg.Button('Login', size=(20,2), key=1)],
               [sg.Button('Cadastro', size=(20,2), key=2)],
-              [sg.Button('Visitante', size=(20,2), key=3)],
               [sg.Button('Sair do sistema', size=(20,2), key=0)]
             ]
 

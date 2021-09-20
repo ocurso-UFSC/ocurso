@@ -115,6 +115,7 @@ class ControladorUsuario():
 
   # card das informações do usuario, opcao de editar e excluir
   def informacao_user(self, usuario = None):
+    adm = self.__controlador_sistema.usuario_logado.adm
     self.__tela_usuario.close()
 
     if usuario == None:
@@ -128,7 +129,7 @@ class ControladorUsuario():
 
     elif button == 1:
       self.__tela_usuario.close_opcao()
-      self.alterar_usuario_info(usuario, usuario.adm)
+      self.alterar_usuario_info(usuario, adm)
 
     elif button == 2:
       self.excluir_usuario(usuario)
