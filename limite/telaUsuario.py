@@ -130,7 +130,6 @@ class TelaUsuario():
   def open_edit_user(self, dados, adm):
     self.edita_usuario(dados, adm)
     button, values = self.__window2.Read()
-    print (button, values)
     
     return button, values
 
@@ -145,7 +144,6 @@ class TelaUsuario():
       self.pega_dados_cadastro()
 
     button, values = self.__window2.Read()
-    print (button, values)
     return button, values
 
   def close_opcao(self):

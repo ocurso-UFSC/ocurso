@@ -81,8 +81,6 @@ class ControladorQuestao():
         usuario_cod = usuario_logado._Usuario__email
         curso_cod = curso._Curso__codigo
         progresso = self.__controlador_sistema.controlador_progresso.progresso_por_curso_e_usuario(curso_cod, usuario_cod)
-        print(progresso._Progresso__ultima_aula)
-        print(len(curso._Curso__lista_aulas))
 
         if len(curso._Curso__lista_aulas) == progresso._Progresso__ultima_aula:
             self.__tela_questao.close_window()

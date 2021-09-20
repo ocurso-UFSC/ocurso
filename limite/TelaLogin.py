@@ -5,7 +5,6 @@ class TelaLogin():
   def __init__(self):
     self.__window = None
     self.__window2 = None
-    self.__window3 = None
 
   def init_components(self):
     sg.ChangeLookAndFeel('DarkBlue')
@@ -13,7 +12,6 @@ class TelaLogin():
     botoes = [
               [sg.Button('Login', size=(20,2), key=1)],
               [sg.Button('Cadastro', size=(20,2), key=2)],
-              [sg.Button('Visitante', size=(20,2), key=3)],
               [sg.Button('Sair do sistema', size=(20,2), key=0)]
             ]
 
@@ -31,23 +29,12 @@ class TelaLogin():
     return button
 
   def close(self):
-    self.__window.Close()
+    if self.__window != None:
+      self.__window.Close()
+    self.__window = None
 
   def show_message(self, titulo: str, mensagem: str):
     sg.Popup(titulo, mensagem)
-
-  def tela_opcoes(self):
-    entrada = int(input(
-'''
----------- oCurso  ------------
-Escolha uma das opções a seguir
-1 - Logar
-2 - Cadastrar Usuário
-3 - Visitante
-0 - Finalizar
-Digite a opção: '''))
-
-    return entrada
 
   def pega_login(self):
     sg.ChangeLookAndFeel('DarkBlue')
@@ -65,16 +52,14 @@ Digite a opção: '''))
       [sg.Column(entrada, vertical_alignment='center', justification='center', k='-C-')]
     ]
 
-    self.__window3 = sg.Window("Login", default_element_size=(30, 1)).Layout(layout)
+    self.__window2 = sg.Window("Login", default_element_size=(30, 1)).Layout(layout)
 
-  
   def open_login(self):
     self.pega_login()
-    button, values = self.__window3.Read()
+    button, values = self.__window2.Read()
     return values
 
   def close_login(self):
-    self.__window3.Close()
-
-  def mostra_mensagem(self, msg):
-    print(msg)
+    if self.__window2 != None:
+      self.__window2.Close()
+    self.__window2 = None

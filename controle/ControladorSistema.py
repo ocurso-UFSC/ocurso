@@ -5,6 +5,7 @@ from controle.ControladorUsuario import ControladorUsuario
 from controle.ControladorLogin import ControladorLogin
 from controle.ControladorAula import ControladorAula
 from controle.ControladorProgresso import ControladorProgresso
+from controle.ControladorCertificado import ControladorCertificado
 
 class ControladorSistema:
     __instance = None
@@ -18,6 +19,7 @@ class ControladorSistema:
         self.__controlador_login = ControladorLogin(self)
         self.__controlador_aula = ControladorAula(self)
         self.__controlador_progresso = ControladorProgresso(self)
+        self.__controlador_certificado = ControladorCertificado()
     
     def __new__(cls):
         if ControladorSistema.__instance is None:
@@ -49,8 +51,16 @@ class ControladorSistema:
         return self.__controlador_progresso
 
     @property
+    def controlador_certificado(self):
+        return self.__controlador_certificado
+
+    @property
     def usuario_logado(self):
         return self.__usuario_logado
+
+    @property
+    def tela_sistema(self):
+        return self.__tela_sistema
 
     @usuario_logado.setter
     def usuario_logado(self, usuario_logado):

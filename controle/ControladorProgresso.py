@@ -107,9 +107,11 @@ class ControladorProgresso():
 
     usuario = self.__controlador_sistema.controlador_usuario.pega_usuario_por_email(progresso.usuario_cod)
     dados_progresso["nome_aluno"] = usuario.nome
+    dados_progresso["email"] = usuario.email
 
     curso = self.__controlador_sistema.controlador_curso.get_curso_por_key(progresso.curso_cod)
     dados_progresso["nome_curso"] = curso.nome_do_curso
+    dados_progresso["horas_curso"] = curso.quantidade_horas
 
     if progresso.nota != None:
       dados_progresso["nota"] = progresso.nota
@@ -185,8 +187,9 @@ class ControladorProgresso():
 
   def gerar_certificado(self, progresso):
     if progresso.nota != None:
-      self.__tela_progresso.show_message("Parabéns", "Show de bola cara")
-      # implementar certificado
+      dados = self.progresso_to_json(progresso)
+      self.__controlador_sistema.controlador_certificado.criador(dados)
+      self.__tela_progresso.show_message("Parabéns", "Certificado salvo na pasta")
 
     else:
       self.__tela_progresso.show_message("Erro", "Curso não concluído")
@@ -198,8 +201,7 @@ class ControladorProgresso():
     if button == 1:
       self.__tela_progresso.close_opcao()
       self.gerar_certificado(progresso)
-      print("Seu certificado...")
-      
+
     else:
       self.__tela_progresso.close_opcao()
         
