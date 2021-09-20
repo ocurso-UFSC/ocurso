@@ -59,10 +59,10 @@ class TelaCurso():
       botoes.extend(botoes_adm)
 
     infos = [
-      [sg.Text('Nome', size=(8, 1), font=("Helvetica", 15)), 
-        sg.Text(infos_curso["nome_curso"], font=("Helvetica", 15))],
+      [sg.Text('Nome:', size=(8, 1), font=("Helvetica", 15)), 
+        sg.Text(f'{infos_curso["nome_curso"].upper()}', font=("Helvetica", 15))],
 
-      [sg.Text('Descricao', size=(8, 1), font=("Helvetica", 15))],
+      [sg.Text('Descrição:', size=(8, 1), font=("Helvetica", 15))],
       [sg.Multiline(default_text=infos_curso["descricao"], size=(35, 3))],
 
       [sg.Text('Horas', size=(8, 1), font=("Helvetica", 15)), 

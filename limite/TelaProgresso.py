@@ -65,14 +65,14 @@ class TelaProgresso():
     botoes = [[sg.Button("Emitir Certificado", key=1), sg.Button("Sair", key=0)]]
 
     infos = [
-      [sg.Text('Aluno', size=(8, 1), font=("Helvetica", 15)), 
+      [sg.Text('Aluno:', size=(8, 1), font=("Helvetica", 15)), 
         sg.Text(dados_progresso["nome_aluno"], font=("Helvetica", 15))],
-      [sg.Text('Curso', size=(8, 1), font=("Helvetica", 15)), 
-        sg.Text(dados_progresso["nome_curso"], font=("Helvetica", 15))],
-      [sg.Text('Aulas Concluidas', size=(8, 1), font=("Helvetica", 15)), 
+      [sg.Text('Curso:', size=(8, 1), font=("Helvetica", 15)), 
+        sg.Text(f'{dados_progresso["nome_curso"].upper()}', font=("Helvetica", 15))],
+      [sg.Text('Concluído:', size=(8, 1), font=("Helvetica", 15)), 
         sg.Text((str(dados_progresso["aula_concluida"]) + "%"), font=("Helvetica", 15))], 
-      [sg.Text('Nota', size=(8, 1), font=("Helvetica", 15)), 
-        sg.Text(dados_progresso["nota"], font=("Helvetica", 15))],
+      [sg.Text('Nota:', size=(8, 1), font=("Helvetica", 15)), 
+        sg.Text(f'{dados_progresso["nota"]:.2f}', font=("Helvetica", 15))],
       ]
 
     layout = [[sg.Text('Informações', size=(15,1), font=("Helvetica", 25), justification='center')],

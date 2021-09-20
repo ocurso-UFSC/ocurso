@@ -107,7 +107,7 @@ class ControladorQuestao():
         acertos = 0
 
         if nome_curso not in self.__respostas_usuario:
-            self.__tela_questao.show_message(f'Atenção!', 'Você ainda não realizou a avaliação deste curso.')
+            self.__tela_questao.show_message(f'Atenção!', 'Você ainda não realizou a \navaliação deste curso nessa sessão.')
 
         else:
             for resposta in range (len(self.__respostas_usuario[nome_curso])):
@@ -118,7 +118,7 @@ class ControladorQuestao():
             nota = acertos/len(self.__respostas_usuario[nome_curso]) * 10
             
             self.__controlador_sistema.controlador_progresso.dar_nota(progresso, nota)
-            self.__tela_questao.open_mostra_mensagem(f'Sua nota em {nome_curso.upper()} é', progresso.nota)
+            self.__tela_questao.open_mostra_mensagem(f'Sua nota em {nome_curso.upper()} é', f'{progresso.nota:.2f}')
         self.__tela_questao.close_window2()
     
     def listar_questoes(self):
