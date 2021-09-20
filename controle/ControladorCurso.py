@@ -3,6 +3,8 @@ from limite.telaCurso import TelaCurso
 from entidade.curso import Curso
 from dao.curso_dao import cursoDAO
 
+from exception.NumberAulaException import NumberAulaException
+
 class ControladorCurso():
   def __init__(self, controlador_sistema):
     self.__dao = cursoDAO()
@@ -133,8 +135,7 @@ class ControladorCurso():
           
           except ValueError:
             erro = True
-            # Colocar Exception aqui!!
-            self.__tela_curso.show_message("Erro", "Horas deve ser um valor inteiro")
+            NumberAulaException(self.__controlador_sistema)
 
           if not erro:
             # Em caso de cadastro (dados antigos is null)

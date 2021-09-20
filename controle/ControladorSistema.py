@@ -52,6 +52,10 @@ class ControladorSistema:
     def usuario_logado(self):
         return self.__usuario_logado
 
+    @property
+    def tela_sistema(self):
+        return self.__tela_sistema
+
     @usuario_logado.setter
     def usuario_logado(self, usuario_logado):
         self.__usuario_logado = usuario_logado

@@ -2,6 +2,10 @@ from limite.telaUsuario import TelaUsuario
 from entidade.usuario import Usuario
 from dao.usuario_dao import usuarioDAO
 
+from exception.EmailJaCadastradoException import EmailJaCadastradoException
+from exception.SenhasNaoCorrespondemException import SenhasNaoCorrespondemException
+from exception.DadosNaoPreenchidosException import DadosNaoPreenchidosException
+
 class ControladorUsuario():
   def __init__(self, controlador_sistema):
     self.__tela_usuario = TelaUsuario()
@@ -30,9 +34,14 @@ class ControladorUsuario():
       return None
 
   def criar_usuario(self, dados_usuario):
-    usuario = Usuario(dados_usuario["nome"], dados_usuario["email"], dados_usuario["senha"], dados_usuario["adm"])
-    self.cadastrar_usuario(usuario)
-    return usuario
+    # verificar chave Key Email
+    if self.pega_usuario_por_email(dados_usuario["email"]) == None:
+      usuario = Usuario(dados_usuario["nome"], dados_usuario["email"], dados_usuario["senha"], dados_usuario["adm"])
+      self.cadastrar_usuario(usuario)
+      return usuario
+    
+    else:
+      return None
 
   def cadastrar_usuario(self, usuario):
     self.__dao.add(usuario)
@@ -42,9 +51,9 @@ class ControladorUsuario():
 
     while True:
       button, dados = self.__tela_usuario.open_opcao(3)
+      self.__tela_usuario.close_opcao()        
 
       if button == 0:
-        self.__tela_usuario.close_opcao()        
         return False
 
       # Por padrão, novos usuarios não serão ADM. Um ADM deve setar outro ADM
@@ -53,17 +62,23 @@ class ControladorUsuario():
       if (dados["nome"] != '' and dados["nome"] != None) and (dados["email"] != '' and dados["email"] != None)\
           and (dados["senha"] != '' and dados["senha"] != None) and (dados["senha2"] != '' and dados["senha2"] != None):
         if dados["senha"] == dados["senha2"]:
-          self.criar_usuario(dados)
+          
+          if self.criar_usuario(dados) != None:
+            self.__tela_usuario.show_message("Sucesso", "Usuário Cadastrado")
+            return True
 
-          self.__tela_usuario.show_message("Sucesso", "Usuário Cadastrado")
-          self.__tela_usuario.close_opcao()
-          return True
-
-        self.__tela_usuario.show_message("Erro", "Senhas não correspondem")
+          else:
+            print('ERRO, email')
+            EmailJaCadastradoException(self.__controlador_sistema)
+        
+        else:
+          SenhasNaoCorrespondemException(self.__controlador_sistema)
+          print('ERRO, senha')
       else:
-        self.__tela_usuario.show_message("Erro", "Preencha todos os campos")
+        DadosNaoPreenchidosException(self.__controlador_sistema)
+        print('ERRO, dados')
 
-      self.__tela_usuario.close_opcao()
+
 
   def user_to_json(self, usuario):
     dados_usuario = {}
