@@ -16,21 +16,15 @@ class ControladorCertificado():
 
     size = 90
     font1 = ImageFont.truetype("arial.ttf", size=size)
-    widthFonte, heighFonte = draw.textsize(dados["nome_aluno"], font=font1)
-
-    # caso Width da fonte for maior, temos que ver o maior que possa encaixar  
-    while widthFonte > maxW:
-      size -= 5
-      font1 = ImageFont.truetype("arial.ttf", size=size)
-      widthFonte, heighFonte = draw.textsize(dados["nome_aluno"], font=font1)
-
-
-    pointX = (widthImage/2 - widthFonte/2) #metade da foto
 
     # nome
+    widthFonte, heighFonte = draw.textsize(dados["nome_aluno"], font=font1)
+    pointX = (widthImage/2 - widthFonte/2) #metade da foto
     draw.text((pointX, (517 - (heighFonte/2))), dados["nome_aluno"], fill = 'rgb(255, 255, 255)', font=font1)
 
     # Curso
+    widthFonte, heighFonte = draw.textsize(dados["nome_curso"], font=font1)
+    pointX = (widthImage/2 - widthFonte/2) #metade da foto
     draw.text((pointX, (517 - (heighFonte/2)+250)), dados["nome_curso"], fill = 'rgb(255, 255, 255)', font=font1)
 
     # horas
