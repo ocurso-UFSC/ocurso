@@ -68,17 +68,12 @@ class ControladorUsuario():
             return True
 
           else:
-            print('ERRO, email')
             EmailJaCadastradoException(self.__controlador_sistema)
         
         else:
           SenhasNaoCorrespondemException(self.__controlador_sistema)
-          print('ERRO, senha')
       else:
         DadosNaoPreenchidosException(self.__controlador_sistema)
-        print('ERRO, dados')
-
-
 
   def user_to_json(self, usuario):
     dados_usuario = {}

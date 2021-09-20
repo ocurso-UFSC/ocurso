@@ -201,8 +201,7 @@ class ControladorProgresso():
     if button == 1:
       self.__tela_progresso.close_opcao()
       self.gerar_certificado(progresso)
-      print("Seu certificado...")
-      
+
     else:
       self.__tela_progresso.close_opcao()
         
