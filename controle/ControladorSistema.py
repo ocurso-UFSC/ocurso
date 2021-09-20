@@ -81,6 +81,7 @@ class ControladorSistema:
         self.__controlador_curso.abre_tela()
 
     def inclui_questao(self):
+        self.__tela_sistema.close()
         self.__controlador_questao.abre_tela()
     
     def abre_aulas(self):
