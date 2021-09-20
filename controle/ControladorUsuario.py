@@ -4,7 +4,6 @@ from dao.usuario_dao import usuarioDAO
 
 class ControladorUsuario():
   def __init__(self, controlador_sistema):
-    # self.__usuarios = []
     self.__tela_usuario = TelaUsuario()
     self.__controlador_sistema = controlador_sistema
     self.__dao = usuarioDAO()
@@ -39,17 +38,13 @@ class ControladorUsuario():
     self.__dao.add(usuario)
   
   def cadastrar(self):
+    self.__tela_usuario.close()
+
     while True:
       button, dados = self.__tela_usuario.open_opcao(3)
 
       if button == 0:
-        self.__tela_usuario.close_opcao()
-
-        # Essa verificacao serve pq pode ser para USUARIO ADM ou LOGIN
-        if self.__tela_usuario.window != None:
-          self.__tela_usuario.close()
-        else:
-          self.__controlador_sistema.controlador_login.tela_login.close()
+        self.__tela_usuario.close_opcao()        
         return False
 
       # Por padrão, novos usuarios não serão ADM. Um ADM deve setar outro ADM
@@ -60,16 +55,7 @@ class ControladorUsuario():
         if dados["senha"] == dados["senha2"]:
           self.criar_usuario(dados)
 
-          # Opcao para a tela no próprio usuário
-          if self.__tela_usuario.window != None:
-            self.__tela_usuario.show_message("Sucesso", "Usuário Cadastrado")
-            self.__tela_usuario.close()
-
-          # Opcao para tela no LOGIN            
-          else:
-            self.__tela_usuario.show_message("Bem Vindo", "Cadastrado com sucesso")
-            self.__controlador_sistema.controlador_login.tela_login.close()
-            
+          self.__tela_usuario.show_message("Sucesso", "Usuário Cadastrado")
           self.__tela_usuario.close_opcao()
           return True
 
@@ -100,6 +86,9 @@ class ControladorUsuario():
       return False
 
   def alterar_usuario_info(self, usuario, adm = False):
+    # está permitindo dados vazios
+    self.__tela_usuario.close()
+
     dados_antigos = self.user_to_json(usuario)
     button, values = self.__tela_usuario.open_edit_user(dados_antigos, adm)
     
@@ -110,11 +99,9 @@ class ControladorUsuario():
       if self.alterar_usuario(usuario, values):
         self.__tela_usuario.show_message("Sucesso", "Dados alterados")
         self.__tela_usuario.close_opcao()
-        self.__tela_usuario.close()
 
     elif button == 0:
       self.__tela_usuario.close_opcao()
-      self.__tela_usuario.close()
 
   # card das informações do usuario, opcao de editar e excluir
   def informacao_user(self, usuario = None):
@@ -138,34 +125,30 @@ class ControladorUsuario():
       self.__tela_usuario.close_opcao()
 
   def lista_usuarios(self, usuario = None):
+    self.__tela_usuario.close()
     lista_emails = []
-    # for usuario in self.__usuarios:
+
     for usuario in self.__dao.get_all():
       lista_emails.append(usuario.email)
 
     while True:
-      self.__tela_usuario.close()
       button, values = self.__tela_usuario.open_opcao(2, lista_emails)
+      self.__tela_usuario.close_opcao()
 
-      if button == 0:
-        self.__tela_usuario.close_opcao()
-        return False
-
-      elif len(values["email"]) == 0:
+      if button == 1 and len(values["email"]) == 0:
         self.__tela_usuario.show_message("Erro", "Nenhum selecionado")
-        self.__tela_usuario.close_opcao()
-        return False
 
-      else:
+      elif button == 1 and len(values["email"]) > 0: # reduntande, mas e para autoexplicar
         usuario = self.pega_usuario_por_email(values["email"][0])
-        self.__tela_usuario.close_opcao()
         self.informacao_user(usuario)
         return True
+
+      else:
+        return False
 
   def excluir_usuario(self, usuario = None):
     self.__tela_usuario.close()
     self.__tela_usuario.close_opcao()
-
 
     if (usuario != None):
       if self.__controlador_sistema.usuario_logado == usuario:
