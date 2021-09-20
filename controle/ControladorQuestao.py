@@ -138,7 +138,6 @@ class ControladorQuestao():
                 return False
             elif button == 1:
                 self.__tela_questao.close_window2()
-                input('')
                 questao = self.procura_questao_por_descricao(values['questao'][0])
                 curso = self.__controlador_sistema.controlador_curso._ControladorCurso__curso_escolhido
                 numero_questao = curso._Curso__avaliacao.index(questao)
