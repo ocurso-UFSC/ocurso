@@ -73,7 +73,7 @@ class TelaQuestao():
 
     def mostra_mensagem(self, titulo, mensagem):
         sg.ChangeLookAndFeel('DarkBlue')
-        if mensagem >= 7:
+        if float(mensagem) >= 7:
             layout = [[sg.Text(f'{titulo}', justification=('center'))],
                     [sg.Text(f'{mensagem}', font=('Helvetica', 20), text_color='#98FB98', justification=('center'))],
                     [sg.Text(f'Você está aprovado!', justification=('center'))],

@@ -63,7 +63,7 @@ class ControladorUsuario():
           and (dados["senha"] != '' and dados["senha"] != None) and (dados["senha2"] != '' and dados["senha2"] != None):
         if dados["senha"] == dados["senha2"]:
           
-          if self.criar_usuario(dados) != None:
+          if self.criar_usuario(dados) is not None:
             self.__tela_usuario.show_message("Sucesso", "Usuário Cadastrado")
             return True
 
